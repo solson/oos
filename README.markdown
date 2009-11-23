@@ -30,11 +30,11 @@ unless you compile Bochs with debugging enabled!
 
 Without the debugger:
 
-    $ ./run-debug.sh
+    $ ./run.sh
 
 With the debugger:
 
-    $ ./run.sh
+    $ ./run-debug.sh
 
 You should be able to use oos with qemu or any emulator of your choice
 by telling your emulator to boot the iso/shiny.iso CD image.
