@@ -1,0 +1,16 @@
+# Ignore the result of any builds.
+*.o
+*.sho
+*.exe
+*.lib
+*.shl
+
+#ignore editor temporary and backup files
+.*.swp
+*~
+\#*\#
+.\#*
+
+#ignore scons database file:
+.sconsign.dblite
+

@@ -1,0 +1,6 @@
+default 0
+timeout 1
+
+title shiny
+kernel /boot/shiny.exe
+

@@ -1,0 +1,6 @@
+# Ignore the ISO
+shiny.iso
+
+# Ignore the iso fs
+fs/
+

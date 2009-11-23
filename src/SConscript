@@ -1,0 +1,8 @@
+# vim: syntax=python
+
+Import('env', 'arch', 'buildtype', 'distreq')
+
+env.Append(LINKFLAGS=['-T', 'src/linker.ld'])
+
+distreq += env.Program('shiny', ['loader.asm', 'kernel.c'])
+

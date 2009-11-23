@@ -1,0 +1,4 @@
+boot: cdrom
+ata0-master: type=cdrom, path=shiny.iso, status=inserted
+display_library: x, options="gui_debug"
+
