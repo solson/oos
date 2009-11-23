@@ -2,7 +2,7 @@
 
 Import('env', 'arch', 'buildtype')
 
-env.Command("shiny.iso", "#src/shiny.exe",
+env.Command("shiny.iso", ["#src/shiny.exe", "menu.lst"],
   [
     Delete('iso/fs/boot/grub'),
     Mkdir('iso/fs/boot/grub'),
