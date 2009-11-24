@@ -1,6 +1,6 @@
 default 0
 timeout 1
 
-title shiny
+title oos/shiny
 kernel /boot/shiny.exe
 

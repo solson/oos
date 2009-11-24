@@ -1,5 +1,5 @@
 # Ignore the ISO
-shiny.iso
+oos.iso
 
 # Ignore the iso fs
 fs/

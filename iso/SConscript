@@ -4,7 +4,7 @@ Import('env', 'arch', 'buildtype', 'distreq')
 
 distreq += ["menu.lst"]
 
-iso = env.Command("shiny.iso", distreq,
+iso = env.Command("oos.iso", distreq,
   [
     Delete('iso/fs/boot/grub'),
     Mkdir('iso/fs/boot/grub'),
