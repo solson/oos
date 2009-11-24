@@ -4,7 +4,7 @@ Import('env', 'arch', 'buildtype', 'distreq')
 
 distreq += ["menu.lst"]
 
-env.Command("shiny.iso", distreq,
+iso = env.Command("shiny.iso", distreq,
   [
     Delete('iso/fs/boot/grub'),
     Mkdir('iso/fs/boot/grub'),
@@ -13,4 +13,6 @@ env.Command("shiny.iso", distreq,
     Copy('iso/fs/boot', 'src/shiny/shiny.exe'),
     'genisoimage -R -b boot/grub/stage2_eltorito -no-emul-boot -boot-load-size 4 -boot-info-table -input-charset utf-8 -o $TARGET iso/fs'
   ])
+
+Clean(iso, 'fs')
 
