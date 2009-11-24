@@ -13,10 +13,15 @@ void kmain(multiboot_info_t* mbd, unsigned int magic)
       /* data structure. */
    }
  
-   if(CHECK_FLAG(mbd->flags, 9)){
+   if(CHECK_FLAG(mbd->flags, 9)) {
      k_clear_screen();
      k_printf("Boot Loader: ", 0);
      k_printf((char*) mbd->boot_loader_name, 1);
+   }
+
+   if(CHECK_FLAG(mbd->flags, 2)) {
+     k_printf("Command Line: ", 3);
+     k_printf((char*) mbd->cmdline, 4);
    }
 }
 
