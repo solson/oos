@@ -1,7 +1,9 @@
+# vim: syntax=python
+
 Import('env', 'arch', 'buildtype', 'distreq')
 Import('sources', 'shiny')
 
-shiny.Append(LINKFLAGS=['-T', 'src/metodo/boot/i386/link.ld'])
+shiny.Append(LINKFLAGS=['-T', 'src/shiny/boot/i386/link.ld'])
 
 sources += [
     'boot/i386/start.asm'
