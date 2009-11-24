@@ -1,4 +1,4 @@
-global loader           ; making entry point visible to linker
+global _start           ; making entry point visible to linker
 extern kmain            ; kmain is defined elsewhere
  
 ; setting up the Multiboot header - see GRUB docs for details
@@ -18,7 +18,7 @@ MultiBootHeader:
 ; reserve initial kernel stack space
 STACKSIZE equ 0x4000                  ; that's 16k.
  
-loader:
+_start:
    mov esp, stack+STACKSIZE           ; set up the stack
    push eax                           ; pass Multiboot magic number
    push ebx                           ; pass Multiboot info structure
