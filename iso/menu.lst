@@ -1,5 +1,5 @@
 default 0
-timeout 1
+color light-blue/black light-cyan/blue
 
 title oos/shiny
 kernel /boot/shiny.exe
