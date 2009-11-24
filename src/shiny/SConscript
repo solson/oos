@@ -12,7 +12,8 @@ SConscript('boot/%s/SConscript' % arch)
 
 sources += ['init/init.c']
 
-distreq += ['#src/shiny/shiny.exe']
+#distreq += ['#src/shiny/shiny.exe']
 
-env.Program('shiny', sources)
+shinyexe = env.Program('shiny', sources)
 
+distreq += [shinyexe]
