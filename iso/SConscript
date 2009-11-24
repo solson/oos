@@ -1,14 +1,16 @@
 # vim: syntax=python
 
-Import('env', 'arch', 'buildtype')
+Import('env', 'arch', 'buildtype', 'distreq')
 
-env.Command("shiny.iso", ["#src/shiny.exe", "menu.lst"],
+distreq += ["menu.lst"]
+
+env.Command("shiny.iso", distreq,
   [
     Delete('iso/fs/boot/grub'),
     Mkdir('iso/fs/boot/grub'),
     Copy('iso/fs/boot/grub', '/boot/grub/stage2_eltorito'),
     Copy('iso/fs/boot/grub', 'iso/menu.lst'),
-    Copy('iso/fs/boot', 'src/shiny.exe'),
+    Copy('iso/fs/boot', 'src/shiny/shiny.exe'),
     'genisoimage -R -b boot/grub/stage2_eltorito -no-emul-boot -boot-load-size 4 -boot-info-table -input-charset utf-8 -o $TARGET iso/fs'
   ])
 

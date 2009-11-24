@@ -42,5 +42,6 @@ if strict == 'yes':
 Export('env', 'arch', 'buildtype', 'distreq')
 
 SConscript('src/SConscript')
-SConscript('iso/SConscript', distreq)
+
+SConscript('iso/SConscript')
 

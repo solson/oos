@@ -1,0 +1,18 @@
+# vim: syntax=python
+
+Import('env', 'arch', 'buildtype', 'distreq')
+
+sources = []
+
+shiny = env.Clone()
+
+Export('sources', 'shiny')
+
+SConscript('boot/%s/SConscript' % arch)
+
+sources += ['init/init.c']
+
+distreq += ['#src/shiny/shiny.exe']
+
+env.Program('shiny', sources)
+
