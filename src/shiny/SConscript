@@ -10,7 +10,10 @@ Export('sources', 'shiny')
 
 SConscript('boot/%s/SConscript' % arch)
 
-sources += ['init/init.c']
+sources += [
+    'init/init.c',
+    'display.c'
+  ]
 
 shinyexe = shiny.Program('shiny', sources)
 
