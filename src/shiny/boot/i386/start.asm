@@ -15,22 +15,21 @@ MultiBootHeader:
    dd FLAGS
    dd CHECKSUM
  
-; reserve initial kernel stack space
-STACKSIZE equ 0x4000                  ; that's 16k.
- 
 _start:
-   mov esp, stack+STACKSIZE           ; set up the stack
-   push eax                           ; pass Multiboot magic number
-   push ebx                           ; pass Multiboot info structure
+   mov esp, stacktop            ; set up the stack
+   push eax                     ; pass Multiboot magic number
+   push ebx                     ; pass Multiboot info structure
  
-   call  kmain                       ; call kernel proper
+   call kmain                   ; call kernel proper
  
    cli
 hang:
-   hlt                                ; halt machine should kernel return
+   hlt                          ; halt machine should kernel return
    jmp   hang
  
 section .bss
 align 4
+;; reserve initial kernel stack space
 stack:
-   resb STACKSIZE                     ; reserve 16k stack on a doubleword boundary
+   resb 0x4000            ; reserve 16k stack on a doubleword boundary
+stacktop:
