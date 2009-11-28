@@ -1,8 +1,6 @@
 #include <shiny/shiny.h>
 #include <shiny/display.h>
 
-#include <multiboot.h>
-
 #define CHECK_FLAG(flags,bit)   ((flags) & (1 << (bit)))
 
 void kmain(multiboot_info_t* mbd, unsigned int magic)
