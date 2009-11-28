@@ -19,6 +19,7 @@ MultiBootHeader:
 gdt:
 
 gdt_null:
+        ;; the null descriptor. intel says we need it, so we need it.
         dq 0
 
 gdt_code:
@@ -39,29 +40,29 @@ gdt_data:
  
 gdt_end:
 
-;; GDT descriptor for LGDT instruction
+;;; GDT descriptor for LGDT instruction
 gdt_desc:
-        dw gdt_end - gdt - 1    ; GDT size - 1
+        dw gdt_end - gdt - 1    ; size of GDT - 1 because it can go up
+                                ; to 65536 and can't be 0
         dd gdt                  ; address of the GDT
 
 ;;; control starts here
 _start:
         mov esp, stacktop       ; set up the stack
-
         lgdt [gdt_desc]         ; load the GDT
         
 reload_segments:
         ;; Reload CS register containing code selector:
-        jmp 0x08:.reload_CS      ; 0x08 points at the new code selector
+        ;; We can't directly alter CS, so we far jump to change it
+        jmp 0x08:.reload_CS     ; 0x08 points at the new code selector (2nd in our GDT)
 .reload_CS:
         ;; Reload data segment registers:
-        mov ax, 0x10            ; 0x10 points at the new data selector
+        mov ax, 0x10            ; 0x10 points at the new data selector (3rd in our GDT)
         mov ds, ax
         mov es, ax
         mov fs, ax
         mov gs, ax
         mov ss, ax
-        jmp 0x08:kernel_start
         
 kernel_start: 
         push eax                ; pass Multiboot magic number
@@ -78,4 +79,5 @@ section .bss
 align 4
 stack:
    resb 0x4000                  ; reserve 16k for the stack on a doubleword boundary
-stacktop:
+stacktop:                       ; the top of the stack is the bottom
+                                ; because the stack counts down
