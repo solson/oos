@@ -1,6 +1,8 @@
 #include <shiny/shiny.h>
 #include <shiny/display.h>
 
+void foo(void); // defined in printa.ooc!
+
 #define CHECK_FLAG(flags,bit)   ((flags) & (1 << (bit)))
 
 void kmain(multiboot_info_t* mbd, unsigned int magic)
@@ -24,4 +26,6 @@ void kmain(multiboot_info_t* mbd, unsigned int magic)
           print("Command Line: ", 3);
           print((char*) mbd->cmdline, 4);
      }
+
+     foo(); // this is defined in printa.ooc!
 }
