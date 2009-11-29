@@ -45,6 +45,8 @@ Running oos on real hardware is untested and not recommended (I am not
 responsible for any fires, explosions, or alien abductions that may
 result), but in theory it should work. I'll keep my fingers crossed.
 
+UPDATE: sdkmvx has tested oos on real hardware, and it worked!
+
 
 Features
 --------
