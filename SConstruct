@@ -19,7 +19,7 @@ env = Environment(
 	SHLIBPREFIX='',
 	SHLIBSUFFIX='.shl',
 	CC='gcc',
-    CCFLAGS=['-m32', '-nostdinc', '-ffreestanding', '-I', 'include', '-DARCH=\'"%s"\'' % arch, '-D%s' % arch.upper()],
+    CCFLAGS=['-m32', '-nostdinc', '-ffreestanding', '-I', 'include', '-D', '%s' % arch.upper()],
 	AS='nasm',
 	ASFLAGS=['-felf32'],
 	LINK='ld',
@@ -28,12 +28,6 @@ env = Environment(
 
 if buildtype == 'debug':
 	env.Append(CCFLAGS=['-g', '-DDEBUG'], LINKFLAGS=['-g'])
-
-if ansi == 'yes':
-	env.Append(CCFLAGS=['-ansi'])
-
-if strict == 'yes':
-	env.Append(CCFLAGS=['-Werror'])
 
 Export('env', 'arch', 'buildtype', 'distreq')
 
