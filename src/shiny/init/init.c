@@ -5,6 +5,8 @@
 
 void kmain(multiboot_info_t* mbd, unsigned int magic)
 {
+     HalInit();
+     
      if ( magic != MULTIBOOT_BOOTLOADER_MAGIC )
      {
           /* Something went not according to specs. Print an error */

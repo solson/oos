@@ -7,8 +7,8 @@ sources = []
 shiny = env.Clone()
 
 Export('sources', 'shiny')
-
 SConscript('boot/%s/SConscript' % arch)
+SConscript('hal/%s/SConscript' % arch)
 
 sources += [
     'init/init.c',

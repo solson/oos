@@ -7,4 +7,6 @@
 
 #include <shiny/init.h>
 
+#include <shiny/hal/hal.h>
+
 #endif
