@@ -14,7 +14,6 @@ ooc = env.ooc('ooc.lib', 'init/init.ooc')
 
 sources += [
   ooc,
-  'display.c',
 ]
 
 shinyexe = shiny.Program('shiny', sources)
