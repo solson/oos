@@ -1,4 +1,4 @@
-include stddef, stdbool
+include stddef, stdbool, stdint
 
 /**
  * Pointer type
@@ -25,6 +25,19 @@ Long: cover from long
 ULong: cover from unsigned long
 LLong: cover from long long
 ULLong: cover from unsigned long long
+
+/**
+ * fixed-size integer types
+ */
+Int8: cover from int8_t
+Int16: cover from int16_t
+Int32: cover from int32_t
+Int64: cover from int64_t
+
+UInt8:  cover from uint8_t
+UInt16: cover from uint16_t
+UInt32: cover from uint32_t
+UInt64: cover from uint64_t
 
 Bool: cover from bool
 
