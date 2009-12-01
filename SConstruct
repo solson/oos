@@ -1,5 +1,7 @@
 # vim: syntax=python
 
+import os
+
 arch = ARGUMENTS.get('arch', 'i386')
 buildtype = ARGUMENTS.get('buildtype', 'debug')
 
@@ -22,7 +24,15 @@ env = Environment(
 	ASFLAGS=['-felf32'],
 	LINK='ld',
 	LINKFLAGS=['-melf_i386', '-nostdlib'],
+    OOC='ooc',
+    OOCFLAGS=['-c', '-gcc', '-driver=sequence', '-nomain', '-gc=off', '+-m32', '+-nostdinc', '+-ffreestanding', '-Iinclude'],
+    ENV = os.environ, # pass outside env to build so ooc is in PATH and OOC_DIST exists
 )
+
+env.Append(ENV={'OOC_SDK' : 'src/ooc-sdk'})
+
+ooc = Builder(action = '$OOC $OOCFLAGS $SOURCE -outlib=$TARGET')
+env.Append(BUILDERS = {'ooc' : ooc})
 
 if buildtype == 'debug':
 	env.Append(CCFLAGS=['-g', '-DDEBUG'], LINKFLAGS=['-g'])
