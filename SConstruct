@@ -2,8 +2,6 @@
 
 arch = ARGUMENTS.get('arch', 'i386')
 buildtype = ARGUMENTS.get('buildtype', 'debug')
-ansi = ARGUMENTS.get('ansi', 'no')
-strict = ARGUMENTS.get('strict', 'yes')
 
 distreq = []
 
