@@ -25,7 +25,7 @@ env = Environment(
 	LINK='ld',
 	LINKFLAGS=['-melf_i386', '-nostdlib'],
     OOC='ooc',
-    OOCFLAGS=['-c', '-gcc', '-driver=sequence', '-nomain', '-gc=off', '+-m32', '+-nostdinc', '+-ffreestanding', '-Iinclude'],
+    OOCFLAGS=['-c', '-gcc', '-driver=sequence', '-nomain', '-gc=off', '+-m32', '+-nostdinc', '+-ffreestanding', '-Iinclude', '-sourcepath=.'],
     ENV = os.environ, # pass outside env to build so ooc is in PATH and OOC_DIST exists
 )
 

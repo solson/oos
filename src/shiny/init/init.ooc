@@ -1,7 +1,7 @@
 include shiny/shiny
 include shiny/hal/hal
 
-import src/shiny/display
+import display
 
 MultiBootInfoT: cover from multiboot_info_t {
         cmdline, boot_loader_name: extern UInt

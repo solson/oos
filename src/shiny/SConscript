@@ -10,10 +10,13 @@ Export('sources', 'shiny')
 SConscript('boot/%s/SConscript' % arch)
 SConscript('hal/%s/SConscript' % arch)
 
-ooc = env.ooc('ooc.lib', 'init/init.ooc')
+ooc = env.Clone()
+ooc.Append(OOCFLAGS=['-sourcepath=src/shiny'])
+
+ooclib = ooc.ooc('ooc.lib', 'init/init.ooc')
 
 sources += [
-  ooc,
+  ooclib
 ]
 
 shinyexe = shiny.Program('shiny', sources)
