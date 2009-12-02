@@ -9,10 +9,86 @@ Pointer: cover from void*
 /**
  * character and pointer types
  */
-Char: cover from char
+Char: cover from char {
+        // check for an alphanumeric character
+        isAlphaNumeric: func -> Bool {
+                isAlpha() || isDigit()
+        }
+
+        // check for an alphabetic character
+        isAlpha: func -> Bool {
+                isLower() || isUpper()
+        }
+
+        // check for a lowercase alphabetic character
+        isLower: func -> Bool {
+                this >= 97 && this <= 122
+        }
+
+        // check for an uppercase alphabetic character
+        isUpper: func -> Bool {
+                this >= 65 && this <= 90
+        }
+
+        // check for a decimal digit (0 through 9)
+        isDigit: func -> Bool {
+                this >= 48 && this <= 57
+        }
+
+        // check for a hexadecimal digit (0 1 2 3 4 5 6 7 8 9 a b c d e f A B C D E F)
+        isHexDigit: func -> Bool {
+                isDigit() ||                  // 0-9
+                (this >= 65 && this <= 70) || // A-F
+                (this >= 97 && this <= 102)   // a-f
+        }
+
+        // check for a control character
+        isControl: func -> Bool {
+                (this >= 0 && this <= 31) || this == 127
+        }
+
+        // check for any printable character except space
+        isGraph: func -> Bool {
+                isPrintable() && this != ' '
+        }
+
+        // check for any printable character including space
+        isPrintable: func -> Bool {
+                this >= 32 && this <= 126
+        }
+
+        // check for any printable character which is not a space or an alphanumeric character
+        isPunctuation: func -> Bool {
+                isPrintable() && !isAlphaNumeric() && this != ' '
+        }
+
+        // check for white-space characters: space, form-feed ('\f'), newline ('\n'),
+        // carriage return ('\r'), horizontal tab ('\t'), and vertical tab ('\v')
+        isWhitespace: func -> Bool {
+                this == ' '  ||
+                this == '\f' ||
+                this == '\n' ||
+                this == '\r' ||
+                this == '\t' ||
+                this == 11 // '\v'
+        }
+
+        // check for a blank character; that is, a space or a tab
+        isBlank: func -> Bool {
+                this == ' ' || this == '\t'
+        }
+
+        toInt: func -> Int {
+                if (isDigit()) {
+                        return (this - 48)
+                }
+                return -1
+        }
+}
+
 UChar: cover from unsigned char
 
-String: cover from char*
+String: cover from Char*
 
 /**
  * integer types
