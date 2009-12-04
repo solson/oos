@@ -1,5 +1,5 @@
 include multiboot // TODO: move this to ooc!
-import hal/i386/hal // TODO: should *not* have to specify arch here
+import hal
 import display
 
 // very unfinished cover of multiboot_info_t
