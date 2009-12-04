@@ -1,10 +1,10 @@
 bits 32
 
-global HalInitGDT
+global halInitGDT
 
 section .text
 
-HalInitGDT:
+halInitGDT:
         lgdt [gdt_desc]         ; load the GDT
 
 reload_segments:

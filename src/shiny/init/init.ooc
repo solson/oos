@@ -1,15 +1,14 @@
-include shiny/shiny
-include shiny/hal/hal
-
+include multiboot // TODO: move this to ooc!
+import hal/i386/hal // TODO: should *not* have to specify arch here
 import display
 
+// very unfinished cover of multiboot_info_t
 MultiBootInfoT: cover from multiboot_info_t {
         cmdline, boot_loader_name: extern UInt
 }
-HalInit: extern func
 
 kmain: func (mbd: MultiBootInfoT*, magic: UInt32) {
-        HalInit()
+        halInit()
 
         clearScreen()
         printString("This kernel is written in ooc!", 0)
