@@ -1,9 +1,11 @@
 include shiny/hal/idt
 
+// These covers wouldn't have to be from C if we could do GCC's
+// __attribute__((packed)) from ooc somehow
 IDTDescriptor: cover from IDTD {
   size: extern UInt16
   offset: extern UInt32
-}
+} // __attribute__((packed))
 
 IDTGate: cover from IDTG {
   offset_1: extern UInt16
@@ -11,10 +13,11 @@ IDTGate: cover from IDTG {
   zero: extern UInt8
   type: extern UInt8
   offset_2: extern UInt16
-}
+} // __attribute__((packed))
 
 idt: IDTGate[256]
 
+// defined in idt.c because it uses GCC inline ASM :(
 halLoadIDT: extern func (IDTDescriptor)
 
 halInitIDT: func {
@@ -36,3 +39,4 @@ zeroMemory: func (ptr: Pointer, size: UInt32) -> Pointer {
 
   return mem
 }
+
