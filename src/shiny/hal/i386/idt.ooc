@@ -8,11 +8,11 @@ IDTDescriptor: cover from IDTD {
 } // __attribute__((packed))
 
 IDTGate: cover from IDTG {
-  offset_1: extern UInt16
-  selector: extern UInt16
-  zero: extern UInt8
-  type: extern UInt8
-  offset_2: extern UInt16
+  offset_1: extern UInt16 // offset bits 0..15
+  selector: extern UInt16 // code segment selector in GDT
+  zero: extern UInt8      // unused, set to 0
+  type_attr: extern UInt8 // type and attributes
+  offset_2: extern UInt16 // offset bits 16..31
 } // __attribute__((packed))
 
 idt: IDTGate[256]
