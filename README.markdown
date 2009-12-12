@@ -55,14 +55,14 @@ Features
 
 * el zilcho
 
-
-Note
+Todo
 ----
 
-At this time oos contains no ooc code... it may be necessary to
-implement malloc/memory management before that can happen
-
-UPDATE: Never mind, oos' kernel is now written in ooc =)
+* interrupts/exceptions and syscalls
+* memory management
+* drivers for keyboard, display, serial, filesystems, floppy, etc
+* modules / elf32 loading
+* ooc stdlib (all things like strlen, strcmp, etc, will be in pure ooc)
 
 
 [repo]: http://github.com/tsion/oos
