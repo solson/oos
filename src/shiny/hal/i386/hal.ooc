@@ -1,4 +1,4 @@
-import idt
+import idt, isr
 
 // defined in gdt.asm
 halInitGDT: extern func
@@ -6,5 +6,6 @@ halInitGDT: extern func
 halInit: func {
         halInitGDT()
         halInitIDT()
+        halIsrInstall()
 }
 
