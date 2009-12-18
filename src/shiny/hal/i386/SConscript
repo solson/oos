@@ -5,6 +5,7 @@ Import('sources', 'shiny')
 
 sources = [
   'gdt.asm',
+  'ports.c',
   'idt.c',
   'exceptions.asm'
 ]
