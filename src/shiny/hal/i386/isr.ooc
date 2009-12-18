@@ -47,6 +47,9 @@ INTR32: const UInt8 = 0xe
 TRAP16: const UInt8 = 0x7
 TRAP32: const UInt8 = 0xf
 
+halIsrHandler: func (regs: Registers*) {
+}
+
 halIsrInstall: func {
   halSetIDTGate(0, halIsr0, 0x8, 0, 0, INTR32)
   halSetIDTGate(1, halIsr1, 0x8, 0, 0, INTR32)
