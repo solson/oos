@@ -1,38 +1,38 @@
 import idt
 
 // from exceptions.asm
-halIsr0: extern func
-halIsr1: extern func
-halIsr2: extern func
-halIsr3: extern func
-halIsr4: extern func
-halIsr5: extern func
-halIsr6: extern func
-halIsr7: extern func
-halIsr8: extern func
-halIsr9: extern func
-halIsr10: extern func
-halIsr11: extern func
-halIsr12: extern func
-halIsr13: extern func
-halIsr14: extern func
-halIsr15: extern func
-halIsr16: extern func
-halIsr17: extern func
-halIsr18: extern func
-halIsr19: extern func
-halIsr20: extern func
-halIsr21: extern func
-halIsr22: extern func
-halIsr23: extern func
-halIsr24: extern func
-halIsr25: extern func
-halIsr26: extern func
-halIsr27: extern func
-halIsr28: extern func
-halIsr29: extern func
-halIsr30: extern func
-halIsr31: extern func
+halIsr0: extern proto func
+halIsr1: extern proto func
+halIsr2: extern proto func
+halIsr3: extern proto func
+halIsr4: extern proto func
+halIsr5: extern proto func
+halIsr6: extern proto func
+halIsr7: extern proto func
+halIsr8: extern proto func
+halIsr9: extern proto func
+halIsr10: extern proto func
+halIsr11: extern proto func
+halIsr12: extern proto func
+halIsr13: extern proto func
+halIsr14: extern proto func
+halIsr15: extern proto func
+halIsr16: extern proto func
+halIsr17: extern proto func
+halIsr18: extern proto func
+halIsr19: extern proto func
+halIsr20: extern proto func
+halIsr21: extern proto func
+halIsr22: extern proto func
+halIsr23: extern proto func
+halIsr24: extern proto func
+halIsr25: extern proto func
+halIsr26: extern proto func
+halIsr27: extern proto func
+halIsr28: extern proto func
+halIsr29: extern proto func
+halIsr30: extern proto func
+halIsr31: extern proto func
 
 Registers: cover {
   gs, fs, es, ds: UInt // segments
