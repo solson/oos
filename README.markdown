@@ -58,7 +58,8 @@ Features
 Todo
 ----
 
-* interrupts/exceptions and syscalls
+* interrupts/exceptions - Done!
+* syscalls - almost done
 * memory management
 * drivers for keyboard, display, serial, filesystems, floppy, etc
 * modules / elf32 loading
