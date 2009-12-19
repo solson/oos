@@ -41,7 +41,7 @@ With the debugger:
 You should be able to use oos with qemu or any emulator of your choice
 by telling your emulator to boot the iso/shiny.iso CD image.
 
-    $ qemu -cdrom iso/shiny.iso
+    $ qemu -cdrom iso/oos.iso
 
 Running oos on real hardware is untested and not recommended (I am not
 responsible for any fires, explosions, or alien abductions that may
