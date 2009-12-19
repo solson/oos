@@ -1,4 +1,0 @@
-boot: cdrom
-ata0-master: type=cdrom, path=oos.iso, status=inserted
-display_library: x, options="gui_debug"
-
