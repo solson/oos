@@ -5,7 +5,10 @@ Import('sources', 'shiny')
 
 sources = [
   'gdt.asm',
-  'idt.c'
+  'ports.c',
+  'idt.c',
+  'interrupts.c',
+  'exceptions.asm'
 ]
 
 hallib = env.StaticLibrary('hal', sources)
