@@ -70,7 +70,7 @@ Char: cover from char {
                 this == '\n' ||
                 this == '\r' ||
                 this == '\t' ||
-                this == 11 // '\v'
+                this == '\v'
         }
 
         // check for a blank character; that is, a space or a tab
