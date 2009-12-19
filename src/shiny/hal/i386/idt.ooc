@@ -33,6 +33,7 @@ halInitIDT: func {
 halSetIDTGate: func (n: SizeT, offset: Pointer, selector: UInt16, priv, sys, gatetype: UInt8) {
   idt[n] offset_1 = offset as UInt32 & 0xffff       // offset bits 0..15
   idt[n] offset_2 = offset as UInt32 >> 16 & 0xffff // offset bits 16..31
+  idt[n] selector = selector
   idt[n] zero = 0 // unused
   idt[n] type_attr = (1 << 7) | // first bit must be set for all valid descriptors
                 ((priv & 0b11) << 5) | // two bits for the ring level
