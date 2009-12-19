@@ -18,4 +18,6 @@ kmain: func (mbd: MultiBootInfoT*, magic: UInt32) {
 
         printString("Command Line:", 5)
         printString(mbd@ cmdline as String, 6)
+
+        while(1){}
 }
