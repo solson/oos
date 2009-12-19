@@ -1,6 +1,9 @@
 # Ignore the ISO
 oos.iso
 
+# Ignore the grub image
+stage2_eltorito
+
 # Ignore the iso fs
 fs/
 
