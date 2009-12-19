@@ -1,4 +1,4 @@
-import idt, isr, irq, interrupts
+import idt, isr, irq, interrupts, syscall
 
 // defined in gdt.asm
 halInitGDT: extern func
@@ -8,6 +8,7 @@ halInit: func {
   halInitIDT()
   halIsrInstall()
   halIrqInstall()
+  halSyscallInstall()
 
   halInterruptsEnable()
 }

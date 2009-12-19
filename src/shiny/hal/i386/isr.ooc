@@ -1,4 +1,4 @@
-import idt
+import idt, syscall
 
 // from exceptions.asm
 halIsr0: extern proto func
@@ -48,6 +48,9 @@ TRAP16: const UInt8 = 0x7
 TRAP32: const UInt8 = 0xf
 
 halIsrHandler: func (regs: Registers*) {
+  if (regs@ interruptNumber == 0x80) {
+    halSyscallHandler(regs)
+  }
 }
 
 halIsrInstall: func {
