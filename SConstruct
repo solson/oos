@@ -35,7 +35,7 @@ ooc = Builder(action = '$OOC $OOCFLAGS $SOURCE -outlib=$TARGET')
 env.Append(BUILDERS = {'ooc' : ooc})
 
 if buildtype == 'debug':
-	env.Append(CCFLAGS=['-g', '-DDEBUG'], LINKFLAGS=['-g'])
+	env.Append(CCFLAGS=['-g', '-DDEBUG'], LINKFLAGS=['-g'], OOCFLAGS=['-g'])
 
 Export('env', 'arch', 'buildtype', 'distreq')
 
