@@ -22,24 +22,24 @@ Char: cover from char {
 
         // check for a lowercase alphabetic character
         isLower: func -> Bool {
-                this >= 97 && this <= 122
+                this >= 'a' && this <= 'z'
         }
 
         // check for an uppercase alphabetic character
         isUpper: func -> Bool {
-                this >= 65 && this <= 90
+                this >= 'A' && this <= 'Z'
         }
 
         // check for a decimal digit (0 through 9)
         isDigit: func -> Bool {
-                this >= 48 && this <= 57
+                this >= '0' && this <= '9'
         }
 
         // check for a hexadecimal digit (0 1 2 3 4 5 6 7 8 9 a b c d e f A B C D E F)
         isHexDigit: func -> Bool {
-                isDigit() ||                  // 0-9
-                (this >= 65 && this <= 70) || // A-F
-                (this >= 97 && this <= 102)   // a-f
+                isDigit() ||
+                (this >= 'A' && this <= 'F') ||
+                (this >= 'a' && this <= 'f')
         }
 
         // check for a control character
@@ -80,13 +80,13 @@ Char: cover from char {
 
         toInt: func -> Int {
                 if (isDigit()) {
-                        return (this - 48)
+                        return (this - '0')
                 }
                 return -1
         }
 }
 
-UChar: cover from unsigned char
+UChar: cover from unsigned char extends Char
 
 String: cover from Char*
 
