@@ -48,6 +48,7 @@ Features
 
 * el zilcho
 
+
 Todo
 ----
 
@@ -59,6 +60,18 @@ Todo
 * ooc stdlib (all things like strlen, strcmp, etc, will be in pure ooc)
 
 
-[repo]: http://github.com/tsion/oos
-[ooc]:  http://ooc-lang.org
-[irc]:  irc://freenode.net/##oos
+Thanks
+------
+
+* [nddrylliog][ndd] and everyone else involved in creating [the ooc language][ooc]!
+* [OSDev][osdev], for all the great tutorials and informative articles
+* The creators of [dux OS][dux]. I read and stole a lot of code from them. :)
+
+
+[repo]:  http://github.com/tsion/oos
+[ooc]:   http://ooc-lang.org
+[irc]:   irc://freenode.net/##oos
+[ndd]:   http://github.com/nddrylliog
+[osdev]: http://wiki.osdev.org/Main_Page
+[dux]:   http://github.com/RockerMONO/dux
+
