@@ -2,14 +2,15 @@
 oos
 ===
 
-* oos is an Operating System with the goal of using [ooc][ooc] for
+* oos is an Operating System with the goal of using [the ooc language][ooc] for
   as much of the code as possible
 * oos stands for ooc operating system
 * Repository: [http://github.com/tsion/oos][repo]
+* IRC: freenode.net/##oos
 
 
 Downloading and Compiling oos
--------------
+-----------------------------
 
 It is as simple as:
 
@@ -26,17 +27,9 @@ Note: You will also need the 'ooc' compiler in your PATH!
 Running oos
 -----------
 
-I've provided scripts for running oos in the Bochs emulator with the
-GUI debugger and without. You won't be able to use the GUI debugger
-unless you compile Bochs with debugging enabled!
-
-Without the debugger:
+I've provided a script for running oos in the Bochs emulator.
 
     $ ./run.sh
-
-With the debugger:
-
-    $ ./run-debug.sh
 
 You should be able to use oos with qemu or any emulator of your choice
 by telling your emulator to boot the iso/shiny.iso CD image.
@@ -47,7 +40,7 @@ Running oos on real hardware is untested and not recommended (I am not
 responsible for any fires, explosions, or alien abductions that may
 result), but in theory it should work. I'll keep my fingers crossed.
 
-UPDATE: sdkmvx has tested oos on real hardware, and it worked!
+UPDATE: sdkmvx has tested oos on real hardware, and it worked for him!
 
 
 Features
@@ -61,7 +54,7 @@ Todo
 * interrupts/exceptions - Done!
 * syscalls - almost done
 * memory management
-* drivers for keyboard, display, serial, filesystems, floppy, etc
+* drivers for keyboard, display (text display driver mostly done), serial, filesystems, floppy, etc
 * modules / elf32 loading
 * ooc stdlib (all things like strlen, strcmp, etc, will be in pure ooc)
 
