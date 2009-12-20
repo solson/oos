@@ -1,7 +1,7 @@
 import idt, isr, irq, interrupts, syscall
 
 // defined in gdt.asm
-halInitGDT: extern func
+halInitGDT: extern proto func
 
 halInit: func {
   halInitGDT()
