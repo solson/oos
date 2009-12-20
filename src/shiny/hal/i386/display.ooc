@@ -19,9 +19,18 @@ COLOR_WHITE:    const Int = 0xf
 
 VIDEO_MEMORY: const UInt16* = 0xb8000 as UInt16*
 
-attr: const Int = 0x7
-cursor_x : const Int = 0
-cursor_y : const Int = 0
+attr: const UInt8
+cursor_x: const Int
+cursor_y: const Int
+
+halInitDisplay: func {
+  halDisplaySetAttr(COLOR_LGREY, COLOR_BLACK)
+  halDisplayClearScreen()
+}
+
+halDisplaySetAttr: func (foreground, background: Int) {
+  attr = (foreground & 0xf) | background << 4
+}
 
 halDisplayClearScreen: func {
   for (row in 0..25) {
