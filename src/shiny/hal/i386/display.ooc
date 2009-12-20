@@ -51,7 +51,7 @@ halDisplayUpdateCursor: func {
   halOutPort(0x3d5, i)
 }
 
-halDisplayPrintChar: func (chr: Char) {
+halDisplayChar: func (chr: Char) {
   // Handle a backspace, by moving the cursor back one space
   if (chr == '\b') {
     if (cursor_x != 0) cursor_x -= 1
@@ -97,9 +97,9 @@ halDisplayPrintChar: func (chr: Char) {
   halDisplayUpdateCursor()
 }
 
-halDisplayPrintString: func (str: String) {
+halDisplayString: func (str: String) {
   for (i in 0..str length()) {
-    halDisplayPrintChar(str[i])
+    halDisplayChar(str[i])
   }
 }
 

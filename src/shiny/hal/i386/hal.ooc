@@ -12,16 +12,16 @@ halInit: func {
   runInitializer("IRQs", halIrqInstall)
   runInitializer("syscalls", halSyscallInstall)
 
-  halDisplayPrintString("Enabling interrupts... ")
+  halDisplayString("Enabling interrupts... ")
   halInterruptsEnable()
-  halDisplayPrintString("Done.\n\n")
+  halDisplayString("Done.\n\n")
 }
 
 runInitializer: func (name: String, fun: Func) {
-  halDisplayPrintString("Initializing ")
-  halDisplayPrintString(name)
-  halDisplayPrintString("... ")
+  halDisplayString("Initializing ")
+  halDisplayString(name)
+  halDisplayString("... ")
   fun()
-  halDisplayPrintString("Done.\n")
+  halDisplayString("Done.\n")
 }
 
