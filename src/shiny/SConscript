@@ -18,6 +18,7 @@ ooclib = ooc.ooc('ooc.lib', 'init/init.ooc')
 Clean(ooclib, '#ooc_tmp')
 
 sources += [
+  'printf.c',
   ooclib
 ]
 
