@@ -10,14 +10,16 @@ MultiBootInfoT: cover from multiboot_info_t {
 kmain: func (mbd: MultiBootInfoT*, magic: UInt32) {
         halInit()
 
-        clearScreen()
-        printString("This kernel is written in ooc!", 0)
+        halDisplayClearScreen()
+        halDisplayPrintString("This kernel is written in ooc!\n\n")
 
-        printString("Boot Loader:", 2)
-        printString(mbd@ boot_loader_name as String, 3)
+        halDisplayPrintString("Boot Loader: ")
+        halDisplayPrintString(mbd@ boot_loader_name as String)
+        halDisplayPrintChar('\n')
 
-        printString("Command Line:", 5)
-        printString(mbd@ cmdline as String, 6)
+        halDisplayPrintString("Command Line: ")
+        halDisplayPrintString(mbd@ cmdline as String)
+        halDisplayPrintChar('\n')
 
         while(1){}
 }
