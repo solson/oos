@@ -6,7 +6,7 @@ oos
   as much of the code as possible
 * oos stands for ooc operating system
 * Repository: [http://github.com/tsion/oos][repo]
-* IRC: freenode.net/##oos
+* IRC: [##oos on freenode][irc]
 
 
 Downloading and Compiling oos
@@ -61,3 +61,4 @@ Todo
 
 [repo]: http://github.com/tsion/oos
 [ooc]:  http://ooc-lang.org
+[irc]:  irc://freenode.net/##oos
