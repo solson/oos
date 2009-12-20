@@ -1,4 +1,4 @@
-import idt, isr, irq, interrupts, syscall, display
+import idt, isr, irq, interrupts, syscall, display, printf
 
 // defined in gdt.asm
 halInitGDT: extern proto func
@@ -12,16 +12,14 @@ halInit: func {
   runInitializer("IRQs", halIrqInstall)
   runInitializer("syscalls", halSyscallInstall)
 
-  halDisplayString("Enabling interrupts... ")
+  printf("Enabling interrupts... ")
   halInterruptsEnable()
-  halDisplayString("Done.\n\n")
+  printf("Done.\n\n")
 }
 
 runInitializer: func (name: String, fun: Func) {
-  halDisplayString("Initializing ")
-  halDisplayString(name)
-  halDisplayString("... ")
+  printf("Initializing %s... ", name)
   fun()
-  halDisplayString("Done.\n")
+  printf("Done.\n")
 }
 
