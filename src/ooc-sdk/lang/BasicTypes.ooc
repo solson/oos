@@ -88,7 +88,16 @@ Char: cover from char {
 
 UChar: cover from unsigned char extends Char
 
-String: cover from Char*
+String: cover from char* {
+  length: func -> SizeT {
+    i := 0
+    while (this@) {
+      this += 1
+      i += 1
+    }
+    return i
+  }
+}
 
 /**
  * integer types
