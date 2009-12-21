@@ -3,7 +3,7 @@
 *.sho
 *.exe
 *.lib
-*.shl
+*.shlib
 
 #ignore editor temporary and backup files
 .*.swp
