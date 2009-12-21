@@ -1,7 +1,7 @@
 # vim: syntax=python
 
-Import('env', 'arch', 'buildtype', 'distreq')
-Import('sources', 'shiny')
+Import('env')
+Import('sources', 'kernel')
 
 sources = [
   'GDT.asm',
@@ -11,9 +11,7 @@ sources = [
   'Exceptions.asm'
 ]
 
-hallib = env.StaticLibrary('hal', sources)
+hal = env.StaticLibrary('hal', sources)
 
-shiny.Append(LIBS=[hallib])
-
-distreq += [hallib]
+kernel.Append(LIBS=[hal])
 

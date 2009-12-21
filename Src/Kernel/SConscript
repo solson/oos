@@ -1,19 +1,17 @@
 # vim: syntax=python
 
-Import('env', 'arch', 'buildtype', 'distreq')
+Import('env')
 
 sources = []
 
-shiny = env.Clone()
+kernel = env.Clone()
+kernel.Append(OOCFLAGS=['-sourcepath=Src/Kernel'])
 
-Export('sources', 'shiny')
+Export('sources', 'kernel')
 SConscript('Hal/SConscript')
 SConscript('Boot/SConscript')
 
-ooc = env.Clone()
-ooc.Append(OOCFLAGS=['-sourcepath=Src/Kernel'])
-
-ooclib = ooc.Ooc('ooc.lib', 'Main.ooc')
+ooclib = kernel.Ooc('ooc.lib', 'Main.ooc')
 
 Clean(ooclib, '#ooc_tmp')
 
@@ -22,7 +20,7 @@ sources += [
   ooclib
 ]
 
-shinyexe = shiny.Program('Oos', sources)
+oos = kernel.Program('oos', sources)
 
-distreq += [shinyexe]
+Return('oos')
 

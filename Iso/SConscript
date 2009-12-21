@@ -1,8 +1,6 @@
 # vim: syntax=python
 
-Import('env', 'arch', 'buildtype', 'distreq')
-
-distreq += ["menu.lst"]
+Import('env', 'oos')
 
 import os
 
@@ -17,16 +15,16 @@ def get_stage2_eltorito(target, source, env):
   else:
     print "stage2_eltorito found"
 
-require_stage2_eltorito = Action(get_stage2_eltorito, cmdstr = 'Checking for iso/stage2_eltorito...')
+stage2_eltorito = Action(get_stage2_eltorito, cmdstr = 'Checking for iso/stage2_eltorito...')
 
-iso = env.Command("oos.iso", distreq,
+iso = env.Command("oos.iso", [oos, 'menu.lst'],
   [
-    require_stage2_eltorito,
+    stage2_eltorito,
     Delete('Iso/fs/boot/grub'),
     Mkdir('Iso/fs/boot/grub'),
     Copy('Iso/fs/boot/grub', 'Iso/stage2_eltorito'),
     Copy('Iso/fs/boot/grub', 'Iso/menu.lst'),
-    Copy('Iso/fs/boot', 'Src/Kernel/Oos.exe'),
+    Copy('Iso/fs/boot', 'Src/Kernel/oos.exe'),
     'genisoimage -R -b boot/grub/stage2_eltorito -no-emul-boot -boot-load-size 4 -boot-info-table -input-charset utf-8 -o $TARGET Iso/fs'
   ])
 

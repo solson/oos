@@ -1,9 +1,9 @@
 # vim: syntax=python
 
-Import('env', 'arch', 'buildtype', 'distreq')
-Import('sources', 'shiny')
+Import('env')
+Import('sources', 'kernel')
 
-shiny.Append(LINKFLAGS=['-T', 'Src/Kernel/Boot/Linker.ld'])
+kernel.Append(LINKFLAGS=['-T', 'Src/Kernel/Boot/Linker.ld'])
 
 sources += [
     'Boot/Boot.asm'

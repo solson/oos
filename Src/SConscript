@@ -1,4 +1,5 @@
 # vim: syntax=python
 
-SConscript('Kernel/SConscript')
+oos = SConscript('Kernel/SConscript')
+Return('oos')
 
