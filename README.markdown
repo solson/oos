@@ -12,16 +12,16 @@ oos
 Downloading and Compiling oos
 -----------------------------
 
-It is as simple as:
+You will need to have installed gcc, scons, nasm, genisoimage (cdrkit), and
+[ooc][ooc]. I recommend you get the very latest version of ooc from the
+[git repo][oocgit], because ooc is still in development and oos relies on some
+recent bugfixes.
+
+After you have all that, it is as simple as:
 
     $ git clone git://github.com/tsion/oos.git
     $ cd oos
     $ scons
-
-That is, if you have scons installed. It should be readily available
-from your package manager.
-
-Note: You will also need the 'ooc' compiler in your PATH!
 
 
 Running oos
@@ -68,10 +68,11 @@ Thanks
 * The creators of [dux OS][dux]. I read and stole a lot of code from them. :)
 
 
-[repo]:  http://github.com/tsion/oos
-[ooc]:   http://ooc-lang.org
-[irc]:   irc://freenode.net/##oos
-[ndd]:   http://github.com/nddrylliog
-[osdev]: http://wiki.osdev.org/Main_Page
-[dux]:   http://github.com/RockerMONO/dux
+[repo]:   http://github.com/tsion/oos
+[ooc]:    http://ooc-lang.org
+[oocgit]: http://github.com/nddrylliog/ooc
+[irc]:    irc://freenode.net/##oos
+[ndd]:    http://github.com/nddrylliog
+[osdev]:  http://wiki.osdev.org/Main_Page
+[dux]:    http://github.com/RockerMONO/dux
 
