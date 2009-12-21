@@ -1,17 +1,14 @@
 # vim: syntax=python
 
 Import('env')
-Import('sources', 'kernel')
 
-sources = [
+hal = env.StaticLibrary('hal', [
   'GDT.asm',
   'Ports.c',
   'IDT.c',
   'Interrupts.c',
   'Exceptions.asm'
-]
+])
 
-hal = env.StaticLibrary('hal', sources)
-
-kernel.Append(LIBS=[hal])
+Return('hal')
 

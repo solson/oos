@@ -2,25 +2,21 @@
 
 Import('env')
 
-sources = []
+hal = SConscript('Hal/SConscript')
 
 kernel = env.Clone()
-kernel.Append(OOCFLAGS=['-sourcepath=Src/Kernel'])
-
-Export('sources', 'kernel')
-SConscript('Hal/SConscript')
-SConscript('Boot/SConscript')
+kernel.Append(OOCFLAGS = ['-sourcepath=Src/Kernel'],
+              LINKFLAGS = ['-T', File('Linker.ld')],
+              LIBS = [hal])
 
 ooclib = kernel.Ooc('ooc.lib', 'Main.ooc')
-
 Clean(ooclib, '#ooc_tmp')
 
-sources += [
+oos = kernel.Program('oos', [
+  'Boot.asm',
   'Printf.c',
   ooclib
-]
-
-oos = kernel.Program('oos', sources)
+])
 
 Return('oos')
 

@@ -2,9 +2,11 @@
 
 Import('env', 'oos')
 
-iso = env.Command("oos.iso", [oos, 'FS/boot/grub/menu.lst'],
-  [
-    Copy('Iso/FS/System', 'Src/Kernel/oos.exe'),
-    'genisoimage -R -b boot/grub/stage2_eltorito -no-emul-boot -boot-load-size 4 -boot-info-table -input-charset utf-8 -o $TARGET Iso/FS'
-  ])
+# copy the oos executable to the ISO filesystem
+Install('FS/System', oos)
+
+# build the ISO
+env.Command('oos.iso', oos,
+  'genisoimage -R -b boot/grub/stage2_eltorito -no-emul-boot -boot-load-size 4 -boot-info-table -input-charset utf-8 -o $TARGET Iso/FS'
+)
 
