@@ -2,5 +2,5 @@ default 0
 color light-blue/black light-cyan/blue
 
 title oos
-kernel /boot/oos.exe
+kernel /System/oos.exe
 
