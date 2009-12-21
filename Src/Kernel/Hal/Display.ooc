@@ -1,4 +1,4 @@
-import ports
+import Ports
 
 COLOR_BLACK:    const Int = 0x0
 COLOR_BLUE:     const Int = 0x1

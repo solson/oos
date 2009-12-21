@@ -1,5 +1,5 @@
 #!/bin/sh
 
-cd iso
+cd Iso
 bochs -q
 

@@ -1,4 +1,4 @@
-import idt, ports, isr
+import IDT, Ports, ISR
 
 irqRoutines: Pointer[16] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 

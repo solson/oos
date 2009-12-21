@@ -1,0 +1,28 @@
+# vim: syntax=python
+
+Import('env', 'arch', 'buildtype', 'distreq')
+
+sources = []
+
+shiny = env.Clone()
+
+Export('sources', 'shiny')
+SConscript('Hal/SConscript')
+SConscript('Boot/SConscript')
+
+ooc = env.Clone()
+ooc.Append(OOCFLAGS=['-sourcepath=Src/Kernel'])
+
+ooclib = ooc.Ooc('ooc.lib', 'Main.ooc')
+
+Clean(ooclib, '#ooc_tmp')
+
+sources += [
+  'Printf.c',
+  ooclib
+]
+
+shinyexe = shiny.Program('Oos', sources)
+
+distreq += [shinyexe]
+

@@ -2,8 +2,7 @@
 
 import os
 
-arch = ARGUMENTS.get('arch', 'i386')
-buildtype = ARGUMENTS.get('buildtype', 'debug')
+debug = ARGUMENTS.get('debug', 'true')
 
 distreq = []
 
@@ -19,7 +18,7 @@ env = Environment(
 	SHLIBPREFIX='',
 	SHLIBSUFFIX='.shl',
 	CC='gcc',
-    CCFLAGS=['-m32', '-nostdinc', '-ffreestanding', '-I', 'include', '-D', '%s' % arch.upper()],
+    CCFLAGS=['-m32', '-nostdinc', '-ffreestanding', '-I', 'include'],
 	AS='nasm',
 	ASFLAGS=['-felf32'],
 	LINK='ld',
@@ -29,17 +28,19 @@ env = Environment(
     ENV = os.environ, # pass outside env to build so ooc is in PATH and OOC_DIST exists
 )
 
-env.Append(ENV={'OOC_SDK' : 'src/ooc-sdk'})
+env.Append(ENV={'OOC_SDK' : 'Src/OocLib'})
 
 ooc = Builder(action = '$OOC $OOCFLAGS $SOURCE -outlib=$TARGET')
-env.Append(BUILDERS = {'ooc' : ooc})
+env.Append(BUILDERS = {'Ooc' : ooc})
 
-if buildtype == 'debug':
+if debug == 'true':
 	env.Append(CCFLAGS=['-g', '-DDEBUG'], LINKFLAGS=['-g'], OOCFLAGS=['-g'])
 
+buildtype = debug
+arch = ''
 Export('env', 'arch', 'buildtype', 'distreq')
 
-SConscript('src/SConscript')
+SConscript('Src/SConscript')
 
-SConscript('iso/SConscript')
+SConscript('Iso/SConscript')
 

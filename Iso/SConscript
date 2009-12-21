@@ -7,10 +7,10 @@ distreq += ["menu.lst"]
 import os
 
 def get_stage2_eltorito(target, source, env):
-  if not os.path.exists('iso/stage2_eltorito'):
+  if not os.path.exists('Iso/stage2_eltorito'):
     print "stage2_eltorito is missing, trying to copy it from /boot/grub/stage2_eltorito"
     if os.path.exists('/boot/grub/stage2_eltorito'):
-      Execute(Copy('iso/stage2_eltorito', '/boot/grub/stage2_eltorito'))
+      Execute(Copy('Iso/stage2_eltorito', '/boot/grub/stage2_eltorito'))
     else:
       print 'stage2_eltorito could not be found. Please find it and copy it to iso/stage2_eltorito'
       exit(1)
@@ -22,14 +22,14 @@ require_stage2_eltorito = Action(get_stage2_eltorito, cmdstr = 'Checking for iso
 iso = env.Command("oos.iso", distreq,
   [
     require_stage2_eltorito,
-    Delete('iso/fs/boot/grub'),
-    Mkdir('iso/fs/boot/grub'),
-    Copy('iso/fs/boot/grub', 'iso/stage2_eltorito'),
-    Copy('iso/fs/boot/grub', 'iso/menu.lst'),
-    Copy('iso/fs/boot', 'src/shiny/shiny.exe'),
-    'genisoimage -R -b boot/grub/stage2_eltorito -no-emul-boot -boot-load-size 4 -boot-info-table -input-charset utf-8 -o $TARGET iso/fs'
+    Delete('Iso/fs/boot/grub'),
+    Mkdir('Iso/fs/boot/grub'),
+    Copy('Iso/fs/boot/grub', 'Iso/stage2_eltorito'),
+    Copy('Iso/fs/boot/grub', 'Iso/menu.lst'),
+    Copy('Iso/fs/boot', 'Src/Kernel/Oos.exe'),
+    'genisoimage -R -b boot/grub/stage2_eltorito -no-emul-boot -boot-load-size 4 -boot-info-table -input-charset utf-8 -o $TARGET Iso/fs'
   ])
 
 Clean(iso, 'fs')
-NoClean('iso/stage2_eltorito')
+NoClean('Iso/stage2_eltorito')
 

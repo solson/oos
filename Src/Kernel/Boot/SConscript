@@ -3,9 +3,9 @@
 Import('env', 'arch', 'buildtype', 'distreq')
 Import('sources', 'shiny')
 
-shiny.Append(LINKFLAGS=['-T', 'src/shiny/boot/i386/link.ld'])
+shiny.Append(LINKFLAGS=['-T', 'Src/Kernel/Boot/Linker.ld'])
 
 sources += [
-    'boot/i386/start.asm'
+    'Boot/Boot.asm'
 ]
 

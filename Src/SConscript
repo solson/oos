@@ -1,0 +1,4 @@
+# vim: syntax=python
+
+SConscript('Kernel/SConscript')
+

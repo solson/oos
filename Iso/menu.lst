@@ -1,6 +1,6 @@
 default 0
 color light-blue/black light-cyan/blue
 
-title oos/shiny
-kernel /boot/shiny.exe
+title oos
+kernel /boot/Oos.exe
 

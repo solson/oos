@@ -1,5 +1,6 @@
 include multiboot // TODO: move this to ooc!
-import hal, printf
+import Hal/Hal
+import Printf
 
 // very unfinished cover of multiboot_info_t
 MultiBootInfoT: cover from multiboot_info_t {

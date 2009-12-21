@@ -1,4 +1,4 @@
-import idt, syscall
+import IDT, SysCall
 
 // from exceptions.asm
 halIsr0: extern proto func

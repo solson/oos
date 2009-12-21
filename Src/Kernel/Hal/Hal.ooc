@@ -1,4 +1,4 @@
-import idt, isr, irq, interrupts, syscall, display, printf
+import IDT, ISR, IRQ, Interrupts, SysCall, Display, Printf
 
 // defined in gdt.asm
 halInitGDT: extern proto func

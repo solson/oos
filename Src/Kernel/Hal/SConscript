@@ -4,11 +4,11 @@ Import('env', 'arch', 'buildtype', 'distreq')
 Import('sources', 'shiny')
 
 sources = [
-  'gdt.asm',
-  'ports.c',
-  'idt.c',
-  'interrupts.c',
-  'exceptions.asm'
+  'GDT.asm',
+  'Ports.c',
+  'IDT.c',
+  'Interrupts.c',
+  'Exceptions.asm'
 ]
 
 hallib = env.StaticLibrary('hal', sources)

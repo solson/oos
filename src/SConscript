@@ -1,4 +1,0 @@
-# vim: syntax=python
-
-SConscript('shiny/SConscript')
-
