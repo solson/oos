@@ -2,8 +2,6 @@
 
 Import('env', 'oos')
 
-import os
-
 iso = env.Command("oos.iso", [oos, 'FS/boot/grub/menu.lst'],
   [
     Copy('Iso/FS/System', 'Src/Kernel/oos.exe'),
