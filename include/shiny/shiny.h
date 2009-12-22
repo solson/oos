@@ -6,6 +6,4 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#include <shiny/hal/hal.h>
-
 #endif
