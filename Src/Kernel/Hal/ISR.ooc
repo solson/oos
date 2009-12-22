@@ -41,11 +41,11 @@ Registers: cover {
   eip, cs, eflags, useresp, ss: UInt // pushed by the processor automatically
 }
 
-TASK  : const UInt8 = 0x5
-INTR16: const UInt8 = 0x6
-INTR32: const UInt8 = 0xe
-TRAP16: const UInt8 = 0x7
-TRAP32: const UInt8 = 0xf
+TASK   := 0x5
+INTR16 := 0x6
+INTR32 := 0xe
+TRAP16 := 0x7
+TRAP32 := 0xf
 
 halIsrHandler: func (regs: Registers*) {
   if (regs@ interruptNumber == 0x80) {

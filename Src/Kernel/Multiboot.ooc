@@ -1,5 +1,5 @@
 // The magic number passed by a Multiboot-compliant boot loader
-MULTIBOOT_BOOTLOADER_MAGIC: const Int = 0x2BADB002
+MULTIBOOT_BOOTLOADER_MAGIC := 0x2BADB002
 
 // The Multiboot header
 MultibootHeader: cover {

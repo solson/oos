@@ -1,29 +1,30 @@
 import Ports
 
-COLOR_BLACK:    const Int = 0x0
-COLOR_BLUE:     const Int = 0x1
-COLOR_GREEN:    const Int = 0x2
-COLOR_CYAN:     const Int = 0x3
-COLOR_RED:      const Int = 0x4
-COLOR_MAGENTA:  const Int = 0x5
-COLOR_BROWN:    const Int = 0x6
-COLOR_LGREY:    const Int = 0x7
-COLOR_DGREY:    const Int = 0x8
-COLOR_LBLUE:    const Int = 0x9
-COLOR_LGREEN:   const Int = 0xa
-COLOR_LCYAN:    const Int = 0xb
-COLOR_LRED:     const Int = 0xc
-COLOR_LMAGENTA: const Int = 0xd
-COLOR_YELLOW:   const Int = 0xe
-COLOR_WHITE:    const Int = 0xf
+COLOR_BLACK    := 0x0
+COLOR_BLUE     := 0x1
+COLOR_GREEN    := 0x2
+COLOR_CYAN     := 0x3
+COLOR_RED      := 0x4
+COLOR_MAGENTA  := 0x5
+COLOR_BROWN    := 0x6
+COLOR_LGREY    := 0x7
+COLOR_DGREY    := 0x8
+COLOR_LBLUE    := 0x9
+COLOR_LGREEN   := 0xa
+COLOR_LCYAN    := 0xb
+COLOR_LRED     := 0xc
+COLOR_LMAGENTA := 0xd
+COLOR_YELLOW   := 0xe
+COLOR_WHITE    := 0xf
 
-VIDEO_MEMORY: const UInt16* = 0xb8000 as UInt16*
+VIDEO_MEMORY := 0xb8000 as UInt16*
 
-attr: const UInt8
-cursor_x: const Int
-cursor_y: const Int
+attr: UInt8
+cursor_x: Int
+cursor_y: Int
 
 halInitDisplay: func {
+  // default to light grey on black like the BIOS
   halDisplaySetAttr(COLOR_LGREY, COLOR_BLACK)
   halDisplayClearScreen()
 }
