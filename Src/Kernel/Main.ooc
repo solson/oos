@@ -5,7 +5,11 @@ import Printf
 kmain: func (mb: MultibootInfo*, magic: UInt32) {
   halInit()
 
-  printf("This kernel is written in ooc!\n\n")
+  printf("This kernel is written in ")
+  halDisplaySetAttr(COLOR_LGREEN, COLOR_BLACK)
+  printf("ooc")
+  halDisplaySetAttr(COLOR_LGREY, COLOR_BLACK)
+  printf("!\n\n")
 
   printf("Boot Loader: ")
   halDisplaySetAttr(COLOR_LBLUE, COLOR_BLACK)
