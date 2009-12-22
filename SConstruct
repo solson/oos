@@ -17,13 +17,13 @@ env = Environment(
 	SHLIBPREFIX='',
 	SHLIBSUFFIX='.shlib',
 	CC='gcc',
-    CCFLAGS=['-m32', '-nostdinc', '-ffreestanding', '-I', 'Include'],
+    CCFLAGS=['-m32', '-nostdinc', '-ffreestanding', '-IInclude', '-fno-stack-protector'],
 	AS='nasm',
 	ASFLAGS=['-felf'],
 	LINK='ld',
 	LINKFLAGS=['-melf_i386', '-nostdlib'],
     OOC='ooc',
-    OOCFLAGS=['-c', '-gcc', '-driver=sequence', '-nomain', '-gc=off', '+-m32', '+-nostdinc', '+-ffreestanding', '-IInclude', '-sourcepath=.'],
+    OOCFLAGS=['-c', '-gcc', '-driver=sequence', '-nomain', '-gc=off', '+-m32', '+-nostdinc', '+-ffreestanding', '+-fno-stack-protector', '-IInclude', '-sourcepath=.'],
     ENV = os.environ, # pass outside env to build so ooc is in PATH and OOC_DIST exists
 )
 
