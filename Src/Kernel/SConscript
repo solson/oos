@@ -18,5 +18,7 @@ oos = kernel.Program('oos', [
   ooclib
 ])
 
+Depends(oos, Glob('*.ooc'))
+
 Return('oos')
 
