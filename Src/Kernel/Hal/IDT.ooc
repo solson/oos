@@ -1,4 +1,4 @@
-include shiny/idt
+include idt
 
 // These covers wouldn't have to be from C if we could do GCC's
 // __attribute__((packed)) from ooc somehow

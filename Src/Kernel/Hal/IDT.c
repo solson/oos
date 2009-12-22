@@ -1,4 +1,4 @@
-#include <shiny/idt.h>
+#include <idt.h>
 
 void halLoadIDT(IDTD idtd)
 {

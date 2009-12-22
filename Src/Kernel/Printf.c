@@ -1,4 +1,5 @@
-#include <shiny/shiny.h>
+#include <stdarg.h>
+#include <stddef.h>
 
 #define IN
 #define OUT
