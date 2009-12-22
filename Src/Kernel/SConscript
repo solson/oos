@@ -5,7 +5,7 @@ Import('env')
 hal = SConscript('Hal/SConscript')
 
 kernel = env.Clone()
-kernel.Append(OOCFLAGS = ['-sourcepath=Src/Kernel'],
+kernel.Append(OOCFLAGS = ['-sourcepath=Src/Kernel', '-entrypoint=kmain'],
               LINKFLAGS = ['-T', File('Linker.ld')],
               LIBS = [hal])
 
