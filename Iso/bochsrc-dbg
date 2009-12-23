@@ -1,0 +1,5 @@
+boot: cdrom
+ata0-master: type=cdrom, path=oos.iso, status=inserted
+
+gdbstub: enabled=1, port=1234, text_base=0, data_base=0, bss_base=0
+
