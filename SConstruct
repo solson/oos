@@ -40,7 +40,7 @@ env.Append(BUILDERS = {'Ooc' : ooc_builder})
 # default to debug mode. `scons debug=0` to build without debugging symbols
 debug = ARGUMENTS.get('debug', 1)
 if int(debug):
-    env.Append(CCFLAGS=['-g', '-DDEBUG'], LINKFLAGS=['-g'], OOCFLAGS=['-g'])
+    env.Append(CCFLAGS=['-g', '-DDEBUG'], ASFLAGS=['-g'], LINKFLAGS=['-g'], OOCFLAGS=['-g'])
 
 
 # run the child SConscripts
