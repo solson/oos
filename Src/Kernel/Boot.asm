@@ -1,4 +1,4 @@
-global _start           ; making entry point visible to linker
+global bootEntry        ; making entry point visible to linker
 extern kmain            ; kmain is defined elsewhere
 
 ;;; setting up the Multiboot header - see GRUB docs for details
@@ -16,7 +16,7 @@ MultiBootHeader:
    dd CHECKSUM
 
 ;;; control starts here
-_start:
+bootEntry:
         mov esp, stacktop       ; set up the stack
 
         push eax                ; pass Multiboot magic number
