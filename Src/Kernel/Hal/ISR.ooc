@@ -47,7 +47,7 @@ INTR32 := 0xe
 TRAP16 := 0x7
 TRAP32 := 0xf
 
-halIsrHandler: func (regs: Registers*) {
+halIsrHandler: unmangled func (regs: Registers*) {
   if (regs@ interruptNumber == 0x80) {
     halSyscallHandler(regs)
   }

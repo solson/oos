@@ -81,7 +81,7 @@ halIrqInstall: func {
 *  to acknowledge the interrupt at BOTH controllers, otherwise, you
 *  only send an EOI command to the first controller. If you don't send
 *  an EOI, you won't raise any more IRQs */
-halIrqHandler: func (regs: Registers*) {
+halIrqHandler: unmangled func (regs: Registers*) {
   /* This is a blank function pointer */
   handler: Func (Registers*)
 
