@@ -52,7 +52,7 @@ halDisplayUpdateCursor: func {
   halOutPort(0x3d5, i)
 }
 
-halDisplayChar: func (chr: Char) {
+halDisplayChar: unmangled func (chr: Char) {
   // Handle a backspace, by moving the cursor back one space
   if (chr == '\b') {
     if (cursor_x != 0) cursor_x -= 1
