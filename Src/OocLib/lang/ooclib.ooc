@@ -1,5 +1,3 @@
-import BasicTypes
-
 // variable arguments
 //version(gcc) {
 VaList: cover from __builtin_va_list
