@@ -7,7 +7,8 @@ hal = env.StaticLibrary('hal', [
   'Ports.c',
   'IDT.c',
   'Interrupts.c',
-  'Exceptions.asm'
+  'Exceptions.asm',
+  'Halt.c'
 ])
 
 Return('hal')

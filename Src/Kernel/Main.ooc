@@ -1,5 +1,5 @@
 import Multiboot
-import Hal/[Hal, Display]
+import Hal/[Hal, Display, Panic]
 import Printf
 
 // from the Linker.ld linker script
@@ -27,6 +27,8 @@ kmain: func (mb: MultibootInfo@, magic: UInt32) {
 
   printf("Kernel Start: 0x%x\n", kernelStart&)
   printf("Kernel End:   0x%x\n", kernelEnd&)
+
+  panic("Splat: %i %s", 4, "(testing formatting abilities)");
 
   while(1){}
 }
