@@ -11,20 +11,20 @@ kmain: func (mb: MultibootInfo@, magic: UInt32) {
   initHal()
 
   printf("This kernel is written in ")
-  Display setAttr(Display LIGHT_GREEN, Display BLACK)
+  Display setForeground(Display LIGHT_GREEN)
   printf("ooc")
-  Display setAttr(Display LIGHT_GREY, Display BLACK)
+  Display setForeground(Display LIGHT_GREY)
   printf("!\n\n")
 
   printf("Boot Loader: ")
-  Display setAttr(Display LIGHT_BLUE, Display BLACK)
+  Display setForeground(Display LIGHT_BLUE)
   printf("%s\n", mb bootLoaderName)
-  Display setAttr(Display LIGHT_GREY, Display BLACK)
+  Display setForeground(Display LIGHT_GREY)
 
   printf("Command Line: ")
-  Display setAttr(Display LIGHT_BLUE, Display BLACK)
+  Display setForeground(Display LIGHT_BLUE)
   printf("%s\n\n", mb cmdline)
-  Display setAttr(Display LIGHT_GREY, Display BLACK)
+  Display setForeground(Display LIGHT_GREY)
 
   printf("Kernel Start: 0x%x\n", kernelStart&)
   printf("Kernel End:   0x%x\n", kernelEnd&)
