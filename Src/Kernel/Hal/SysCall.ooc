@@ -1,10 +1,11 @@
 import IDT into IDT
+import Registers
 
 // in Exceptions.asm
 isrSyscall: extern proto func
 
-init: func {
-  IDT setGate(0x80, isrSyscall, 0x08, 0, 0, INTR32)
+initSysCall: func {
+  IDT setGate(0x80, isrSyscall, 0x08, 0, 0, IDT INTR32)
 }
 
 syscallHandler: func (regs: Registers@) {

@@ -15,12 +15,18 @@ IDTGate: cover from IDTG {
   offset_2: extern UInt16 // offset bits 16..31
 } // __attribute__((packed))
 
+TASK   := 0x5
+INTR16 := 0x6
+INTR32 := 0xe
+TRAP16 := 0x7
+TRAP32 := 0xf
+
 idt: IDTGate[256]
 
 // defined in idt.c because it uses GCC inline ASM :(
 loadIDT: extern(halLoadIDT) func (IDTDescriptor)
 
-init: func {
+initIDT: func {
   idtd: IDTDescriptor
   idtd offset = idt as UInt32
   idtd size = sizeof(IDTGate) * 256 - 1

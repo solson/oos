@@ -1,2 +1,2 @@
 // defined in GDT.asm
-init: extern(initGDT) proto func
+initGDT: extern proto func

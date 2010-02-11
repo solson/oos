@@ -1,23 +1,16 @@
-import GDT into GDT
-import IDT into IDT
-import ISR into ISR
-import IRQ into IRQ
-import Interrupts into Interrupts
-import SysCall into SysCall
-import Display into Display
-import Printf
+import GDT, IDT, ISR, IRQ, Interrupts, SysCall, Display, Printf
 
-init: func {
-  GDT init()
-  Display init()
+initHal: func {
+  initGDT()
+  initDisplay()
 
-  runInitializer("IDT", IDT init)
-  runInitializer("ISRs", ISR init)
-  runInitializer("IRQs", IRQ init)
-  runInitializer("syscalls", SysCall init)
+  runInitializer("IDT", initIDT)
+  runInitializer("ISRs", initISR)
+  runInitializer("IRQs", initIRQ)
+  runInitializer("syscalls", initSysCall)
 
   printf("Enabling interrupts... ")
-  Interrupts enable()
+  enableInterrupts()
   printf("Done.\n\n")
 }
 

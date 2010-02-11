@@ -8,7 +8,7 @@ isrSyscall:
 	cli
 	push 0
 	push 0x80
-	jmp halIsrCommon
+	jmp isrCommon
 	iret
 
 %macro HANDLER_COMMON 1
@@ -25,7 +25,7 @@ isrSyscall:
 	mov gs, ax
 	mov eax, esp
 	push eax
-	mov eax, hal%1Handler
+	mov eax, %1Handler
 	call eax
 	pop eax
 	pop gs

@@ -93,7 +93,7 @@ int m_printn(OUT char *str, IN int maxlen, IN int len, IN unsigned int n,
 	if (sign)
 		str[len++] = sign;
 
-	/* Write any zeros to satisfy the precision. */ 
+	/* Write any zeros to satisfy the precision. */
 	while (i < precision--)
 		if (len < maxlen)
 			str[len++] = '0';
@@ -148,7 +148,7 @@ int printf(IN const char *fmt, ...)
 	va_end(args);
 
 	while (str[i])
-		halDisplayChar(str[i++]);
+		printChar(str[i++]);
 
 #if 0
 	free(str);
@@ -161,11 +161,11 @@ int sprintf(OUT char *str, IN const char *fmt, ...)
 {
 	va_list args;
 	int i;
-	
+
 	va_start(args, fmt);
 	i = vsnprintf(str, 0, fmt, args);
 	va_end(args);
-	
+
 	va_start(args, fmt);
 	i = vsnprintf(str, i+1, fmt, args);
 	va_end(args);
@@ -177,7 +177,7 @@ int snprintf(OUT char *str, IN size_t size, IN const char *fmt, ...)
 {
 	va_list args;
 	int i;
-	
+
 	va_start(args, fmt);
 	i = vsnprintf(str, size, fmt, args);
 	va_end(args);
@@ -193,7 +193,7 @@ int vprintf(IN const char *fmt, va_list ap)
 	char str[1024];
 	va_list args;
 	int len, i = 0;
-	
+
 #if 0
 	len = vsnprintf(NULL, 0, fmt, ap);
 	str = malloc(len+1);
@@ -203,7 +203,7 @@ int vprintf(IN const char *fmt, va_list ap)
 	len = vsnprintf(str, 1024, fmt, ap);
 
 	while (str[i])
-		halDisplayChar(str[i++]);
+		printChar(str[i++]);
 
 #if 0
 	free(str);
@@ -215,7 +215,7 @@ int vprintf(IN const char *fmt, va_list ap)
 int vsprintf(OUT char *str, IN const char *fmt, va_list ap)
 {
 	int i;
-	
+
 	i = vsnprintf(str, 0, fmt, ap);
 	i = vsnprintf(str, i+1, fmt, ap);
 	return i;

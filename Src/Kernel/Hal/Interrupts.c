@@ -1,10 +1,9 @@
-void halInterruptsEnable(void)
+void enableInterrupts(void)
 {
     __asm__ __volatile__ ("sti");
 }
 
-void halInterruptsDisable(void)
+void disableInterrupts(void)
 {
     __asm__ __volatile__ ("cli");
 }
-

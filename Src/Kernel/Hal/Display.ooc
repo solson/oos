@@ -1,21 +1,21 @@
 import Ports into Ports
 
-COLOR_BLACK    := 0x0
-COLOR_BLUE     := 0x1
-COLOR_GREEN    := 0x2
-COLOR_CYAN     := 0x3
-COLOR_RED      := 0x4
-COLOR_MAGENTA  := 0x5
-COLOR_BROWN    := 0x6
-COLOR_LGREY    := 0x7
-COLOR_DGREY    := 0x8
-COLOR_LBLUE    := 0x9
-COLOR_LGREEN   := 0xa
-COLOR_LCYAN    := 0xb
-COLOR_LRED     := 0xc
-COLOR_LMAGENTA := 0xd
-COLOR_YELLOW   := 0xe
-COLOR_WHITE    := 0xf
+BLACK         := 0x0
+BLUE          := 0x1
+GREEN         := 0x2
+CYAN          := 0x3
+RED           := 0x4
+MAGENTA       := 0x5
+BROWN         := 0x6
+LIGHT_GREY    := 0x7
+DARK_GREY     := 0x8
+LIGHT_BLUE    := 0x9
+LIGHT_GREEN   := 0xa
+LIGHT_CYAN    := 0xb
+LIGHT_RED     := 0xc
+LIGHT_MAGENTA := 0xd
+YELLOW        := 0xe
+WHITE         := 0xf
 
 VIDEO_MEMORY := 0xb8000 as UInt16*
 
@@ -23,9 +23,9 @@ attr: UInt8
 cursor_x: Int
 cursor_y: Int
 
-init: func {
+initDisplay: func {
   // default to light grey on black like the BIOS
-  setAttr(COLOR_LGREY, COLOR_BLACK)
+  setAttr(LIGHT_GREY, BLACK)
   clearScreen()
 }
 
