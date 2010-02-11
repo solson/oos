@@ -1,5 +1,3 @@
-#include <stdarg.h>
-
 #define IN
 #define OUT
 
@@ -13,8 +11,16 @@
 #define TF_PLUS 64
 #define TF_UNSIGNED 128
 
+/* Misc */
 typedef unsigned int size_t;
 #define NULL ((void*) 0)
+
+/* Variable Arguments */
+#define va_start(v,l) __builtin_va_start(v,l)
+#define va_arg(v,l) __builtin_va_arg(v,l)
+#define va_end(v) __builtin_va_end(v)
+#define va_copy(d,s) __builtin_va_copy(d,s)
+typedef __builtin_va_list va_list;
 
 int m_printn(OUT char *str, IN int maxlen, IN int len, IN unsigned int n,
 		IN int base, IN int size, IN int flags, IN int precision);
