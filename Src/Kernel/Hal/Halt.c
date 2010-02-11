@@ -1,0 +1,4 @@
+void halt()
+{
+  asm("hlt");
+}
