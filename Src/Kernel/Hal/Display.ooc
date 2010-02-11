@@ -1,4 +1,4 @@
-import Ports
+import Ports into Ports
 
 COLOR_BLACK    := 0x0
 COLOR_BLUE     := 0x1
@@ -23,17 +23,17 @@ attr: UInt8
 cursor_x: Int
 cursor_y: Int
 
-halInitDisplay: func {
+init: func {
   // default to light grey on black like the BIOS
-  halDisplaySetAttr(COLOR_LGREY, COLOR_BLACK)
-  halDisplayClearScreen()
+  setAttr(COLOR_LGREY, COLOR_BLACK)
+  clearScreen()
 }
 
-halDisplaySetAttr: func (foreground, background: Int) {
+setAttr: func (foreground, background: Int) {
   attr = (foreground & 0xf) | background << 4
 }
 
-halDisplayClearScreen: func {
+clearScreen: func {
   for (row in 0..25) {
     for (col in 0..80) {
       VIDEO_MEMORY[row * 80 + col] = ' ' | attr << 8
@@ -41,18 +41,18 @@ halDisplayClearScreen: func {
   }
   cursor_x = 0
   cursor_y = 0
-  halDisplayUpdateCursor()
+  updateCursor()
 }
 
-halDisplayUpdateCursor: func {
+updateCursor: func {
   i := cursor_y * 80 + cursor_x
-  halOutPort(0x3d4, 14)
-  halOutPort(0x3d5, i >> 8)
-  halOutPort(0x3d4, 15)
-  halOutPort(0x3d5, i)
+  Ports outByte(0x3d4, 14)
+  Ports outByte(0x3d5, i >> 8)
+  Ports outByte(0x3d4, 15)
+  Ports outByte(0x3d5, i)
 }
 
-halDisplayChar: unmangled func (chr: Char) {
+printChar: unmangled func (chr: Char) {
   // Handle a backspace, by moving the cursor back one space
   if (chr == '\b') {
     if (cursor_x != 0) cursor_x -= 1
@@ -95,12 +95,11 @@ halDisplayChar: unmangled func (chr: Char) {
     cursor_y += 1
   }
 
-  halDisplayUpdateCursor()
+  updateCursor()
 }
 
-halDisplayString: func (str: String) {
+printString: func (str: String) {
   for (i in 0..str length()) {
-    halDisplayChar(str[i])
+    printChar(str[i])
   }
 }
-

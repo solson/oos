@@ -1,25 +1,28 @@
-import IDT, ISR, IRQ, Interrupts, SysCall, Display, Printf
+import GDT into GDT
+import IDT into IDT
+import ISR into ISR
+import IRQ into IRQ
+import Interrupts into Interrupts
+import SysCall into SysCall
+import Display into Display
+import Printf
 
-// defined in gdt.asm
-halInitGDT: extern proto func
+init: func {
+  GDT init()
+  Display init()
 
-halInit: func {
-  halInitGDT()
-  halInitDisplay()
-
-  runInitializer("IDT", halInitIDT)
-  runInitializer("ISRs", halIsrInstall)
-  runInitializer("IRQs", halIrqInstall)
-  runInitializer("syscalls", halSyscallInstall)
+  runInitializer("IDT", IDT init)
+  runInitializer("ISRs", ISR init)
+  runInitializer("IRQs", IRQ init)
+  runInitializer("syscalls", SysCall init)
 
   printf("Enabling interrupts... ")
-  halInterruptsEnable()
+  Interrupts enable()
   printf("Done.\n\n")
 }
 
-runInitializer: func (name: String, fun: Func) {
+runInitializer: func (name: String, f: Func) {
   printf("Initializing %s... ", name)
-  fun()
+  f()
   printf("Done.\n")
 }
-

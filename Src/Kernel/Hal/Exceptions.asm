@@ -1,10 +1,10 @@
 bits 32
 
-extern halIsrHandler
-extern halIrqHandler
+extern isrHandler
+extern irqHandler
 
-global halIsrSyscall
-halIsrSyscall:
+global isrSyscall
+isrSyscall:
 	cli
 	push 0
 	push 0x80
@@ -12,7 +12,7 @@ halIsrSyscall:
 	iret
 
 %macro HANDLER_COMMON 1
-hal%1Common:
+%1Common:
 	pusha
 	push ds
 	push es
@@ -40,12 +40,12 @@ hal%1Common:
 ; ISRs!
 
 %macro ISR_COMMON 1
-global halIsr%1
-halIsr%1:
+global isr%1
+isr%1:
 	cli
 	push byte 0
 	push byte %1
-	jmp halIsrCommon
+	jmp isrCommon
 	iret
 %endmacro
 
@@ -104,17 +104,17 @@ ISR_RESV 29
 ISR_RESV 30
 ISR_RESV 31
 
-HANDLER_COMMON Isr
+HANDLER_COMMON isr
 
 ; IRQs!
 
 %macro IRQ_COMMON 2
-global halIrq%1
-halIrq%1:
+global irq%1
+irq%1:
 	cli
 	push byte 0
 	push byte %2
-	jmp halIrqCommon
+	jmp irqCommon
 	iret
 %endmacro
 
@@ -135,5 +135,4 @@ IRQ_COMMON 13, 45
 IRQ_COMMON 14, 46
 IRQ_COMMON 15, 47
 
-HANDLER_COMMON Irq
-
+HANDLER_COMMON irq

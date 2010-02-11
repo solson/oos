@@ -1,3 +1,2 @@
-halInterruptsEnable: extern proto func
-halInterruptsDisable: extern proto func
-
+enable: extern(halInterruptsEnable) proto func
+disable: extern(halInterruptsDisable) proto func

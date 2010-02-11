@@ -1,13 +1,12 @@
-import IDT, ISR
+import IDT into IDT
 
-// in exceptions.asm
-halIsrSyscall: extern proto func
+// in Exceptions.asm
+isrSyscall: extern proto func
 
-halSyscallInstall: func {
-  halSetIDTGate(0x80, halIsrSyscall, 0x08, 0, 0, INTR32)
+init: func {
+  IDT setGate(0x80, isrSyscall, 0x08, 0, 0, INTR32)
 }
 
-halSyscallHandler: func (regs: Registers*) {
+syscallHandler: func (regs: Registers@) {
   // TODO
 }
-

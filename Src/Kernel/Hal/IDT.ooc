@@ -18,27 +18,27 @@ IDTGate: cover from IDTG {
 idt: IDTGate[256]
 
 // defined in idt.c because it uses GCC inline ASM :(
-halLoadIDT: extern func (IDTDescriptor)
+loadIDT: extern(halLoadIDT) func (IDTDescriptor)
 
-halInitIDT: func {
+init: func {
   idtd: IDTDescriptor
   idtd offset = idt as UInt32
   idtd size = sizeof(IDTGate) * 256 - 1
 
   zeroMemory(idt, idtd size)
 
-  halLoadIDT(idtd)
+  loadIDT(idtd)
 }
 
-halSetIDTGate: func (n: SizeT, offset: Pointer, selector: UInt16, priv, sys, gatetype: UInt8) {
+setGate: func (n: SizeT, offset: Pointer, selector: UInt16, priv, sys, gatetype: UInt8) {
   idt[n] offset_1 = offset as UInt32 & 0xffff       // offset bits 0..15
   idt[n] offset_2 = offset as UInt32 >> 16 & 0xffff // offset bits 16..31
   idt[n] selector = selector
   idt[n] zero = 0 // unused
   idt[n] type_attr = (1 << 7) | // first bit must be set for all valid descriptors
-                ((priv & 0b11) << 5) | // two bits for the ring level
-                ((sys & 0b1) << 4) |   // one bit for system segment
-                (gatetype & 0b1111)    // four bits for gate type
+         ((priv & 0b11) << 5) | // two bits for the ring level
+         ((sys & 0b1) << 4)   | // one bit for system segment
+         (gatetype & 0b1111)    // four bits for gate type
 }
 
 zeroMemory: func (ptr: Pointer, size: UInt32) -> Pointer {
@@ -50,4 +50,3 @@ zeroMemory: func (ptr: Pointer, size: UInt32) -> Pointer {
 
   return mem
 }
-

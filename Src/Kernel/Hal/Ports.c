@@ -1,11 +1,11 @@
 #include <stdint.h>
 
-void halOutPort(uint16_t port, uint8_t val)
+void halOutPortByte(uint16_t port, uint8_t val)
 {
 	__asm volatile("outb %0, %1" : : "a"(val), "d" (port));
 }
 
-uint8_t halInPort(uint16_t port)
+uint8_t halInPortByte(uint16_t port)
 {
 	uint8_t val;
 	__asm volatile("inb %1, %0" : "=a" (val) : "d" (port));
@@ -35,4 +35,3 @@ uint32_t halInPortLong(uint16_t port)
 	__asm volatile("inl %1, %0" : "=a" (val) : "d" (port));
 	return val;
 }
-

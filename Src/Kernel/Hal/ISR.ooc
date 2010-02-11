@@ -1,4 +1,5 @@
-import IDT, SysCall
+import IDT into IDT
+import SysCall into SysCall
 
 // from exceptions.asm
 halIsr0: extern proto func
@@ -47,44 +48,43 @@ INTR32 := 0xe
 TRAP16 := 0x7
 TRAP32 := 0xf
 
-halIsrHandler: unmangled func (regs: Registers*) {
-  if (regs@ interruptNumber == 0x80) {
-    halSyscallHandler(regs)
+isrHandler: unmangled func (regs: Registers@) {
+  if (regs interruptNumber == 0x80) {
+    SysCall syscallHandler(regs&)
   }
 }
 
-halIsrInstall: func {
-  halSetIDTGate(0, halIsr0, 0x8, 0, 0, INTR32)
-  halSetIDTGate(1, halIsr1, 0x8, 0, 0, INTR32)
-  halSetIDTGate(2, halIsr2, 0x8, 0, 0, INTR32)
-  halSetIDTGate(3, halIsr3, 0x8, 0, 0, INTR32)
-  halSetIDTGate(4, halIsr4, 0x8, 0, 0, INTR32)
-  halSetIDTGate(5, halIsr5, 0x8, 0, 0, INTR32)
-  halSetIDTGate(6, halIsr6, 0x8, 0, 0, INTR32)
-  halSetIDTGate(7, halIsr7, 0x8, 0, 0, INTR32)
-  halSetIDTGate(8, halIsr8, 0x8, 0, 0, INTR32)
-  halSetIDTGate(9, halIsr9, 0x8, 0, 0, INTR32)
-  halSetIDTGate(10, halIsr10, 0x8, 0, 0, INTR32)
-  halSetIDTGate(11, halIsr11, 0x8, 0, 0, INTR32)
-  halSetIDTGate(12, halIsr12, 0x8, 0, 0, INTR32)
-  halSetIDTGate(13, halIsr13, 0x8, 0, 0, INTR32)
-  halSetIDTGate(14, halIsr14, 0x8, 0, 0, INTR32)
-  halSetIDTGate(15, halIsr15, 0x8, 0, 0, INTR32)
-  halSetIDTGate(16, halIsr16, 0x8, 0, 0, INTR32)
-  halSetIDTGate(17, halIsr17, 0x8, 0, 0, INTR32)
-  halSetIDTGate(18, halIsr18, 0x8, 0, 0, INTR32)
-  halSetIDTGate(19, halIsr19, 0x8, 0, 0, INTR32)
-  halSetIDTGate(20, halIsr20, 0x8, 0, 0, INTR32)
-  halSetIDTGate(21, halIsr21, 0x8, 0, 0, INTR32)
-  halSetIDTGate(22, halIsr22, 0x8, 0, 0, INTR32)
-  halSetIDTGate(23, halIsr23, 0x8, 0, 0, INTR32)
-  halSetIDTGate(24, halIsr24, 0x8, 0, 0, INTR32)
-  halSetIDTGate(25, halIsr25, 0x8, 0, 0, INTR32)
-  halSetIDTGate(26, halIsr26, 0x8, 0, 0, INTR32)
-  halSetIDTGate(27, halIsr27, 0x8, 0, 0, INTR32)
-  halSetIDTGate(28, halIsr28, 0x8, 0, 0, INTR32)
-  halSetIDTGate(29, halIsr29, 0x8, 0, 0, INTR32)
-  halSetIDTGate(30, halIsr30, 0x8, 0, 0, INTR32)
-  halSetIDTGate(31, halIsr31, 0x8, 0, 0, INTR32)
+init: func {
+  IDT setGate(0, halIsr0, 0x8, 0, 0, INTR32)
+  IDT setGate(1, halIsr1, 0x8, 0, 0, INTR32)
+  IDT setGate(2, halIsr2, 0x8, 0, 0, INTR32)
+  IDT setGate(3, halIsr3, 0x8, 0, 0, INTR32)
+  IDT setGate(4, halIsr4, 0x8, 0, 0, INTR32)
+  IDT setGate(5, halIsr5, 0x8, 0, 0, INTR32)
+  IDT setGate(6, halIsr6, 0x8, 0, 0, INTR32)
+  IDT setGate(7, halIsr7, 0x8, 0, 0, INTR32)
+  IDT setGate(8, halIsr8, 0x8, 0, 0, INTR32)
+  IDT setGate(9, halIsr9, 0x8, 0, 0, INTR32)
+  IDT setGate(10, halIsr10, 0x8, 0, 0, INTR32)
+  IDT setGate(11, halIsr11, 0x8, 0, 0, INTR32)
+  IDT setGate(12, halIsr12, 0x8, 0, 0, INTR32)
+  IDT setGate(13, halIsr13, 0x8, 0, 0, INTR32)
+  IDT setGate(14, halIsr14, 0x8, 0, 0, INTR32)
+  IDT setGate(15, halIsr15, 0x8, 0, 0, INTR32)
+  IDT setGate(16, halIsr16, 0x8, 0, 0, INTR32)
+  IDT setGate(17, halIsr17, 0x8, 0, 0, INTR32)
+  IDT setGate(18, halIsr18, 0x8, 0, 0, INTR32)
+  IDT setGate(19, halIsr19, 0x8, 0, 0, INTR32)
+  IDT setGate(20, halIsr20, 0x8, 0, 0, INTR32)
+  IDT setGate(21, halIsr21, 0x8, 0, 0, INTR32)
+  IDT setGate(22, halIsr22, 0x8, 0, 0, INTR32)
+  IDT setGate(23, halIsr23, 0x8, 0, 0, INTR32)
+  IDT setGate(24, halIsr24, 0x8, 0, 0, INTR32)
+  IDT setGate(25, halIsr25, 0x8, 0, 0, INTR32)
+  IDT setGate(26, halIsr26, 0x8, 0, 0, INTR32)
+  IDT setGate(27, halIsr27, 0x8, 0, 0, INTR32)
+  IDT setGate(28, halIsr28, 0x8, 0, 0, INTR32)
+  IDT setGate(29, halIsr29, 0x8, 0, 0, INTR32)
+  IDT setGate(30, halIsr30, 0x8, 0, 0, INTR32)
+  IDT setGate(31, halIsr31, 0x8, 0, 0, INTR32)
 }
-

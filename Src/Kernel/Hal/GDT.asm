@@ -1,10 +1,10 @@
 bits 32
 
-global halInitGDT
+global initGDT
 
 section .text
 
-halInitGDT:
+initGDT:
         lgdt [gdt_desc]         ; load the GDT
 
 reload_segments:
@@ -19,7 +19,7 @@ reload_segments:
         mov fs, ax
         mov gs, ax
         mov ss, ax
-        
+
         ;; return from HalInitGDT
         ret
 
@@ -34,20 +34,20 @@ gdt_null:
 
 gdt_code:
         dw 0xFFFF    ; first 16 bits of segment limiter
-	dw 0         ; first 16 bits of base address
-	db 0         ; next 8 bits of base address
-	db 10011010b ; code segment, readable, nonconforming
-	db 11001111b ; ganular, last 3 bits of segment limiter
-	db 0         ; final 8 bits of base address
+        dw 0         ; first 16 bits of base address
+        db 0         ; next 8 bits of base address
+        db 10011010b ; code segment, readable, nonconforming
+        db 11001111b ; ganular, last 3 bits of segment limiter
+        db 0         ; final 8 bits of base address
 
 gdt_data:
-	dw 0xFFFF       ; first 16 bits of segment limiter
+        dw 0xFFFF       ; first 16 bits of segment limiter
         dw 0            ; first 16 bits of base address
         db 0            ; next 8 bits of base address
         db 10010010b    ; data segment, writable, extends downwards
         db 11001111b    ; big
         db 0            ; final 8 bits of base address
- 
+
 gdt_end:
 
 ;;; GDT descriptor for LGDT instruction
