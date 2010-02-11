@@ -2,17 +2,17 @@
 MULTIBOOT_BOOTLOADER_MAGIC := 0x2BADB002
 
 // Multiboot Flags
-MULTIBOOT_FLAG_MEM     := 0x001
-MULTIBOOT_FLAG_DEVICE  := 0x002
-MULTIBOOT_FLAG_CMDLINE := 0x004
-MULTIBOOT_FLAG_MODS    := 0x008
-MULTIBOOT_FLAG_AOUT    := 0x010
-MULTIBOOT_FLAG_ELF     := 0x020
-MULTIBOOT_FLAG_MMAP    := 0x040
-MULTIBOOT_FLAG_CONFIG  := 0x080
-MULTIBOOT_FLAG_LOADER  := 0x100
-MULTIBOOT_FLAG_APM     := 0x200
-MULTIBOOT_FLAG_VBE     := 0x400
+MULTIBOOT_FLAG_MEM     := 1 << 0
+MULTIBOOT_FLAG_DEVICE  := 1 << 1
+MULTIBOOT_FLAG_CMDLINE := 1 << 2
+MULTIBOOT_FLAG_MODS    := 1 << 3
+MULTIBOOT_FLAG_AOUT    := 1 << 4
+MULTIBOOT_FLAG_ELF     := 1 << 5
+MULTIBOOT_FLAG_MMAP    := 1 << 6
+MULTIBOOT_FLAG_CONFIG  := 1 << 7
+MULTIBOOT_FLAG_LOADER  := 1 << 8
+MULTIBOOT_FLAG_APM     := 1 << 9
+MULTIBOOT_FLAG_VBE     := 1 << 10
 
 // Structure containing information received from GRUB (or any
 // other Multiboot-compliant bootloader).
@@ -73,4 +73,3 @@ MMapEntry: cover {
   lengthHigh,   // Upper 32-bits of the previous value (for 64-bits systems).
   type: ULong   // Type (1 = available RAM, 0 = reserved).
 }
-
