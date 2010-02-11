@@ -1,10 +1,12 @@
-include stddef, stdbool, stdint
+include stdbool, stdint
 
 /**
  * Pointer type
  */
 Void: cover from void
 Pointer: cover from void*
+
+NULL := 0 as Pointer
 
 /**
  * character and pointer types
@@ -139,7 +141,7 @@ LDouble: cover from long double
 Range: cover {
 
     min, max: Int
-    
+
     new: static func (.min, .max) -> This {
         this : This
         this min = min
@@ -155,10 +157,10 @@ SizeT: cover from unsigned int
  * objects
  */
 Class: abstract class {
-    
-    /// Number of octets to allocate for a new instance of this class 
+
+    /// Number of octets to allocate for a new instance of this class
     instanceSize: SizeT
-    
+
     /// Number of octets to allocate to hold an instance of this class
     /// it's different because for classes, instanceSize may greatly
     /// vary, but size will always be equal to the size of a Pointer.
@@ -167,10 +169,10 @@ Class: abstract class {
 
     /// Human readable representation of the name of this class
     name: String
-    
+
     /// Pointer to instance of super-class
     super: const Class
-    
+
     /// Create a new instance of the object of type defined by this class
     /*alloc: final func -> Object {
         object := gc_malloc(instanceSize) as Object
@@ -180,7 +182,7 @@ Class: abstract class {
         }
         return object
     }
-    
+
     inheritsFrom: final func (T: Class) -> Bool {
         if(this == T) return true
         return (super ? super as This inheritsFrom(T) : false)
@@ -190,22 +192,21 @@ Class: abstract class {
     __defaults__: static Func (Class)
     __destroy__: static Func (Class)
     __load__: static Func
-    
+
 }
 
 Object: abstract class {
 
     class: Class
-        
+
     /// Instance initializer: set default values for a new instance of this class
     __defaults__: func {}
-    
+
     /// Finalizer: cleans up any objects belonging to this instance
     __destroy__: func {}
 
     /*instanceOf: final func (T: Class) -> Bool {
         class inheritsFrom(T)
     }*/
-    
-}
 
+}

@@ -1,5 +1,4 @@
 #include <stdarg.h>
-#include <stddef.h>
 
 #define IN
 #define OUT
@@ -13,6 +12,9 @@
 #define TF_SMALL 32
 #define TF_PLUS 64
 #define TF_UNSIGNED 128
+
+typedef unsigned int size_t;
+#define NULL ((void*) 0)
 
 int m_printn(OUT char *str, IN int maxlen, IN int len, IN unsigned int n,
 		IN int base, IN int size, IN int flags, IN int precision);
