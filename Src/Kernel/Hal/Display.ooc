@@ -20,6 +20,8 @@ WHITE         := 0xf
 VIDEO_MEMORY := 0xb8000 as UInt16*
 
 attr: UInt8
+foreground: Int
+background: Int
 cursor_x: Int
 cursor_y: Int
 
@@ -29,8 +31,18 @@ initDisplay: func {
   clearScreen()
 }
 
-setAttr: func (foreground, background: Int) {
-  attr = (foreground & 0xf) | background << 4
+setAttr: func (fg, bg: Int) {
+  foreground = fg
+  background = bg
+  attr = (fg & 0xf) | bg << 4
+}
+
+setForeground: func (fg: Int) {
+  setAttr(fg, background)
+}
+
+setBackground: func (bg: Int) {
+  setAttr(foreground, bg)
 }
 
 clearScreen: func {
