@@ -20,7 +20,7 @@ reload_segments:
         mov gs, ax
         mov ss, ax
 
-        ;; return from HalInitGDT
+        ;; return from initGDT
         ret
 
 section .data
