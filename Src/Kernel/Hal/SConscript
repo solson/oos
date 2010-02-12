@@ -3,8 +3,7 @@
 Import('env')
 
 hal = env.StaticLibrary('hal', [
-  'Hal.asm',
-  'Ports.c'
+  'Hal.asm'
 ])
 
 Return('hal')
