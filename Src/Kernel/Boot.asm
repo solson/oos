@@ -1,5 +1,5 @@
-global bootEntry        ; making entry point visible to linker
-extern kmain            ; kmain is defined elsewhere
+global boot  ; making entry point visible to linker
+extern kmain ; kmain is defined in Main.ooc
 
 
 ;;; Multiboot header. See GRUB docs for details
