@@ -1,4 +1,4 @@
 void halt()
 {
-  asm("hlt");
+  __asm__ __volatile__("hlt");
 }
