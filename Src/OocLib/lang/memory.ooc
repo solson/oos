@@ -1,6 +1,6 @@
 /*version(gc) {
     include gc/gc
-    
+
     gc_malloc: extern(GC_MALLOC) func (size: SizeT) -> Pointer
     gc_malloc_atomic: extern(GC_MALLOC_ATOMIC) func (size: SizeT) -> Pointer
     gc_realloc: extern(GC_REALLOC) func (ptr: Pointer, size: SizeT) -> Pointer
@@ -21,3 +21,12 @@ version(!gc) {
 
 gc_malloc: func (size: SizeT) -> Pointer {0}
 
+zeroMemory: func (ptr: Pointer, size: UInt32) -> Pointer {
+  mem: UInt8* = ptr
+
+  for (i in 0..size) {
+    mem[i] = 0
+  }
+
+  return mem
+}

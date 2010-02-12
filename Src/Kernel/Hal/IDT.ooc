@@ -46,13 +46,3 @@ setGate: func (n: SizeT, offset: Pointer, selector: UInt16, priv, sys, gatetype:
          ((sys & 0b1) << 4)   | // one bit for system segment
          (gatetype & 0b1111)    // four bits for gate type
 }
-
-zeroMemory: func (ptr: Pointer, size: UInt32) -> Pointer {
-  mem: UInt8* = ptr
-
-  for (i in 0..size) {
-    mem[i] = 0
-  }
-
-  return mem
-}
