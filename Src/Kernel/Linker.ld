@@ -1,4 +1,4 @@
-ENTRY(bootEntry)
+ENTRY(boot)
 
 SECTIONS {
     /* 0x100000 = 1 MB. The kernel must be above 1 MB in order for GRUB to be able to load it. */
@@ -24,4 +24,3 @@ SECTIONS {
 
     kernelEnd = .;
 }
-
