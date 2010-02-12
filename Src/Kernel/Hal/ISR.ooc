@@ -1,6 +1,7 @@
 import IDT into IDT
 import SysCall into SysCall
 import Registers
+import Panic
 
 // from exceptions.asm
 isr0: extern proto func
@@ -36,9 +37,50 @@ isr29: extern proto func
 isr30: extern proto func
 isr31: extern proto func
 
+exceptionMessages: const String[32] = [
+  "0 #DE Divide Error",
+  "1 #DB RESERVED",
+  "2 - NMI Interrupt",
+  "3 #BP Breakpoint",
+  "4 #OF Overflow",
+  "5 #BR BOUND Range Exceeded",
+  "6 #UD Invalid Opcode (Undefined Opcode)",
+  "7 #NM Device Not Available (No Math Coprocessor)",
+  "8 #DF Double Fault",
+  "9   Coprocessor Segment Overrun (reserved)",
+  "10 #TS Invalid TSS",
+  "11 #NP Segment Not Present",
+  "12 #SS Stack-Segment Fault",
+  "13 #GP General Protection",
+  "14 #PF Page Fault",
+  "15 - (Intel reserved. Do not use.)",
+  "16 #MF x87 FPU Floating-Point Error (Math Fault)",
+  "17 #AC Alignment Check",
+  "18 #MC Machine Check",
+  "19 #XM SIMD Floating-Point Exception",
+  "20 - Intel reserved. Do not use.",
+  "21 - Intel reserved. Do not use.",
+  "22 - Intel reserved. Do not use.",
+  "23 - Intel reserved. Do not use.",
+  "24 - Intel reserved. Do not use.",
+  "25 - Intel reserved. Do not use.",
+  "26 - Intel reserved. Do not use.",
+  "27 - Intel reserved. Do not use.",
+  "28 - Intel reserved. Do not use.",
+  "29 - Intel reserved. Do not use.",
+  "30 - Intel reserved. Do not use.",
+  "31 - Intel reserved. Do not use."
+]
+
 isrHandler: unmangled func (regs: Registers@) {
   if (regs interruptNumber == 0x80) {
     SysCall syscallHandler(regs&)
+  } else if (regs interruptNumber == 3) {
+    // Handle breakpoints here
+    panic(exceptionMessages[3])
+  } else if (regs interruptNumber < 32) {
+    // panic with appropriate message
+    panic(exceptionMessages[regs interruptNumber])
   }
 }
 
