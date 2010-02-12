@@ -2,7 +2,7 @@ bits 32
 
 section .text
 
-;; loadGDT(GDTDescriptor*)
+;; loadGDT: func (GDTDescriptor*)
 global loadGDT
 loadGDT:
     push eax
@@ -26,7 +26,7 @@ loadGDT:
     ret
 
 
-;; loadIDT(IDTDescriptor*)
+;; loadIDT: func (IDTDescriptor*)
 global loadIDT
 loadIDT:
     push eax
@@ -36,21 +36,21 @@ loadIDT:
     ret                 ; return
 
 
-;; enableInterrupts()
+;; enableInterrupts: func
 global enableInterrupts
 enableInterrupts:
 	sti
 	ret
 
 
-;; disableInterrupts()
+;; disableInterrupts: func
 global disableInterrupts
 disableInterrupts:
 	cli
 	ret
 
 
-;; halt()
+;; halt: func
 global halt
 halt:
 	hlt
