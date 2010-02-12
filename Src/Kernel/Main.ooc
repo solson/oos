@@ -26,9 +26,12 @@ kmain: func (mb: MultibootInfo@, magic: UInt32) {
   setForeground(LIGHT_GREY)
 
   printf("Kernel Start: 0x%x\n", kernelStart&)
-  printf("Kernel End:   0x%x\n", kernelEnd&)
+  printf("Kernel End:   0x%x\n\n", kernelEnd&)
 
-  panic("Splat: %i %s", 4, "(testing formatting abilities)");
+  panic("Splat: %i %s", 4, "(testing formatting abilities)")
 
+  printf("This should never be shown.\n")
+
+  // Never return from kmain
   while(1){}
 }
