@@ -24,7 +24,7 @@ TRAP32 := 0xf
 idt: IDTGate[256]
 
 // defined in idt.c because it uses GCC inline ASM :(
-loadIDT: extern(halLoadIDT) func (IDTDescriptor)
+loadIDT: extern func (IDTDescriptor)
 
 initIDT: func {
   idtd: IDTDescriptor

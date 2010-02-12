@@ -17,6 +17,6 @@ typedef struct IDTG {
 	uint16_t offset_2;
 } __attribute__((packed)) IDTG;
 
-void halLoadIDT(IDTD);
+void loadIDT(IDTD);
 
 #endif
