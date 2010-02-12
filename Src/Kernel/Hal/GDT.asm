@@ -6,8 +6,8 @@ section .text
 
 loadGDT:
     push eax
-    mov eax, [esp+0x8]
-    lgdt [eax]     ; load the GDT
+    mov eax, [esp+0x8] ; get the struct pointer
+    lgdt [eax]         ; load the GDT
     pop eax
 
     ;; Reload CS register containing code selector:
