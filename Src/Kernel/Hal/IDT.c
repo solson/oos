@@ -1,4 +1,4 @@
-#include <idt.h>
+#include <IDT.h>
 
 void loadIDT(IDTD idtd)
 {
