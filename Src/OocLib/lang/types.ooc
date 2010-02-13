@@ -1,5 +1,6 @@
 include stdbool, stdint
 
+
 /**
  * Pointer type
  */
@@ -11,6 +12,7 @@ NULL := 0 as Pointer
 /**
  * character and pointer types
  */
+__char: extern(char) Void
 Char: cover from char {
         // check for an alphanumeric character
         isAlphaNumeric: func -> Bool {
@@ -104,6 +106,9 @@ String: cover from char* {
 /**
  * integer types
  */
+__void: extern(void) Void
+__int: extern(int) Void
+__uint: extern(uint32_t) Void
 Int: cover from int
 UInt: cover from unsigned int
 Short: cover from short
