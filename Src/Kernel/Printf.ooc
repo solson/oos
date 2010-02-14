@@ -130,7 +130,7 @@ printf: func ( fmt: String, ... ) -> Int
   char *str;
 */
   //Char str[1024]
-  str: String
+  str: String = "" // Uninitialized ftl
   args: VaList
   len: Int
   i: Int = 0
@@ -197,8 +197,8 @@ vprintf: func ( fmt: String, ap: VaList ) -> Int
   char *str;
 */
   //char str[1024];
-  str: String
-  args: VaList
+  str: String = "" // What, uninitialized? Roar.
+  //args: VaList // I'm not sure what this was for anyways, but it may be important
   len: Int
   i: Int = 0
 
@@ -378,7 +378,7 @@ vsnprintf: func ( str: String, size: SizeT, fmt: String,
         i+=1
       }
     case 's' =>
-      sval = va_arg(ap, __char*)
+      sval = va_arg(ap, __char_ary) as Pointer
       /* Change to -2 so that 0-1 doesn't cause the
        * loop to keep going. */
       if (precision == -1)
