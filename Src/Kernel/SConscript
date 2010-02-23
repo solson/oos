@@ -14,7 +14,6 @@ Clean(ooclib, '#ooc_tmp')
 
 oos = kernel.Program('oos', [
   'Boot.asm',
-  'Printf.c',
   ooclib
 ])
 
