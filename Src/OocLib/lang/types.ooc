@@ -1,6 +1,6 @@
 include stdbool, stdint, c_types
 
-import Hal/Display
+import Hal/Display, Printf
 
 /**
  * Pointer type
@@ -120,6 +120,17 @@ String: cover from char* {
 
     print: func {
         printString(this)
+    }
+
+    format: func (...) -> This {
+        list: VaList
+        output := ""
+
+        va_start(list, this)
+        vsprintf(output, this, list)
+        va_end(list)
+
+        return output
     }
 }
 

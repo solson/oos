@@ -26,8 +26,10 @@ kmain: func (mb: MultibootInfo@, magic: UInt32) {
     "\n\n" print()
     setForeground(LIGHT_GREY)
 
-    printf("Kernel Start: 0x%x\n", kernelStart&)
-    printf("Kernel End:   0x%x\n\n", kernelEnd&)
+    "Kernel Start: 0x%x" format(kernelStart&) println()
+    "Kernel End:   0x%x" format(kernelEnd&) println()
+
+    '\n' print()
 
     panic("Splat: %i %s", 4, "(testing formatting abilities)")
 
