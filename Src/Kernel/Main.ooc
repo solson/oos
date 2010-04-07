@@ -9,20 +9,21 @@ kernelStart: extern proto Int
 kmain: func (mb: MultibootInfo@, magic: UInt32) {
     initHal()
 
-    printf("This kernel is written in ")
+    "This kernel is written in " print()
     setForeground(LIGHT_GREEN)
-    printf("ooc")
+    "ooc" print()
     setForeground(LIGHT_GREY)
-    printf("!\n\n")
+    "!\n\n" print()
 
-    printf("Boot Loader: ")
+    "Boot Loader: " print()
     setForeground(LIGHT_BLUE)
-    printf("%s\n", mb bootLoaderName)
+    mb bootLoaderName as String println()
     setForeground(LIGHT_GREY)
 
-    printf("Command Line: ")
+    "Command Line: " print()
     setForeground(LIGHT_BLUE)
-    printf("%s\n\n", mb cmdline)
+    mb cmdline as String print()
+    "\n\n" print()
     setForeground(LIGHT_GREY)
 
     printf("Kernel Start: 0x%x\n", kernelStart&)
@@ -30,7 +31,7 @@ kmain: func (mb: MultibootInfo@, magic: UInt32) {
 
     panic("Splat: %i %s", 4, "(testing formatting abilities)")
 
-    printf("This should never be shown.\n")
+    "This should never be shown." println()
 
     // Never return from kmain
     while(1){}

@@ -1,5 +1,6 @@
 include stdbool, stdint, c_types
 
+import Hal/Display
 
 /**
  * Pointer type
@@ -94,14 +95,23 @@ Char: cover from char {
 UChar: cover from unsigned char extends Char
 
 String: cover from char* {
-  length: func -> SizeT {
-    i := 0
-    while (this@) {
-      this += 1
-      i += 1
+    length: func -> SizeT {
+        i := 0
+        while (this@) {
+            this += 1
+            i += 1
+        }
+        return i
     }
-    return i
-  }
+
+    println: func {
+        printString(this)
+        printChar('\n')
+    }
+
+    print: func {
+        printString(this)
+    }
 }
 
 /**
