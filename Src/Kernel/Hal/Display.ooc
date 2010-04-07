@@ -64,7 +64,7 @@ updateCursor: func {
   Ports outByte(0x3d5, i)
 }
 
-printChar: unmangled func (chr: Char) {
+printChar: func (chr: Char) {
   // Handle a backspace, by moving the cursor back one space
   if (chr == '\b') {
     if (cursor_x != 0) cursor_x -= 1

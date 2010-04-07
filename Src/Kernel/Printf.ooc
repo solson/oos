@@ -171,10 +171,9 @@ printf: func (fmt: String, ...) -> Int {
 /*
   char *str
 */
-  str: String = "" // Uninitialized?! Bah!
+  str := ""
   args: VaList
   len: Int
-  i := 0
 
 /*
   va_start(args, fmt)
@@ -192,16 +191,13 @@ printf: func (fmt: String, ...) -> Int {
   len = vsnprintf(str, 1024, fmt, args)
   va_end(args)
 
-  while (str[i]) {
-    printChar(str[i])
-    i += 1
-  }
+  str print()
 
 /*
   free(str)
 */
 
-  return i
+  return len
 }
 
 sprintf: func (str: String, fmt: String, ...) -> Int {
@@ -231,10 +227,8 @@ snprintf: func (str: String, size: SizeT, fmt: String, ...) -> Int {
 
 vprintf: func (fmt: String, ap: VaList) -> Int {
   /* TODO: Make vprintf use memory management. */
-  str: String = "" // Initialize THIS ;)
-  //args: VaList // Why do we have this?
+  str := ""
   len: Int
-  i := 0
 
 /*
   len = vsnprintf(NULL, 0, fmt, ap)
@@ -244,16 +238,13 @@ vprintf: func (fmt: String, ap: VaList) -> Int {
 
   len = vsnprintf(str, 1024, fmt, ap)
 
-  while (str[i]) {
-    printChar(str[i])
-    i += 1
-  }
+  str print()
 
 /*
   free(str);
 */
 
-  return i
+  return len
 }
 
 vsprintf: func (str: String, fmt: String, ap: VaList) -> Int {
@@ -288,7 +279,7 @@ vsnprintf: func (str: String, size: SizeT, fmt: String, ap: VaList) -> Int {
 
     /* Find any flags. */
     flags = 0
-    
+
     while(true) {
       match(p@) {
         case '#' => flags |= TF_ALTERNATE
@@ -397,7 +388,6 @@ vsnprintf: func (str: String, size: SizeT, fmt: String, ap: VaList) -> Int {
          * loop to keep going. */
         if (precision == -1)
           precision = -2
-        //while (*sval && (precision-->0 || precision <= -2))
         while (sval@ && (precision > 0 || precision <= -2)) {
           if (precision > 0) {
             precision -= 1
