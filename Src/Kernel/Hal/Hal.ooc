@@ -14,10 +14,8 @@ initHal: func {
   "Done.\n" println()
 }
 
-runInitializer: func (name: String, f: Func) {
-  "Initializing " print()
-  name print()
-  "... " print()
-  f()
+runInitializer: func (name: String, fn: Func) {
+  "Initializing %s... " format(name) print()
+  fn()
   "Done." println()
 }
