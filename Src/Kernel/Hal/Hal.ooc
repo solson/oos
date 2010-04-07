@@ -9,13 +9,15 @@ initHal: func {
   runInitializer("IRQs", initIRQ)
   runInitializer("syscalls", initSysCall)
 
-  printf("Enabling interrupts... ")
+  "Enabling interrupts... " print()
   enableInterrupts()
-  printf("Done.\n\n")
+  "Done.\n" println()
 }
 
 runInitializer: func (name: String, f: Func) {
-  printf("Initializing %s... ", name)
+  "Initializing " print()
+  name print()
+  "... " print()
   f()
-  printf("Done.\n")
+  "Done." println()
 }
