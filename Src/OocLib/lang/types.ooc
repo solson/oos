@@ -16,6 +16,15 @@ NULL := 0 as Pointer
 //__char: extern(char) Void
 __char_ary: extern(__CHAR_ARY) Void
 Char: cover from char {
+    println: func {
+        printChar(this)
+        printChar('\n')
+    }
+
+    print: func {
+        printChar(this)
+    }
+
         // check for an alphanumeric character
         isAlphaNumeric: func -> Bool {
                 isAlpha() || isDigit()
