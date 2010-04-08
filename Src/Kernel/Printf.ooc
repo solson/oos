@@ -214,7 +214,8 @@ vsnprintf: func (str: String, size: SizeT, fmt: String, ap: VaList) -> Int {
     if(size != 0)
         size -= 1
 
-    for(p = fmt; p@; p += 1) {
+    p = fmt
+    while(p@) {
         if(p@ != '%') {
             if(len < size) {
                 str[len] = p@
@@ -222,6 +223,7 @@ vsnprintf: func (str: String, size: SizeT, fmt: String, ap: VaList) -> Int {
             } else {
                 len += 1
             }
+            p += 1
             continue
         }
 
@@ -364,6 +366,7 @@ vsnprintf: func (str: String, size: SizeT, fmt: String, ap: VaList) -> Int {
                     len += 1
                 }
         }
+        p += 1
     }
 
     /* And now we magically have room for one more byte. */
