@@ -18,24 +18,24 @@ println: func ~char (chr: Char) {
     Display printChar('\n')
 }
 
-Display: cover {
-    BLACK         := static 0x0
-    BLUE          := static 0x1
-    GREEN         := static 0x2
-    CYAN          := static 0x3
-    RED           := static 0x4
-    MAGENTA       := static 0x5
-    BROWN         := static 0x6
-    LIGHT_GREY    := static 0x7
-    DARK_GREY     := static 0x8
-    LIGHT_BLUE    := static 0x9
-    LIGHT_GREEN   := static 0xa
-    LIGHT_CYAN    := static 0xb
-    LIGHT_RED     := static 0xc
-    LIGHT_MAGENTA := static 0xd
-    YELLOW        := static 0xe
-    WHITE         := static 0xf
+BLACK         := 0x0
+BLUE          := 0x1
+GREEN         := 0x2
+CYAN          := 0x3
+RED           := 0x4
+MAGENTA       := 0x5
+BROWN         := 0x6
+LIGHT_GREY    := 0x7
+DARK_GREY     := 0x8
+LIGHT_BLUE    := 0x9
+LIGHT_GREEN   := 0xa
+LIGHT_CYAN    := 0xb
+LIGHT_RED     := 0xc
+LIGHT_MAGENTA := 0xd
+YELLOW        := 0xe
+WHITE         := 0xf
 
+Display: cover {
     VIDEO_MEMORY := static 0xb8000 as UInt16*
 
     attr: static UInt8
