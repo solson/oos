@@ -68,29 +68,6 @@ m_printn: func (str: String, maxlen, len: Int, n: UInt, base, size, flags, preci
   if (sign)
     size -= 1
 
-  if (flags & TF_ALTERNATE)
-    if (base == 8) {
-      if (len < maxlen) {
-        str[len] = '0'
-        len += 1
-      } else {
-        len += 1
-      }
-    } else if (base == 16) {
-      if (len < maxlen) {
-        str[len] = '0'
-        len += 1
-      } else {
-        len += 1
-      }
-      if (len < maxlen) {
-        str[len] = 'x';
-        len += 1
-      } else {
-        len += 1
-      }
-    }
-
   /* Find the number in reverse. */
   if (n == 0) {
     tmp[i] = '0'
