@@ -124,7 +124,7 @@ String: cover from char* {
 
     format: func (...) -> This {
         list: VaList
-        output := ""
+        output := "\0"
 
         va_start(list, this)
         vsprintf(output, this, list)
