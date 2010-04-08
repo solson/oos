@@ -1,9 +1,11 @@
 import Kernel
 
-placementAddress := kernelEnd& as Pointer
+VMM: cover {
+    placementAddress := static kernelEnd& as Pointer
 
-alloc: func (size: SizeT) -> Pointer {
-    mem := placementAddress
-    placementAddress += size
-    return mem
+    alloc: static func (size: SizeT) -> Pointer {
+        mem := placementAddress
+        placementAddress += size
+        return mem
+    }
 }

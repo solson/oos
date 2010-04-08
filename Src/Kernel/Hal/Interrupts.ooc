@@ -1,2 +1,4 @@
-enableInterrupts: extern proto func
-disableInterrupts: extern proto func
+Interrupts: cover {
+    enable:  extern(enableInterrupts)  proto static func
+    disable: extern(disableInterrupts) proto static func
+}

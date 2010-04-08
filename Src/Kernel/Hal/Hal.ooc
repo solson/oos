@@ -1,17 +1,19 @@
 import GDT, IDT, ISR, IRQ, Interrupts, SysCall, Display, Printf
 
-initHal: func {
-  initGDT()
-  initDisplay()
+Hal: cover {
+    init: static func {
+        GDT init()
+        Display init()
 
-  runInitializer("IDT", initIDT)
-  runInitializer("ISRs", initISR)
-  runInitializer("IRQs", initIRQ)
-  runInitializer("syscalls", initSysCall)
+        runInitializer("IDT", IDT init)
+        runInitializer("ISRs", IST init)
+        runInitializer("IRQs", IRQ init)
+        runInitializer("syscalls", SysCall init)
 
-  "Enabling interrupts... " print()
-  enableInterrupts()
-  "Done.\n" println()
+        "Enabling interrupts... " print()
+        Interrupts enable()
+        "Done.\n" println()
+    }
 }
 
 runInitializer: func (name: String, fn: Func) {

@@ -17,12 +17,11 @@ NULL: unmangled Pointer = 0
 __char_ary: extern(__CHAR_ARY) Void
 Char: cover from char {
     println: func {
-        printChar(this)
-        printChar('\n')
+        println(this)
     }
 
     print: func {
-        printChar(this)
+        print(this)
     }
 
     // check for an alphanumeric character
@@ -120,12 +119,11 @@ String: cover from char* {
     }
 
     println: func {
-        printString(this)
-        printChar('\n')
+        println(this)
     }
 
     print: func {
-        printString(this)
+        print(this)
     }
 
     format: func (...) -> This {
