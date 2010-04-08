@@ -1,32 +1,32 @@
-/*version(gc) {
-    include gc/gc
+import Hal/VMM
 
-    gc_malloc: extern(GC_MALLOC) func (size: SizeT) -> Pointer
-    gc_malloc_atomic: extern(GC_MALLOC_ATOMIC) func (size: SizeT) -> Pointer
-    gc_realloc: extern(GC_REALLOC) func (ptr: Pointer, size: SizeT) -> Pointer
-    gc_calloc: func (nmemb: SizeT, size: SizeT) -> Pointer {
-        gc_malloc(nmemb * size)
-    }
+// Memory allocation functions
+gc_malloc: func (size: SizeT) -> Pointer {
+    alloc(size)
 }
 
-version(!gc) {
-    gc_malloc: extern(malloc) func (size: SizeT) -> Pointer
-    //gc_malloc: func (size: SizeT) -> Pointer {
-    //  gc_calloc(1, size)
-    //}
-    gc_malloc_atomic: extern(malloc) func (size: SizeT) -> Pointer
-    gc_realloc: extern(realloc) func (ptr: Pointer, size: SizeT) -> Pointer
-    gc_calloc: extern(calloc) func (nmemb: SizeT, size: SizeT) -> Pointer
-}*/
+gc_malloc_atomic: func (size: SizeT) -> Pointer {
+    gc_malloc(size)
+}
 
-gc_malloc: func (size: SizeT) -> Pointer {0}
+gc_realloc: func (ptr: Pointer, size: SizeT) -> Pointer {
+    null
+}
 
+gc_calloc: func (nmemb: SizeT, size: SizeT) -> Pointer {
+    gc_malloc(nmemb * size)
+}
+
+free: func (ptr: Pointer) {
+}
+
+// Memory setting/copying functions
 zeroMemory: func (ptr: Pointer, size: UInt32) -> Pointer {
-  mem: UInt8* = ptr
+    mem: UInt8* = ptr
 
-  for (i in 0..size) {
-    mem[i] = 0
-  }
+    for (i in 0..size) {
+        mem[i] = 0
+    }
 
-  return mem
+    return mem
 }

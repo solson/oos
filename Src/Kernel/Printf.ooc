@@ -144,35 +144,23 @@ m_printn: func (str: String, maxlen, len: Int, n: UInt, base, size, flags, preci
 }
 
 printf: func (fmt: String, ...) -> Int {
-  /* TODO: Make printf use memory management. */
-/*
-  char *str
-*/
-  str := ""
+  str: String
   args: VaList
   len: Int
 
-/*
   va_start(args, fmt)
   len = vsnprintf(NULL, 0, fmt, args)
   va_end(args)
 
-  str = malloc(len+1)
+  str = gc_malloc(len+1)
 
   va_start(args, fmt)
   len = vsnprintf(str, len+1, fmt, args)
   va_end(args)
-*/
-
-  va_start(args, fmt)
-  len = vsnprintf(str, 1024, fmt, args)
-  va_end(args)
 
   str print()
 
-/*
   free(str)
-*/
 
   return len
 }
@@ -203,23 +191,16 @@ snprintf: func (str: String, size: SizeT, fmt: String, ...) -> Int {
 }
 
 vprintf: func (fmt: String, ap: VaList) -> Int {
-  /* TODO: Make vprintf use memory management. */
-  str := ""
+  str: String
   len: Int
 
-/*
   len = vsnprintf(NULL, 0, fmt, ap)
-  str = malloc(len+1)
+  str = gc_malloc(len+1)
   len = vsnprintf(str, len+1, fmt, ap)
-*/
-
-  len = vsnprintf(str, 1024, fmt, ap)
 
   str print()
 
-/*
   free(str);
-*/
 
   return len
 }

@@ -1,10 +1,4 @@
-import Multiboot
-import Hal/[Hal, Display, Panic]
-import Printf
-
-// from the Linker.ld linker script
-kernelEnd: extern proto Int
-kernelStart: extern proto Int
+import Kernel, Multiboot, Hal/[Hal, Display, Panic]
 
 kmain: func (mb: MultibootInfo*, magic: UInt32) {
     multiboot = mb@

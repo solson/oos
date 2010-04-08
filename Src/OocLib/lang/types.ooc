@@ -104,6 +104,12 @@ Char: cover from char {
 UChar: cover from unsigned char extends Char
 
 String: cover from char* {
+    new: static func~withLength (length: Int) -> This {
+        result := gc_malloc(length + 1) as This
+        result[length] = '\0'
+        result
+    }
+
     length: func -> SizeT {
         i := 0
         while (this@) {
@@ -123,11 +129,16 @@ String: cover from char* {
     }
 
     format: func (...) -> This {
-        list: VaList
-        output := "\0"
+        list:VaList
 
         va_start(list, this)
-        vsprintf(output, this, list)
+
+        length := vsnprintf(null, 0, this, list)
+        output := This new(length)
+        va_end(list)
+
+        va_start(list, this)
+        vsnprintf(output, length + 1, this, list)
         va_end(list)
 
         return output
