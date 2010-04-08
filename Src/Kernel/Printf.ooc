@@ -26,16 +26,6 @@
 
 import Hal/Display
 
-/* print*() - more tied to printChar(), but requires printf() */
-
-printDec: func (i: Int) {
-  printf("%i", i)
-}
-
-printHex: func (i: Int) {
-  printf("%x", i)
-}
-
 /* Text Formatting */
 TF_ALTERNATE := 1
 TF_ZEROPAD := 2
