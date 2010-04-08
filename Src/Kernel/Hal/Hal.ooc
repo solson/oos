@@ -6,7 +6,7 @@ Hal: cover {
         Display init()
 
         runInitializer("IDT", IDT init)
-        runInitializer("ISRs", IST init)
+        runInitializer("ISRs", ISR init)
         runInitializer("IRQs", IRQ init)
         runInitializer("syscalls", SysCall init)
 
