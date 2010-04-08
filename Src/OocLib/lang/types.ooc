@@ -8,7 +8,7 @@ import Hal/Display, Printf
 Void: cover from void
 Pointer: cover from void*
 
-NULL : unmangled Pointer = 0
+NULL: unmangled Pointer = 0
 
 /**
  * character and pointer types
