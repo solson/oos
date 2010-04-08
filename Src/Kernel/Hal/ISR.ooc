@@ -72,7 +72,7 @@ ISR: cover {
 
     handler: unmangled(isrHandler) static func (regs: Registers@) {
         if(regs interruptNumber == 0x80) {
-            SysCall syscallHandler(regs&)
+            SysCall handler(regs&)
         } else if(regs interruptNumber == 3) {
             // Handle breakpoints here
             panic(exceptionMessages[3])
