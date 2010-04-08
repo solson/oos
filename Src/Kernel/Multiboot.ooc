@@ -14,6 +14,9 @@ MULTIBOOT_FLAG_LOADER  := 1 << 8
 MULTIBOOT_FLAG_APM     := 1 << 9
 MULTIBOOT_FLAG_VBE     := 1 << 10
 
+// Global variable for multiboot info so it can be accessed everywhere.
+multiboot: MultibootInfo
+
 // Structure containing information received from GRUB (or any
 // other Multiboot-compliant bootloader).
 MultibootInfo: cover {

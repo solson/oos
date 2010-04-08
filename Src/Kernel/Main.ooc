@@ -6,7 +6,8 @@ import Printf
 kernelEnd: extern proto Int
 kernelStart: extern proto Int
 
-kmain: func (mb: MultibootInfo@, magic: UInt32) {
+kmain: func (mb: MultibootInfo*, magic: UInt32) {
+    multiboot = mb@
     initHal()
 
     "This kernel is written in " print()
@@ -17,12 +18,12 @@ kmain: func (mb: MultibootInfo@, magic: UInt32) {
 
     "Boot Loader: " print()
     setForeground(LIGHT_BLUE)
-    mb bootLoaderName as String println()
+    multiboot bootLoaderName as String println()
     setForeground(LIGHT_GREY)
 
     "Command Line: " print()
     setForeground(LIGHT_BLUE)
-    mb cmdline as String print()
+    multiboot cmdline as String print()
     "\n\n" print()
     setForeground(LIGHT_GREY)
 
