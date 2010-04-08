@@ -27,14 +27,14 @@
 import Hal/Display
 
 /* Text Formatting */
-TF_ALTERNATE := 1
-TF_ZEROPAD := 2
-TF_LEFT := 4
-TF_SPACE := 8
-TF_EXP_SIGN := 16
-TF_SMALL := 32
-TF_PLUS := 64
-TF_UNSIGNED := 128
+TF_ALTERNATE := 1 << 0
+TF_ZEROPAD   := 1 << 1
+TF_LEFT      := 1 << 2
+TF_SPACE     := 1 << 3
+TF_EXP_SIGN  := 1 << 4
+TF_SMALL     := 1 << 5
+TF_PLUS      := 1 << 6
+TF_UNSIGNED  := 1 << 7
 
 m_printn: func (str: String, maxlen, len: Int, n: UInt, base, size, flags, precision: Int) -> Int {
     sign: Char = '\0'
