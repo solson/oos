@@ -9,22 +9,24 @@ println: func (str: String) {
     Display printChar('\n')
 }
 
-BLACK         := 0x0
-BLUE          := 0x1
-GREEN         := 0x2
-CYAN          := 0x3
-RED           := 0x4
-MAGENTA       := 0x5
-BROWN         := 0x6
-LIGHT_GREY    := 0x7
-DARK_GREY     := 0x8
-LIGHT_BLUE    := 0x9
-LIGHT_GREEN   := 0xa
-LIGHT_CYAN    := 0xb
-LIGHT_RED     := 0xc
-LIGHT_MAGENTA := 0xd
-YELLOW        := 0xe
-WHITE         := 0xf
+Color: class {
+    black        := static 0x0
+    blue         := static 0x1
+    green        := static 0x2
+    cyan         := static 0x3
+    red          := static 0x4
+    magenta      := static 0x5
+    brown        := static 0x6
+    lightGrey    := static 0x7
+    darkGrey     := static 0x8
+    lightBlue    := static 0x9
+    lightGreen   := static 0xa
+    lightCyan    := static 0xb
+    lightRed     := static 0xc
+    lightMagenta := static 0xd
+    yellow       := static 0xe
+    white        := static 0xf
+}
 
 Display: class {
     VIDEO_MEMORY := static 0xb8000 as UInt16*
@@ -37,7 +39,7 @@ Display: class {
 
     setup: static func {
       // default to light grey on black like the BIOS
-      setAttr(LIGHT_GREY, BLACK)
+      setAttr(Color lightGrey, Color black)
       clearScreen()
     }
 
