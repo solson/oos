@@ -4,17 +4,8 @@ print: func (str: String) {
     Display printString(str)
 }
 
-print: func ~char (chr: Char) {
-    Display printChar(chr)
-}
-
 println: func (str: String) {
     Display printString(str)
-    Display printChar('\n')
-}
-
-println: func ~char (chr: Char) {
-    Display printChar(chr)
     Display printChar('\n')
 }
 
