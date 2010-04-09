@@ -56,7 +56,7 @@ MultibootInfo: cover {
   vbeMode,
   vbeInterfaceSegment,
   vbeInterfaceOffset,
-  vbeInterfaceLength: ULong
+  vbeInterfaceLength: UInt32
 }
 
 // The module structure.
@@ -64,7 +64,7 @@ MultibootModule: cover {
   moduleStart,
   moduleEnd,
   string,
-  reserved: ULong
+  reserved: UInt32
 }
 
 // Memory map entry.
@@ -74,5 +74,5 @@ MMapEntry: cover {
   baseAddrHigh, // Upper 32-bits of the previous value (for 64-bits systems).
   lengthLow,    // Memory region length.
   lengthHigh,   // Upper 32-bits of the previous value (for 64-bits systems).
-  type: ULong   // Type (1 = available RAM, 0 = reserved).
+  type: UInt32  // Type (1 = available RAM, 0 = reserved).
 }
