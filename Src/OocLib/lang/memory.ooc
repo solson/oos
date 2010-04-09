@@ -22,10 +22,10 @@ free: func (ptr: Pointer) {
 
 // Memory setting/copying functions
 zeroMemory: func (ptr: Pointer, count: SizeT) -> Pointer {
-    memset(UInt8, ptr, 0, count)
+    memset(ptr, 0 as UInt8, count)
 }
 
-memset: func <T> (T: Class, dest: Pointer, val: T, count: SizeT) -> Pointer {
+memset: func <T> (dest: Pointer, val: T, count: SizeT) -> Pointer {
     destination := dest as T*
 
     for(i in 0..count) {
@@ -36,8 +36,8 @@ memset: func <T> (T: Class, dest: Pointer, val: T, count: SizeT) -> Pointer {
 }
 
 memcpy: func (dest, src: Pointer, count: SizeT) -> Pointer {
-    destination := dest as Char*
-    source := src as Char*
+    destination := dest as UInt8*
+    source := src as UInt8*
 
     for(i in 0..count) {
       destination[i] = source[i]
