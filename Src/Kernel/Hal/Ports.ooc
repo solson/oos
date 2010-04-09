@@ -1,4 +1,4 @@
-Ports: cover {
+Ports: class {
     outByte: extern proto static func (port: UInt16, val: UInt8)
     inByte:  extern proto static func (port: UInt16) -> UInt8
 

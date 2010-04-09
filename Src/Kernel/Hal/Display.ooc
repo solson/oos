@@ -35,7 +35,7 @@ LIGHT_MAGENTA := 0xd
 YELLOW        := 0xe
 WHITE         := 0xf
 
-Display: cover {
+Display: class {
     VIDEO_MEMORY := static 0xb8000 as UInt16*
 
     attr: static UInt8

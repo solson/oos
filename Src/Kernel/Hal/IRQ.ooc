@@ -1,6 +1,6 @@
 import IDT, Ports, Registers
 
-IRQ: cover {
+IRQ: class {
     irqRoutines: static Pointer[16] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
     // from exceptions.asm

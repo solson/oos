@@ -1,6 +1,6 @@
 import Kernel
 
-VMM: cover {
+VMM: class {
     placementAddress := static kernelEnd& as Pointer
 
     alloc: static func (size: SizeT) -> Pointer {

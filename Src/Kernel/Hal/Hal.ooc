@@ -1,6 +1,6 @@
 import GDT, IDT, ISR, IRQ, Interrupts, SysCall, Display, Printf
 
-Hal: cover {
+Hal: class {
     init: static func {
         GDT init()
         Display init()

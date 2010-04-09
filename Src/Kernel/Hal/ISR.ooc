@@ -1,6 +1,6 @@
 import IDT, SysCall, Registers, Panic
 
-ISR: cover {
+ISR: class {
     // from exceptions.asm
     isr0: extern proto static func
     isr1: extern proto static func
