@@ -10,14 +10,14 @@ Hal: class {
         runInitializer("IRQs", IRQ setup)
         runInitializer("syscalls", SysCall setup)
 
-        "Enabling interrupts... " print()
+//        "Enabling interrupts... " print()
         Interrupts enable()
-        "Done.\n" println()
+//        "Done.\n" println()
     }
 }
 
 runInitializer: func (name: String, fn: Func) {
-  "Initializing %s... " format(name) print()
+//  "Initializing %s... " format(name) print()
   fn()
-  "Done." println()
+//  "Done." println()
 }
