@@ -217,20 +217,20 @@ Class: abstract class {
     /// Pointer to instance of super-class
     super: const Class
 
-    /// Create a new instance of the object of type defined by this class
-    /*alloc: final func -> Object {
+    /** create a new instance of the object of type defined by this class */
+    alloc: final func -> Object {
         object := gc_malloc(instanceSize) as Object
         if(object) {
             object class = this
-            object __defaults__()
         }
         return object
     }
 
+    /** return true if `this` is a subclass of *T* . */
     inheritsFrom: final func (T: Class) -> Bool {
         if(this == T) return true
         return (super ? super as This inheritsFrom(T) : false)
-    }*/
+    }
 
     // workaround needed to avoid C circular dependency with _ObjectClass
     __defaults__: static Func (Class)
@@ -249,8 +249,10 @@ Object: abstract class {
     /// Finalizer: cleans up any objects belonging to this instance
     __destroy__: func {}
 
-    /*instanceOf: final func (T: Class) -> Bool {
+    /** return true if *class* is a subclass of *T*. */
+    instanceOf: final func (T: Class) -> Bool {
+        if(!this) return false
         class inheritsFrom(T)
-    }*/
+    }
 
 }
