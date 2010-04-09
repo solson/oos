@@ -36,8 +36,8 @@ memset: func <T> (dest: Pointer, val: T, count: SizeT) -> Pointer {
 }
 
 memcpy: func (dest, src: Pointer, count: SizeT) -> Pointer {
-    destination := dest as Char*
-    source := src as Char*
+    destination := dest as UInt8*
+    source := src as UInt8*
 
     for(i in 0..count) {
       destination[i] = source[i]
