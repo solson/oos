@@ -231,6 +231,7 @@ vsnprintf: func (str: String, size: SizeT, fmt: String, ap: VaList) -> Int {
         flags = 0
 
         while(true) {
+            p += 1
             match(p@) {
                 case '#' => flags |= TF_ALTERNATE
                 case '0' => flags |= TF_ZEROPAD
@@ -239,7 +240,6 @@ vsnprintf: func (str: String, size: SizeT, fmt: String, ap: VaList) -> Int {
                 case '+' => flags |= TF_EXP_SIGN
                 case => breakloop = 1
             }
-            p += 1
             if (breakloop == 1)
                 break
         }
