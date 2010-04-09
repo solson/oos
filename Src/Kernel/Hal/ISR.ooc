@@ -82,7 +82,7 @@ ISR: class {
         }
     }
 
-    init: static func {
+    setup: static func {
         IDT setGate(0, isr0, 0x8, 0, 0, IDT INTR32)
         IDT setGate(1, isr1, 0x8, 0, 0, IDT INTR32)
         IDT setGate(2, isr2, 0x8, 0, 0, IDT INTR32)

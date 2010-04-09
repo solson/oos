@@ -25,7 +25,7 @@ GDT: class {
     // defined in GDT.asm
     load: extern(loadGDT) proto static func (GDTDescriptor*)
 
-    init: static func {
+    setup: static func {
         gdtd: GDTDescriptor
         gdtd offset = gdt as UInt32
         gdtd size = sizeof(GDTEntry) * 3 - 1

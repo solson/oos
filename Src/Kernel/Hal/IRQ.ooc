@@ -53,7 +53,7 @@ IRQ: class {
     /* We first remap the interrupt controllers, and then we install
     *  the appropriate ISRs to the correct entries in the IDT. This
     *  is just like installing the exception handlers */
-    init: func {
+    setup: static func {
         remap()
 
         IDT setGate(32, irq0, 0x8, 0, 0, IDT INTR32)

@@ -2,7 +2,7 @@ import Kernel, Multiboot, Hal/[Hal, Display, Panic]
 
 kmain: func (mb: MultibootInfo*, magic: UInt32) {
     multiboot = mb@
-    Hal init()
+    Hal setup()
 
     "This kernel is written in " print()
     Display setForeground(LIGHT_GREEN)

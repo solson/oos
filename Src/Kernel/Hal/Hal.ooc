@@ -1,14 +1,14 @@
 import GDT, IDT, ISR, IRQ, Interrupts, SysCall, Display, Printf
 
 Hal: class {
-    init: static func {
-        GDT init()
-        Display init()
+    setup: static func {
+        GDT setup()
+        Display setup()
 
-        runInitializer("IDT", IDT init)
-        runInitializer("ISRs", ISR init)
-        runInitializer("IRQs", IRQ init)
-        runInitializer("syscalls", SysCall init)
+        runInitializer("IDT", IDT setup)
+        runInitializer("ISRs", ISR setup)
+        runInitializer("IRQs", IRQ setup)
+        runInitializer("syscalls", SysCall setup)
 
         "Enabling interrupts... " print()
         Interrupts enable()

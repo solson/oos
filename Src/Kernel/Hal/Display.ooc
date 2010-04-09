@@ -44,7 +44,7 @@ Display: class {
     cursor_x: static Int
     cursor_y: static Int
 
-    init: static func {
+    setup: static func {
       // default to light grey on black like the BIOS
       setAttr(LIGHT_GREY, BLACK)
       clearScreen()

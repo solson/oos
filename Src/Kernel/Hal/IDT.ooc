@@ -27,7 +27,7 @@ IDT: class {
     // defined in IDT.asm
     load: extern(loadIDT) proto static func (IDTDescriptor*)
 
-    init: static func {
+    setup: static func {
         idtd: IDTDescriptor
         idtd offset = idt as UInt32
         idtd size = sizeof(IDTGate) * 256 - 1
