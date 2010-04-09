@@ -37,7 +37,7 @@ IRQ: class {
     *  Interrupt Controller (PICs - also called the 8259's) in
     *  order to make irq0 to 15 be remapped to IDT entries 32 to
     *  47 */
-    remap: func {
+    remap: static func {
         Ports outByte(0x20, 0x11)
         Ports outByte(0xA0, 0x11)
         Ports outByte(0x21, 0x20)
@@ -82,15 +82,15 @@ IRQ: class {
     *  to acknowledge the interrupt at BOTH controllers, otherwise, you
     *  only send an EOI command to the first controller. If you don't send
     *  an EOI, you won't raise any more IRQs */
-    irqHandler: unmangled func (regs: Registers*) {
+    handler: unmangled(irqHandler) static func (regs: Registers@) {
         /* This is a blank function pointer */
-        handler: Func (Registers*)
+        fn: Func (Registers*)
 
         /* Find out if we have a custom handler to run for this
         *  IRQ, and then finally, run it */
-        handler = irqRoutines[regs@ interruptNumber - 32]
-        if(handler) {
-            handler(regs)
+        fn = irqRoutines[regs interruptNumber - 32]
+        if(fn) {
+            fn(regs&)
         }
 
         /* We need to send an EOI to the
