@@ -1,29 +1,29 @@
 import Multiboot, Panic
 
-Bitmap: cover from UInt32* {
+Bitmap: class {
     size: UInt
+    data: UInt32*
 
-    new: static func (=size) -> This {
-        bm := gc_malloc(sizeof(UInt32) * size) as This
-        memset(bm, 0 as UInt32, sizeof(UInt32) * size)
-        return bm
+    init: func (=size) {
+        data = gc_malloc(sizeof(UInt32) * size) as UInt32*
+        memset(data, 0 as UInt32, sizeof(UInt32) * size)
     }
 
     set: func (index, bit: UInt) {
-        this[index] |= (1 << bit)
+        data[index] |= (1 << bit)
     }
 
     isSet: func (index, bit: UInt) -> Bool {
-        this[index] & (1 << bit)
+        data[index] & (1 << bit)
     }
 
     // This is a quick way to check if all the bits in an element are set.
     allSet: func (index: UInt) -> Bool {
-        this[index] == 0xFFFFFFFF
+        data[index] == 0xFFFFFFFF
     }
 
     clear: func (index, bit: UInt) {
-        this[index] &= ~(1 << bit)
+        data[index] &= ~(1 << bit)
     }
 }
 
