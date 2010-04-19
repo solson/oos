@@ -16,14 +16,12 @@ env = Environment(
 	LIBSUFFIX='.lib',
 	SHLIBPREFIX='',
 	SHLIBSUFFIX='.shlib',
-	CC='gcc',
-    CCFLAGS=['-m32', '-nostdinc', '-ffreestanding', '-IInclude', '-fno-stack-protector'],
 	AS='nasm',
 	ASFLAGS=['-felf'],
 	LINK='ld',
 	LINKFLAGS=['-melf_i386', '-nostdlib'],
     OOC='ooc',
-    OOCFLAGS=['-c', '-gcc', '-driver=sequence', '-nomain', '-gc=off', '+-m32', '+-nostdinc', '+-ffreestanding', '+-fno-stack-protector', '-IInclude', '-sourcepath=.', '-noclean', '-nolines'],
+    OOCFLAGS=['-c', '-v', '-gcc', '-driver=sequence', '-nomain', '-gc=off', '+-m32', '+-nostdinc', '+-ffreestanding', '+-fno-stack-protector', '-IInclude', '-sourcepath=.', '-noclean', '-nolines'],
     ENV = os.environ, # pass outside env to build so ooc is in PATH and OOC_DIST exists
 )
 
@@ -40,11 +38,10 @@ env.Append(BUILDERS = {'Ooc' : ooc_builder})
 # default to debug mode. `scons debug=0` to build without debugging symbols
 debug = ARGUMENTS.get('debug', 1)
 if int(debug):
-    env.Append(CCFLAGS=['-g', '-DDEBUG'], ASFLAGS=['-g'], LINKFLAGS=['-g'], OOCFLAGS=['-g'])
+    env.Append(ASFLAGS=['-g'], LINKFLAGS=['-g'], OOCFLAGS=['-g'])
 
 
 # run the child SConscripts
 Export('env')
 oos = SConscript('Src/SConscript')
 SConscript('Iso/SConscript', 'oos')
-
