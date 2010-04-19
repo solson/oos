@@ -62,7 +62,7 @@ PMM: class {
             if(bitmap allSet(elem)) continue
 
             for(bit in 0..32) {
-                if(bitmap isSet(elem, bit)) {
+                if(!bitmap isSet(elem, bit)) {
                     // We've found ourselves a free bit, allocate and return it.
                     bitmap set(elem, bit)
                     lastElement = elem
