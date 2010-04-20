@@ -3,6 +3,7 @@
 # os is needed to get the environment
 import os
 
+ooc = ARGUMENTS.get('compiler', 'ooc')
 
 # set up the default environment
 env = Environment(
@@ -20,7 +21,7 @@ env = Environment(
 	ASFLAGS=['-felf'],
 	LINK='ld',
 	LINKFLAGS=['-melf_i386', '-nostdlib'],
-    OOC='ooc',
+    OOC=ooc,
     OOCFLAGS=['-c', '-v', '-gcc', '-driver=sequence', '-nomain', '-gc=off', '+-m32', '+-nostdinc', '+-ffreestanding', '+-fno-stack-protector', '-IInclude', '-sourcepath=.', '-noclean', '-nolines'],
     ENV = os.environ, # pass outside env to build so ooc is in PATH and OOC_DIST exists
 )
