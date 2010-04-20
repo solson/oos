@@ -15,9 +15,14 @@ Bochs: cover {
     Ports outByte(0xE9, chr)
   }
 
-  printString: static func (str: String) {
+  print: static func (str: String) {
     for(i in 0..str length()) {
       printChar(str[i])
     }
+  }
+
+  println: static func (str: String) {
+    print(str)
+    printChar('\n')
   }
 }
