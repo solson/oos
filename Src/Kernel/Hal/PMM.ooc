@@ -73,6 +73,24 @@ PMM: class {
             lastElement += 1
         }
 
+        // Maybe some frames we've already looked through have become available
+        lastElement = 0
+
+        for(elem in lastElement..Bitmap size) {
+            if(bitmap allSet(elem)) continue
+
+            for(bit in 0..32) {
+                if(bitmap isSet(elem, bit)) {
+                    // We've found ourselves a free bit, allocate and return it.
+                    bitmap set(elem, bit)
+                    lastElement = elem
+                    return elem * 32 + bit
+                }
+            }
+
+            lastElement += 1
+        }
+
         // If still nothing was found, the entire bitmap is set, and there is
         // no free memory!
         panic("The physical memory manager did not find any free physical frames!");
