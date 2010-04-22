@@ -1,4 +1,4 @@
-import Printf, Hal/[Interrupts, Halt]
+import Printf, Hal/[Interrupts, System]
 
 panic: func(fmt: String, ...) {
 	args: VaList
@@ -9,5 +9,5 @@ panic: func(fmt: String, ...) {
 	vprintf(fmt, args)
 
 	Interrupts disable()
-	halt()
+	System halt()
 }

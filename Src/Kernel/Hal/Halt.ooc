@@ -1,1 +1,0 @@
-halt: extern proto func
