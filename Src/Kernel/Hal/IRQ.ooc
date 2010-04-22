@@ -33,7 +33,7 @@ IRQ: class {
     // Port commands
     PIC_EOI := static 0x20 // End of interrupt
 
-    handlerInstall: static func (irq: Int, handler: Func (Registers@)) {
+    handlerInstall: static func (irq: Int, handler: Func (Registers*)) {
         irqRoutines[irq] = handler
     }
 
