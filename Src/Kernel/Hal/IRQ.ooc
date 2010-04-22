@@ -1,7 +1,8 @@
 import IDT, Ports, Registers
 
 IRQ: class {
-    irqRoutines: static Pointer[16] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    irqRoutines: static Pointer[16] = [null, null, null, null, null, null,
+        null, null, null, null, null, null, null, null, null, null]
 
     // from exceptions.asm
     irq0: extern proto static func
