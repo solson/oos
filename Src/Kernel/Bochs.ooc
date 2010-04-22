@@ -2,11 +2,11 @@ import Hal/Ports
 
 Bochs: cover {
   // bochs uses this port to let us print to the bochs console
-  PORT_E9 := const static 0xE9
+  PORT_E9 := static 0xE9
 
   // read http://bochs.sourceforge.net/doc/docbook/development/iodebug.html
   // iodebug command port
-  IODEBUG_COMMAND := const static 0x8A00
+  IODEBUG_COMMAND := static 0x8A00
 
   // this function drops to the debugger in bochs, like a breakpoint
   // only works if you compile bochs with --enable-iodebug and
