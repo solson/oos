@@ -31,6 +31,12 @@ Color: class {
 Display: class {
     VIDEO_MEMORY := static 0xb8000 as UInt16*
 
+    INDEX_PORT := static 0x3d4
+    DATA_PORT  := static 0x3d5
+
+    CURSOR_LOW_PORT  := static 0xE
+    CURSOR_HIGH_PORT := static 0xF
+
     attr: static UInt8
     foreground: static Int
     background: static Int
@@ -69,11 +75,13 @@ Display: class {
     }
 
     updateCursor: static func {
-      i := cursor_y * 80 + cursor_x
-      Ports outByte(0x3d4, 14)
-      Ports outByte(0x3d5, i >> 8)
-      Ports outByte(0x3d4, 15)
-      Ports outByte(0x3d5, i)
+      position := cursor_y * 80 + cursor_x
+
+      Ports outByte(INDEX_PORT, CURSOR_LOW_PORT)
+      Ports outByte(DATA_PORT, position >> 8)
+
+      Ports outByte(INDEX_PORT, CURSOR_HIGH_PORT)
+      Ports outByte(DATA_PORT, position)
     }
 
     printChar: static func (chr: Char) {
