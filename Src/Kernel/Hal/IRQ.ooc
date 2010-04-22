@@ -22,6 +22,17 @@ IRQ: class {
     irq14: extern proto static func
     irq15: extern proto static func
 
+    //// Ports
+    // Master PIC
+    PIC1_COMMAND := static 0x20
+    PIC1_DATA    := static 0x21
+    // Slave PIC
+    PIC2_COMMAND  := static 0xA0
+    PIC2_DATA     := static 0xA1
+
+    // Port commands
+    PIC_EOI := static 0x20 // End of interrupt
+
     handlerInstall: static func (irq: Int, handler: Func (Registers@)) {
         irqRoutines[irq] = handler
     }
@@ -38,24 +49,28 @@ IRQ: class {
     *  Interrupt Controller (PICs - also called the 8259's) in
     *  order to make irq0 to 15 be remapped to IDT entries 32 to
     *  47 */
-    remap: static func {
-        Ports outByte(0x20, 0x11)
-        Ports outByte(0xA0, 0x11)
-        Ports outByte(0x21, 0x20)
-        Ports outByte(0xA1, 0x28)
-        Ports outByte(0x21, 0x04)
-        Ports outByte(0xA1, 0x02)
-        Ports outByte(0x21, 0x01)
-        Ports outByte(0xA1, 0x01)
-        Ports outByte(0x21, 0x00)
-        Ports outByte(0xA1, 0x00)
+    remapPIC: static func {
+        Ports outByte(PIC1_COMMAND, 0x11)
+        Ports outByte(PIC2_COMMAND, 0x11)
+
+        Ports outByte(PIC1_DATA, 0x20)
+        Ports outByte(PIC2_DATA, 0x28)
+
+        Ports outByte(PIC1_DATA, 0x04)
+        Ports outByte(PIC2_DATA, 0x02)
+
+        Ports outByte(PIC1_DATA, 0x01)
+        Ports outByte(PIC2_DATA, 0x01)
+
+        Ports outByte(PIC1_DATA, 0x00)
+        Ports outByte(PIC2_DATA, 0x00)
     }
 
     /* We first remap the interrupt controllers, and then we install
     *  the appropriate ISRs to the correct entries in the IDT. This
     *  is just like installing the exception handlers */
     setup: static func {
-        remap()
+        remapPIC()
 
         IDT setGate(32, irq0, 0x8, 0, 0, IDT INTR32)
         IDT setGate(33, irq1, 0x8, 0, 0, IDT INTR32)
@@ -94,11 +109,11 @@ IRQ: class {
             fn(regs&)
         }
 
-        /* We need to send an EOI to the
-        *  interrupt controllers too */
-        if(regs interruptNumber > 8) { /* Only send EOI to slave controller if it's involved (irqs 9 and up) */
-            Ports outByte(0xA0, 0x20)
+        // We need to send an EOI to the interrupt controllers when we are done
+        // Only send EOI to slave controller if it's involved (irqs 9 and up)
+        if(regs interruptNumber > 8) {
+            Ports outByte(PIC2_COMMAND, PIC_EOI)
         }
-        Ports outByte(0x20, 0x20)
+        Ports outByte(PIC1_COMMAND, PIC_EOI)
   }
 }
