@@ -35,8 +35,8 @@ PMM: class {
     bitmap: static Bitmap
 
     setup: static func {
-        // memUpper is given in kB, but we want B
-        memorySize = multiboot memUpper * 1024
+        // memUpper and memLower are given in kB, but we want B
+        memorySize = (multiboot memLower + multiboot memUpper) * 1024
 
         frameCount := memorySize / FRAME_SIZE
 
@@ -57,7 +57,7 @@ PMM: class {
         }
     }
 
-    allocFrame: func -> UInt {
+    allocFrame: static func -> UInt {
         for(elem in lastElement..Bitmap size) {
             if(bitmap allSet(elem)) continue
 
@@ -97,12 +97,12 @@ PMM: class {
         return 0
     }
 
-    allocFrame: func ~address (address: UInt) {
+    allocFrame: static func ~address (address: UInt) {
         address /= FRAME_SIZE
         bitmap set(address / 32, address % 32)
     }
 
-    freeFrame: func (address: UInt) {
+    freeFrame: static func (address: UInt) {
         address /= FRAME_SIZE
         bitmap clear(address / 32, address % 32)
     }

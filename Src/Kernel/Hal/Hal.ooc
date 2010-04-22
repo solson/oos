@@ -1,9 +1,12 @@
-import GDT, IDT, ISR, IRQ, Interrupts, SysCall, Display, Printf
+import GDT, IDT, ISR, IRQ, Interrupts, SysCall, Display, Printf, PMM, VMM
 
 Hal: class {
     setup: static func {
         GDT setup()
         Display setup()
+
+        PMM setup()
+        VMM setup()
 
         runInitializer("IDT", IDT setup)
         runInitializer("ISRs", ISR setup)

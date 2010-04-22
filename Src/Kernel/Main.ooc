@@ -30,10 +30,10 @@ kmain: func (mb: MultibootInfo*, magic: UInt32) {
 
     '\n' print()
 
-    "Memory Map:" println()
-    printMMap()
+//    "Memory Map:" println()
+//    printMMap()
 
-    '\n' print()
+//    '\n' print()
 
     panic("Splat: %i %s", 4, "(testing formatting abilities)")
 
