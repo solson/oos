@@ -38,7 +38,7 @@ IRQ: class {
     }
 
     handlerUninstall: static func (irq: Int) {
-        irqRoutines[irq] = 0
+        irqRoutines[irq] = null
     }
 
     /* Normally, IRQs 0 to 7 are mapped to entries 8 to 15. This
