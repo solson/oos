@@ -4,6 +4,8 @@ VMM: class {
     placementAddress := static kernelEnd& as Pointer
 
     setup: static func {
+
+        // Parse the memory map from GRUB
         i := multiboot mmapAddr
 
         while(i < multiboot mmapAddr + multiboot mmapLength) {
@@ -15,6 +17,8 @@ VMM: class {
                 mmapEntry@ baseAddrLow + mmapEntry@ lengthLow - 1,
                 mmapEntry@ lengthLow / 1024) println()
 
+            // Anything other than 1 means reserved. We set reserved memory to
+            // allocated in the physical memory manager.
             if(mmapEntry@ type != 1) {
                 for(j in (mmapEntry@ baseAddrLow)..(mmapEntry@ baseAddrLow + mmapEntry@ lengthLow)) {
                     PMM allocFrame(j)
