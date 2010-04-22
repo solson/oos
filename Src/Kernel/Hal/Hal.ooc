@@ -1,4 +1,4 @@
-import GDT, IDT, ISR, IRQ, Interrupts, SysCall, Display, Printf, PMM, VMM
+import GDT, IDT, ISR, IRQ, Interrupts, SysCall, Display, PMM, VMM
 
 Hal: class {
     setup: static func {
@@ -6,21 +6,15 @@ Hal: class {
         Display setup()
 
         PMM setup()
+        '\n' print()
         VMM setup()
+        '\n' print()
 
-        runInitializer("IDT", IDT setup)
-        runInitializer("ISRs", ISR setup)
-        runInitializer("IRQs", IRQ setup)
-        runInitializer("syscalls", SysCall setup)
+        IDT setup()
+        ISR setup()
+        IRQ setup()
+        SysCall setup()
 
-//        "Enabling interrupts... " print()
         Interrupts enable()
-//        "Done.\n" println()
     }
-}
-
-runInitializer: func (name: String, fn: Func) {
-//  "Initializing %s... " format(name) print()
-  fn()
-//  "Done." println()
 }

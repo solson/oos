@@ -17,7 +17,6 @@ VMM: class {
 
             if(mmapEntry@ type != 1) {
                 for(j in (mmapEntry@ baseAddrLow)..(mmapEntry@ baseAddrLow + mmapEntry@ lengthLow)) {
-//                    Bochs println("Allocating %i" format(j))
                     PMM allocFrame(j)
                 }
             }
