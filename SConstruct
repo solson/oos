@@ -28,7 +28,7 @@ env = Environment(
 
 
 # set our custom ooc stdlib location
-env.Append(ENV={'OOC_SDK' : 'Src/OocLib'})
+env.Append(ENV={'OOC_SDK' : 'Src/OocLib', 'ROCK_SDK' : 'Src/OocLib'})
 
 
 # set up the ooc builder
