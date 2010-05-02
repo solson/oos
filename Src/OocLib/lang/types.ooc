@@ -103,7 +103,7 @@ Char: cover from char {
 
 UChar: cover from unsigned char extends Char
 
-String: cover from char* {
+String: cover from Char* {
     new: static func~withLength (length: Int) -> This {
         result := gc_malloc(length + 1) as This
         result[length] = '\0'
