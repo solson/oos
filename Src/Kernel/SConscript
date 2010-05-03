@@ -11,6 +11,7 @@ kernel.Append(OOCFLAGS = ['-sourcepath=Src/Kernel', '-entrypoint=kmain'],
 
 ooclib = kernel.Ooc('ooc.lib', 'Main.ooc')
 Clean(ooclib, '#ooc_tmp')
+Clean(ooclib, '#rock_tmp')
 
 oos = kernel.Program('oos', [
   'Boot.asm',
@@ -20,4 +21,3 @@ oos = kernel.Program('oos', [
 Depends(oos, Glob('*.ooc'))
 
 Return('oos')
-
