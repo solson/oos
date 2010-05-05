@@ -12,8 +12,8 @@
 /* Imports:
 *
 * - IDT: So we can set gates for interrupts.
-* - Ports: So we can program the PICs
-* - Registers: A struct given to interrupt handlers */
+* - Ports: So we can program the PICs.
+* - Registers: A struct given to interrupt handlers. */
 import IDT, Ports, Registers
 
 /* `IRQ` is only used as a namespace. */
@@ -70,7 +70,7 @@ IRQ: class {
     *  what's happening. We send commands to the Programmable
     *  Interrupt Controller (PICs - also called the 8259's) in
     *  order to make irq0 to 15 be remapped to IDT entries 32 to
-    *  47 */
+    *  47. */
     remapPIC: static func {
         Ports outByte(PIC1_COMMAND, 0x11)
         Ports outByte(PIC2_COMMAND, 0x11)
@@ -90,7 +90,7 @@ IRQ: class {
 
     /* We first remap the interrupt controllers, and then we install
     *  the appropriate ISRs to the correct entries in the IDT. This
-    *  is just like installing the exception handlers */
+    *  is just like installing the exception handlers. */
     setup: static func {
         remapPIC()
 
@@ -119,19 +119,20 @@ IRQ: class {
     *  second controller (an IRQ from 8 to 15) gets an interrupt, you need
     *  to acknowledge the interrupt at BOTH controllers, otherwise, you
     *  only send an EOI command to the first controller. If you don't send
-    *  an EOI, you won't raise any more IRQs */
+    *  an EOI, you won't raise any more IRQs. */
     handler: unmangled(irqHandler) static func (regs: Registers@) {
         // This is a blank function pointer
         fn: Func (Registers*)
 
         /* Find out if we have a custom handler to run for this
-        *  IRQ, and then run it */
+        *  IRQ, and then run it. */
         fn = irqRoutines[regs interruptNumber - 32]
         if(fn)
             fn(regs&)
 
-        /* We need to send an EOI to the interrupt controllers when we are done
-        *  Only send EOI to slave controller if it's involved (irqs 9 and up) */
+        /* We need to send an EOI to the interrupt controllers when we are
+        *  done. Only send EOI to slave controller if it's involved (irqs 9 and
+        *  up). */
         if(regs interruptNumber > 8)
             Ports outByte(PIC2_COMMAND, PIC_EOI)
         Ports outByte(PIC1_COMMAND, PIC_EOI)
