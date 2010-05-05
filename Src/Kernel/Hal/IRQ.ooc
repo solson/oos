@@ -1,10 +1,29 @@
+/* Taken from <http://wiki.osdev.org/IRQ>:
+*
+*>  An interrupt is a message from a device, such as the keyboard, to the CPU,
+*>  telling it to immediately stop whatever it is currently doing and do
+*>  something else. For example, the keyboard controller sends an interrupt when
+*>  a key is pressed. To know what to do when a specifc interrupt arise, the CPU
+*>  has a table called the IDT which is setup by the OS, and stored in memory.
+*>  There are 256 interrupts, numbered from 0 to 255, but only 16 are used by
+*>  devices. These are called IRQs (Interrupt ReQuest) or hardware interrupts.
+*>  The 16 IRQs are numbered from 0 to 15. */
+
+/* Imports:
+*
+* - IDT: So we can set gates for interrupts.
+* - Ports: So we can program the PICs
+* - Registers: A struct given to interrupt handlers */
 import IDT, Ports, Registers
 
+/* `IRQ` is only used as a namespace. */
 IRQ: class {
+    /* An array storing pointers to the interrupt handler functions. */
     irqRoutines: static Pointer[16] = [null, null, null, null, null, null,
         null, null, null, null, null, null, null, null, null, null]
 
-    // from exceptions.asm
+    /* All of these `irq` functions are defined in Hal.asm. The `proto` keyword
+    *  is used because there is no C header that declares these functions. */
     irq0: extern proto static func
     irq1: extern proto static func
     irq2: extern proto static func
@@ -22,21 +41,24 @@ IRQ: class {
     irq14: extern proto static func
     irq15: extern proto static func
 
-    //// Ports
-    // Master PIC
+    /* These are the Master PIC command and data port numbers. */
     PIC1_COMMAND := static 0x20
     PIC1_DATA    := static 0x21
-    // Slave PIC
+
+    /* These are the Slave PIC command and data port numbers. */
     PIC2_COMMAND  := static 0xA0
     PIC2_DATA     := static 0xA1
 
-    // Port commands
-    PIC_EOI := static 0x20 // End of interrupt
+    /* This is a command that is sent to the PICs, telling them we are finished
+    *  handling the interrupt, and to resume regularily scheduled programming. */
+    PIC_EOI := static 0x20
 
+    /* Install a custom function to handle a certain IRQ number. */
     handlerInstall: static func (irq: Int, handler: Func (Registers*)) {
         irqRoutines[irq] = handler
     }
 
+    /* Uninstall the function that handles a certain IRQ number. */
     handlerUninstall: static func (irq: Int) {
         irqRoutines[irq] = null
     }
@@ -99,21 +121,19 @@ IRQ: class {
     *  only send an EOI command to the first controller. If you don't send
     *  an EOI, you won't raise any more IRQs */
     handler: unmangled(irqHandler) static func (regs: Registers@) {
-        /* This is a blank function pointer */
+        // This is a blank function pointer
         fn: Func (Registers*)
 
         /* Find out if we have a custom handler to run for this
-        *  IRQ, and then finally, run it */
+        *  IRQ, and then run it */
         fn = irqRoutines[regs interruptNumber - 32]
-        if(fn) {
+        if(fn)
             fn(regs&)
-        }
 
-        // We need to send an EOI to the interrupt controllers when we are done
-        // Only send EOI to slave controller if it's involved (irqs 9 and up)
-        if(regs interruptNumber > 8) {
+        /* We need to send an EOI to the interrupt controllers when we are done
+        *  Only send EOI to slave controller if it's involved (irqs 9 and up) */
+        if(regs interruptNumber > 8)
             Ports outByte(PIC2_COMMAND, PIC_EOI)
-        }
         Ports outByte(PIC1_COMMAND, PIC_EOI)
   }
 }
