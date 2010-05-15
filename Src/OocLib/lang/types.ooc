@@ -1,6 +1,72 @@
-include stdbool, stdint, c_types
-
 import Hal/Display, Printf
+
+include stdbool, stdint, c_types
+include ./array
+
+/**
+ * objects
+ */
+Object: abstract class {
+
+    class: Class
+
+    /// Instance initializer: set default values for a new instance of this class
+    __defaults__: func {}
+
+    /// Finalizer: cleans up any objects belonging to this instance
+    __destroy__: func {}
+
+    /** return true if *class* is a subclass of *T*. */
+    instanceOf: final func (T: Class) -> Bool {
+        if(!this) return false
+        class inheritsFrom(T)
+    }
+
+    /*
+    toString: func -> String {
+        "%s@%p" format(class name, this)
+    }
+    */
+
+}
+
+Class: abstract class {
+
+    /// Number of octets to allocate for a new instance of this class
+    instanceSize: SizeT
+
+    /// Number of octets to allocate to hold an instance of this class
+    /// it's different because for classes, instanceSize may greatly
+    /// vary, but size will always be equal to the size of a Pointer.
+    /// for basic types (e.g. Int, Char, Pointer), size == instanceSize
+    size: SizeT
+
+    /// Human readable representation of the name of this class
+    name: String
+
+    /// Pointer to instance of super-class
+    super: const Class
+
+    /// Create a new instance of the object of type defined by this class
+    alloc: final func ~_class -> Object {
+        object := gc_malloc(instanceSize) as Object
+        if(object) {
+            object class = this
+        }
+        return object
+    }
+
+    inheritsFrom: final func ~_class (T: Class) -> Bool {
+        if(this == T) return true
+        return (super ? super inheritsFrom(T) : false)
+    }
+
+}
+
+Array: cover from _lang_array__Array {
+    length: extern Int
+    data: extern Pointer
+}
 
 /**
  * Pointer type
@@ -195,64 +261,4 @@ Range: cover {
     }
 }
 
-SizeT: cover from unsigned int
-
-/**
- * objects
- */
-Class: abstract class {
-
-    /// Number of octets to allocate for a new instance of this class
-    instanceSize: SizeT
-
-    /// Number of octets to allocate to hold an instance of this class
-    /// it's different because for classes, instanceSize may greatly
-    /// vary, but size will always be equal to the size of a Pointer.
-    /// for basic types (e.g. Int, Char, Pointer), size == instanceSize
-    size: SizeT
-
-    /// Human readable representation of the name of this class
-    name: String
-
-    /// Pointer to instance of super-class
-    super: const Class
-
-    /** create a new instance of the object of type defined by this class */
-    alloc: final func -> Object {
-        object := gc_malloc(instanceSize) as Object
-        if(object) {
-            object class = this
-        }
-        return object
-    }
-
-    /** return true if `this` is a subclass of *T* . */
-    inheritsFrom: final func (T: Class) -> Bool {
-        if(this == T) return true
-        return (super ? super as This inheritsFrom(T) : false)
-    }
-
-    // workaround needed to avoid C circular dependency with _ObjectClass
-    __defaults__: static Func (Class)
-    __destroy__: static Func (Class)
-    __load__: static Func
-
-}
-
-Object: abstract class {
-
-    class: Class
-
-    /// Instance initializer: set default values for a new instance of this class
-    __defaults__: func {}
-
-    /// Finalizer: cleans up any objects belonging to this instance
-    __destroy__: func {}
-
-    /** return true if *class* is a subclass of *T*. */
-    instanceOf: final func (T: Class) -> Bool {
-        if(!this) return false
-        class inheritsFrom(T)
-    }
-
-}
+SizeT: cover from size_t
