@@ -1,4 +1,4 @@
-import Hal/Display, Printf
+import Hal/[Display, Panic], Printf
 
 include stdbool, stdint, c_types
 include ./array
@@ -262,3 +262,27 @@ Range: cover {
 }
 
 SizeT: cover from size_t
+
+/**
+* exceptions
+*/
+Exception: class {
+
+    origin: Class
+    msg : String
+
+    init: func ~originMsg (=origin, =msg) {}
+    init: func ~noOrigin (=msg) {}
+
+    getMessage: func -> String {
+        if(origin)
+            return "[%s in %s]: %s\n" format(this as Object class name, origin name, msg)
+        else
+            return "[%s]: %s\n" format(this as Object class name, msg)
+    }
+
+    throw: func {
+        panic(getMessage())
+    }
+
+}

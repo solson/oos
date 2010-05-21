@@ -22,12 +22,15 @@ IDT: class {
     TRAP16 := static 0x7
     TRAP32 := static 0xf
 
-    idt: static IDTGate[256]
+//    idt: static IDTGate[256]
+    idt: static IDTGate*
 
     // defined in IDT.asm
     load: extern(loadIDT) proto static func (IDTDescriptor*)
 
     setup: static func {
+        idt = gc_malloc(IDTGate size * 256)
+
         idtd: IDTDescriptor
         idtd offset = idt as UInt32
         idtd size = sizeof(IDTGate) * 256 - 1

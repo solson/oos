@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-#define _lang_array__Array_new(type, size) ((_lang_array__Array) { size, malloc(size * sizeof(type)) });
+#define _lang_array__Array_new(type, size) ((_lang_array__Array) { size, lang_memory__gc_malloc(size * sizeof(type)) });
 
 #define _lang_array__Array_get(array, index, type) ( \
     (index < 0 || index >= array.length) ? \
@@ -14,7 +14,6 @@
 #define _lang_array__Array_set(array, index, type, value) \
     if(index < 0 || index >= array.length) { \
         lang_types__Exception_throw(lang_types__Exception_new_noOrigin(lang_types__String_format("when writing to array index = %d out of bounds [0, %d)\n", index, array.length))); \
-        exit(1); \
     } \
     ((type* restrict) array.data)[index] = value;
 
