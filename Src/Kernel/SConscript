@@ -9,7 +9,7 @@ kernel.Append(OOCFLAGS = ['-sourcepath=Src/Kernel', '-entrypoint=kmain'],
               LINKFLAGS = ['-T', File('Linker.ld')],
               LIBS = [hal])
 
-ooclib = kernel.Ooc('ooc.lib', 'Main.ooc')
+ooclib = kernel.ooc('ooc.lib', 'Main.ooc')
 Clean(ooclib, '#ooc_tmp')
 Clean(ooclib, '#rock_tmp')
 
@@ -18,6 +18,8 @@ oos = kernel.Program('oos', [
   ooclib
 ])
 
-Depends(oos, Glob('*.ooc'))
+Depends(ooclib, Glob('*.ooc'))
+Depends(ooclib, Glob('*/*.ooc'))
+Depends(ooclib, Glob('#Src/OocLib/*/*.ooc'))
 
 Return('oos')

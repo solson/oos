@@ -33,7 +33,7 @@ env.Append(ENV={'OOC_SDK' : 'Src/OocLib', 'ROCK_SDK' : 'Src/OocLib'})
 
 # set up the ooc builder
 ooc_builder = Builder(action = '$OOC $OOCFLAGS $SOURCE -outlib=$TARGET')
-env.Append(BUILDERS = {'Ooc' : ooc_builder})
+env.Append(BUILDERS = {'ooc' : ooc_builder})
 
 
 # default to debug mode. `scons debug=0` to build without debugging symbols
