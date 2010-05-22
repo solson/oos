@@ -1,5 +1,5 @@
 default 0
-#timeout 0
+timeout 0
 color light-blue/black light-cyan/blue
 
 title oos
