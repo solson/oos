@@ -9,23 +9,23 @@ println: func (str: String) {
     Display printChar('\n')
 }
 
-Color: class {
-    black        := static 0x0
-    blue         := static 0x1
-    green        := static 0x2
-    cyan         := static 0x3
-    red          := static 0x4
-    magenta      := static 0x5
-    brown        := static 0x6
-    lightGrey    := static 0x7
-    darkGrey     := static 0x8
-    lightBlue    := static 0x9
-    lightGreen   := static 0xa
-    lightCyan    := static 0xb
-    lightRed     := static 0xc
-    lightMagenta := static 0xd
-    yellow       := static 0xe
-    white        := static 0xf
+Color: enum {
+    black = 0
+    blue
+    green
+    cyan
+    red
+    magenta
+    brown
+    lightGrey
+    darkGrey
+    lightBlue
+    lightGreen
+    lightCyan
+    lightRed
+    lightMagenta
+    yellow
+    white
 }
 
 Display: class {
@@ -38,8 +38,8 @@ Display: class {
     CURSOR_HIGH_PORT := static 0xF
 
     attr: static UInt8
-    foreground: static Int
-    background: static Int
+    foreground: static Color
+    background: static Color
     cursor_x: static Int
     cursor_y: static Int
 
@@ -49,17 +49,17 @@ Display: class {
       clearScreen()
     }
 
-    setAttr: static func (fg, bg: Int) {
+    setAttr: static func (fg, bg: Color) {
       foreground = fg
       background = bg
       attr = (fg & 0xf) | bg << 4
     }
 
-    setForeground: static func (fg: Int) {
+    setForeground: static func (fg: Color) {
       setAttr(fg, background)
     }
 
-    setBackground: static func (bg: Int) {
+    setBackground: static func (bg: Color) {
       setAttr(foreground, bg)
     }
 
