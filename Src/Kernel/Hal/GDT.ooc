@@ -31,7 +31,7 @@ GDT: class {
 
         gdtd: GDTDescriptor
         gdtd offset = gdt as UInt32
-        gdtd size = sizeof(GDTEntry) * 3 - 1
+        gdtd size = GDTEntry size * 3 - 1
 
         zeroMemory(gdt, gdtd size)
 

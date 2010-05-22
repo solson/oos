@@ -33,7 +33,7 @@ IDT: class {
 
         idtd: IDTDescriptor
         idtd offset = idt as UInt32
-        idtd size = sizeof(IDTGate) * 256 - 1
+        idtd size = IDTGate size * 256 - 1
 
         zeroMemory(idt, idtd size)
 

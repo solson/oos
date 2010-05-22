@@ -26,7 +26,7 @@ VMM: class {
                 }
             }
 
-            i += mmapEntry@ size + sizeof(mmapEntry@ size)
+            i += mmapEntry@ size + mmapEntry@ size class size
         }
     }
 

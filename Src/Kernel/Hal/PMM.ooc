@@ -5,8 +5,8 @@ Bitmap: class {
     data: UInt32*
 
     init: func (=size) {
-        data = gc_malloc(sizeof(UInt32) * size) as UInt32*
-        memset(data, 0 as UInt32, sizeof(UInt32) * size)
+        data = gc_malloc(UInt32 size * size) as UInt32*
+        memset(data, 0 as UInt32, UInt32 size * size)
     }
 
     set: func (index, bit: UInt) {

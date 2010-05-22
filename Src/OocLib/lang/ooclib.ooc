@@ -6,6 +6,3 @@ va_arg: extern(__builtin_va_arg) func (VaList, ...) -> Int // ap, type
 va_end: extern(__builtin_va_end) func (VaList) // ap
 va_copy: extern(__builtin_va_copy) func (VaList, VaList) // dest, src
 //}
-
-sizeof: extern func (...) -> SizeT
-
