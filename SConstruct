@@ -3,7 +3,7 @@
 # os is needed to get the environment
 import os
 
-ooc = ARGUMENTS.get('compiler', 'ooc')
+ooc = ARGUMENTS.get('compiler', 'rock')
 
 # set up the default environment
 env = Environment(
