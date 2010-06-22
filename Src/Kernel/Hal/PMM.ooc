@@ -14,7 +14,7 @@ Bitmap: class {
     }
 
     isSet: func (index, bit: UInt) -> Bool {
-        data[index] & (1 << bit)
+        (data[index] & (1 << bit)) as Bool
     }
 
     // This is a quick way to check if all the bits in an element are set.
