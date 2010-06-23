@@ -96,7 +96,7 @@ PMM: class {
 
         // If still nothing was found, the entire bitmap is set, and there is
         // no free memory!
-        panic("The physical memory manager did not find any free physical frames!");
+        panic("The physical memory manager did not find any free physical frames!")
         return 0
     }
 
