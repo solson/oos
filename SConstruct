@@ -32,7 +32,7 @@ env.Append(ENV={'OOC_SDK' : 'Src/OocLib', 'ROCK_SDK' : 'Src/OocLib'})
 
 
 # set up the ooc builder
-ooc_builder = Builder(action = '$OOC $OOCFLAGS $SOURCE -outlib=$TARGET')
+ooc_builder = Builder(action = '$OOC $OOCFLAGS $SOURCE -staticlib=$TARGET')
 env.Append(BUILDERS = {'ooc' : ooc_builder})
 
 
