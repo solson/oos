@@ -21,8 +21,8 @@ kmain: func (mb: MultibootInfo*, magic: UInt32) {
     Display setForeground(Color lightGrey)
     '\n' print()
 
-    "Kernel Start: 0x%x" format(kernelStart&) println()
-    "Kernel End:   0x%x" format(kernelEnd&) println()
+    "Kernel Start: %p" format(kernelStart&) println()
+    "Kernel End:   %p" format(kernelEnd&) println()
     "Kernel Size:  %i kB" format((kernelEnd& as Int - kernelStart& as Int) / 1024) println()
     '\n' print()
 }
