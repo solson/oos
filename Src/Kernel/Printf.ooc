@@ -45,6 +45,15 @@ m_printn: func (str: String, maxlen, len: Int, n: UInt, base, size, flags, preci
 
     /* Preprocess the flags. */
 
+    if(flags & TF_ALTERNATE && base == 16) {
+        str[len] = '0'
+        if(flags & TF_SMALL)
+            str[len + 1] = 'x'
+        else
+            str[len + 1] = 'X'
+        len += 2
+    }
+
     if(flags & TF_SMALL)
         digits = "0123456789abcdefghijklmnopqrstuvwxyz"
 
@@ -208,7 +217,6 @@ vsnprintf: func (str: String, size: SizeT, fmt: String, ap: VaList) -> Int {
     p: Char*
     flags, fieldwidth, precision, i: Int
     sval: Char*
-    breakloop := 0
 
     /* Leave room for the null byte. */
     if(size != 0)
@@ -219,10 +227,8 @@ vsnprintf: func (str: String, size: SizeT, fmt: String, ap: VaList) -> Int {
         if(p@ != '%') {
             if(len < size) {
                 str[len] = p@
-                len += 1
-            } else {
-                len += 1
             }
+            len += 1
             p += 1
             continue
         }
@@ -238,10 +244,8 @@ vsnprintf: func (str: String, size: SizeT, fmt: String, ap: VaList) -> Int {
                 case '-' => flags |= TF_LEFT
                 case ' ' => flags |= TF_SPACE
                 case '+' => flags |= TF_EXP_SIGN
-                case => breakloop = 1
+                case => break
             }
-            if (breakloop == 1)
-                break
         }
 
         /* Find the field width. */
@@ -256,7 +260,7 @@ vsnprintf: func (str: String, size: SizeT, fmt: String, ap: VaList) -> Int {
         /* Find the precision. */
         precision = -1
         if(p@ == '.') {
-            p@ += 1
+            p += 1
             precision = 0
             if(p@ == '*') {
                 precision = va_arg(ap, __int)
@@ -301,6 +305,12 @@ vsnprintf: func (str: String, size: SizeT, fmt: String, ap: VaList) -> Int {
                                  va_arg(ap, __uint), 16,
                                  fieldwidth, flags|TF_SMALL, precision)
             case 'X' =>
+                len = m_printn(str, size, len,
+                                 va_arg(ap, __uint), 16,
+                                 fieldwidth, flags, precision)
+            case 'p' =>
+                flags |= TF_ALTERNATE
+                flags |= TF_SMALL
                 len = m_printn(str, size, len,
                                  va_arg(ap, __uint), 16,
                                  fieldwidth, flags, precision)
