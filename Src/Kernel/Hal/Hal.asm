@@ -31,7 +31,7 @@ loadGDT:
 global loadIDT
 loadIDT:
    push  eax
-   mov   eax, [esp+0x8          ; get the struct pointer
+   mov   eax, [esp+0x8]         ; get the struct pointer
    lidt  [eax]                  ; load the IDT
    pop   eax
    ret                          ; return
