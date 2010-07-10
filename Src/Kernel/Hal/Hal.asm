@@ -2,117 +2,106 @@ bits 32
 
 section .text
 
-;; loadGDT: func (GDTDescriptor*)
+;;; loadGDT: func (GDTDescriptor*)
 global loadGDT
-loadGDT:
-    push eax
-    mov eax, [esp+0x8] ; get the struct pointer
-    lgdt [eax]         ; load the GDT
-    pop eax
+loadGDT: 
+   push  eax
+   mov   eax, [esp+0x8]         ; get the struct pointer
+   lgdt  [eax]                  ; load the GDT
+   pop   eax
 
-    ;; Reload CS register containing code selector:
-    ;; We can't directly alter CS, so we far jump to change it
-    jmp 0x08:.reload_CS ; 0x08 points at the new code selector (2nd in our GDT)
+   ;; Reload CS register containing code selector:
+   ;; We can't directly alter CS, so we far jump to change it
+   jmp   0x08:.reload_CS        ; 0x08 points at the new code selector (2nd in our GDT)
 .reload_CS:
-    ;; Reload data segment registers:
-    mov ax, 0x10 ; 0x10 points at the new data selector (3rd in our GDT)
-    mov ds, ax
-    mov es, ax
-    mov fs, ax
-    mov gs, ax
-    mov ss, ax
+   ;; Reload data segment registers:
+   mov   ax, 0x10               ; 0x10 points at the new data selector (3rd in our GDT)
+   mov   ds, ax
+   mov   es, ax
+   mov   fs, ax
+   mov   gs, ax
+   mov   ss, ax
 
-    ;; return from loadGDT
-    ret
+   ;; return from loadGDT
+   ret   
 
-
-;; loadIDT: func (IDTDescriptor*)
+;;; loadIDT: func (IDTDescriptor*)
 global loadIDT
 loadIDT:
-    push eax
-    mov eax, [esp+0x8]  ; get the struct pointer
-    lidt [eax]          ; load the IDT
-    pop eax
-    ret                 ; return
+   push  eax
+   mov   eax, [esp+0x8          ; get the struct pointer
+   lidt  [eax]                  ; load the IDT
+   pop   eax
+   ret                          ; return
 
-
-;; enableInterrupts: func
+;;; enableInterrupts: func
 global enableInterrupts
 enableInterrupts:
-	sti
-	ret
+   sti   
+   ret   
 
-
-;; disableInterrupts: func
+;;; disableInterrupts: func
 global disableInterrupts
 disableInterrupts:
-	cli
-	ret
+   cli   
+   ret   
 
-
-;; halt: func
+;;; halt: func
 global halt
 halt:
-	hlt
+   hlt   
 
-
-
+   
 ;;;
 ;;; Ports
 ;;;
 
-;; outByte: func (port: UInt16, val: UInt8)
+;;; outByte: func (port: UInt16, val: UInt8) 
 global outByte
 outByte:
-	mov eax, [esp+8] ; val
-	mov edx, [esp+4] ; port
-	out dx, al
-	ret
+   mov   eax, [esp+8]           ; val
+   mov   edx, [esp+4]           ; port
+   out   dx, al
+   ret   
 
-
-;; inByte: func (port: UInt16) -> UInt8
+;;; inByte: func (port: UInt16) -> UInt8
 global inByte
 inByte:
-	mov edx, [esp+4] ; port
-	in al, dx
-	ret
+   mov   edx, [esp+4]           ; port
+   in    al, dx
+   ret   
 
-
-;; outWord: func (port: UInt16, val: UInt16)
+;;; outWord: func (port: UInt16, val: UInt16)
 global outWord
 outWord:
-	mov eax, [esp+8] ; val
-	mov edx, [esp+4] ; port
-	out dx, ax
-	ret
+   mov   eax, [esp+8]           ; val
+   mov   edx, [esp+4]           ; port
+   out   dx, ax
+   ret   
 
-
-;; inWord: func (port: UInt16) -> UInt16
+;;; inWord: func (port: UInt16) -> UInt16
 global inWord
 inWord:
-	mov edx, [esp+4] ; port
-	in ax, dx
-	ret
+   mov   edx, [esp+4]           ; port
+   in    ax, dx
+   ret   
 
-
-;; outLong: func (port: UInt16, val: UInt32)
+;;; outLong: func (port: UInt16, val: UInt32)
 global outLong
 outLong:
-	mov eax, [esp+8] ; val
-	mov edx, [esp+4] ; port
-	out dx, eax
-	ret
+   mov   eax, [esp+8]           ; val
+   mov   edx, [esp+4]           ; port
+   out   dx, eax
+   ret   
 
-
-;; inLong: func (port: UInt16) -> UInt32
+;;; inLong: func (port: UInt16) -> UInt32
 global inLong
 inLong:
-	mov edx, [esp+4] ; port
-	in eax, dx
-	ret
+   mov   edx, [esp+4]           ; port
+   in    eax, dx
+   ret   
 
-
-
+   
 ;;;
 ;;; Exceptions, ISRs, IRQs, SysCalls
 ;;;
@@ -122,68 +111,68 @@ extern irqHandler
 
 global isrSyscall
 isrSyscall:
-	cli
-	push 0
-	push 0x80
-	jmp isrCommon
-	iret
+   cli   
+   push  0
+   push  0x80
+   jmp   isrCommon
+   iret  
 
 %macro HANDLER_COMMON 1
 %1Common:
-	pusha
-	push ds
-	push es
-	push fs
-	push gs
-	mov ax, 0x10
-	mov ds, ax
-	mov es, ax
-	mov fs, ax
-	mov gs, ax
-	mov eax, esp
-	push eax
-	mov eax, %1Handler
-	call eax
-	pop eax
-	pop gs
-	pop fs
-	pop es
-	pop ds
-	popa
-	add esp, 8
-	iret
+   pusha 
+   push  ds
+   push  es
+   push  fs
+   push  gs
+   mov   ax, 0x10
+   mov   ds, ax
+   mov   es, ax
+   mov   fs, ax
+   mov   gs, ax
+   mov   eax, esp
+   push  eax
+   mov   eax, %1Handler
+   call  eax
+   pop   eax
+   pop   gs
+   pop   fs
+   pop   es
+   pop   ds
+   popa  
+   add   esp, 8
+   iret  
 %endmacro
 
-; ISRs!
+;;; ISRs
 
 %macro ISR_COMMON 1
 global isr%1
 isr%1:
-	cli
-	push byte 0
-	push byte %1
-	jmp isrCommon
-	iret
+   cli   
+   push  byte 0
+   push  byte %1
+   jmp   isrCommon
+   iret  
 %endmacro
 
 %macro ISR_ABORT 1
-	ISR_COMMON %1
+   ISR_COMMON %1
 %endmacro
 
 %macro ISR_FAULT 1
-	ISR_COMMON %1
+   ISR_COMMON %1
 %endmacro
 
 %macro ISR_INTR 1
-	ISR_COMMON %1
+   ISR_COMMON %1
 %endmacro
 
 %macro ISR_RESV 1
-	ISR_COMMON %1
+   ISR_COMMON %1
 %endmacro
 
 %macro ISR_TRAP 1
-	ISR_COMMON %1
+   ISR_COMMON %1
 %endmacro
 
 section .text
@@ -223,16 +212,16 @@ ISR_RESV 31
 
 HANDLER_COMMON isr
 
-; IRQs!
+;;; IRQs
 
 %macro IRQ_COMMON 2
 global irq%1
 irq%1:
-	cli
-	push byte 0
-	push byte %2
-	jmp irqCommon
-	iret
+   cli   
+   push  byte 0
+   push  byte %2
+   jmp   irqCommon
+   iret  
 %endmacro
 
 IRQ_COMMON 0,  32
