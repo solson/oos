@@ -2,6 +2,10 @@ bits 32
 
 section .text
 
+;;;
+;;; Miscellaneous
+;;; 
+   
 ;;; loadGDT: func (GDTDescriptor*)
 global loadGDT
 loadGDT: 
@@ -9,7 +13,6 @@ loadGDT:
    mov   eax, [esp+0x8]         ; get the struct pointer
    lgdt  [eax]                  ; load the GDT
    pop   eax
-
    ;; Reload CS register containing code selector:
    ;; We can't directly alter CS, so we far jump to change it
    jmp   0x08:.reload_CS        ; 0x08 points at the new code selector (2nd in our GDT)
@@ -21,7 +24,6 @@ loadGDT:
    mov   fs, ax
    mov   gs, ax
    mov   ss, ax
-
    ;; return from loadGDT
    ret   
 
