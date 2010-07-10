@@ -37,36 +37,36 @@ Display: class {
     CURSOR_LOW_PORT  := static 0xE
     CURSOR_HIGH_PORT := static 0xF
 
-    attr: static UInt8
-    foreground: static Color
-    background: static Color
+    color: static UInt8
+    fg: static Color
+    bg: static Color
     cursor_x: static Int
     cursor_y: static Int
 
     setup: static func {
         // default to light grey on black like the BIOS
-        setAttr(Color lightGrey, Color black)
+        setColor(Color lightGrey, Color black)
         clearScreen()
     }
 
-    setAttr: static func (fg, bg: Color) {
-        foreground = fg
-        background = bg
-        attr = (fg & 0xf) | bg << 4
+    setColor: static func (fg, bg: Color) {
+        This fg = fg
+        This bg = bg
+        This color = (fg & 0xf) | bg << 4
     }
 
-    setForeground: static func (fg: Color) {
-        setAttr(fg, background)
+    setFgColor: static func (fg: Color) {
+        setColor(fg, This bg)
     }
 
-    setBackground: static func (bg: Color) {
-        setAttr(foreground, bg)
+    setBgColor: static func (bg: Color) {
+        setColor(This fg, bg)
     }
 
     clearScreen: static func {
         for (row in 0..25) {
             for (col in 0..80) {
-                VIDEO_MEMORY[row * 80 + col] = ' ' | attr << 8
+                VIDEO_MEMORY[row * 80 + col] = ' ' | color << 8
             }
         }
         cursor_x = 0
@@ -116,7 +116,7 @@ Display: class {
         // Index = [(y * width) + x]
         else if(chr >= ' ') {
             i := cursor_y * 80 + cursor_x
-            VIDEO_MEMORY[i] = chr | attr << 8
+            VIDEO_MEMORY[i] = chr | color << 8
             cursor_x += 1
         }
 
