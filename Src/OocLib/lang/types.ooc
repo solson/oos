@@ -192,6 +192,7 @@ String: cover from Char* {
         print(this)
     }
 
+    /** return a string formatted using *this* as template. */
     format: func (...) -> This {
         list:VaList
 
@@ -206,6 +207,23 @@ String: cover from Char* {
         va_end(list)
 
         return output
+    }
+
+    printf: func (...) {
+        list: VaList
+
+        va_start(list, this)
+        vprintf(this, list)
+        va_end(list)
+    }
+
+    printfln: func (...) {
+        list: VaList
+
+        va_start(list, this)
+        vprintf(this, list)
+        va_end(list)
+        '\n' print()
     }
 }
 

@@ -56,8 +56,8 @@ PMM: class {
             bitmap set(bitmap size - 1, i)
         }
 
-        "Memory size: %i kB" format(multiboot memLower + multiboot memUpper) println()
-        "Bitmap size: %i B" format(bitmap size * 4) println()
+        "Memory size: %i kB" printfln(multiboot memLower + multiboot memUpper)
+        "Bitmap size: %i B" printfln(bitmap size * 4)
     }
 
     allocFrame: static func -> UInt {
