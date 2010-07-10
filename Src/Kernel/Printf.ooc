@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2010 Nick Markwell
+ Copyright (c) 2010 Nick Markwell and Scott Olson
  Copyright (c) 2009 Martin Brandenburg
 
  Permission is hereby granted, free of charge, to any person
@@ -199,7 +199,7 @@ vprintf: func (fmt: String, ap: VaList) -> Int {
 
     str print()
 
-    free(str);
+    free(str)
 
     return len
 }
@@ -295,7 +295,7 @@ vsnprintf: func (str: String, size: SizeT, fmt: String, ap: VaList) -> Int {
             case 'o' =>
                 len = m_printn(str, size, len,
                                  va_arg(ap, __uint), 8,
-                                 fieldwidth, flags, precision);
+                                 fieldwidth, flags, precision)
             case 'u' =>
                 len = m_printn(str, size, len,
                                  va_arg(ap, __uint), 10,
@@ -320,7 +320,7 @@ vsnprintf: func (str: String, size: SizeT, fmt: String, ap: VaList) -> Int {
                     while(i < fieldwidth) {
                         i += 1
                         if(len < size) {
-                            str[len] = ' ';
+                            str[len] = ' '
                             len += 1
                         } else {
                             len += 1
