@@ -22,12 +22,9 @@ Object: abstract class {
         class inheritsFrom(T)
     }
 
-    /*
     toString: func -> String {
-        "%s@%p" format(class name, this)
+        "%s@%08p" format(class name, this)
     }
-    */
-
 }
 
 Class: abstract class {
