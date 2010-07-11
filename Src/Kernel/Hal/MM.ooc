@@ -1,39 +1,23 @@
-import Multiboot, Panic
+import Kernel, Multiboot, Panic
+import structs/Bitmap
 
-Bitmap: class {
-    size: UInt
-    data: UInt32*
+MM: class {
+    /// Memory region covered by one frame. (4kB)
+    FRAME_SIZE := static 4096
 
-    init: func (=size) {
-        data = gc_malloc(UInt32 size * size) as UInt32*
-        memset(data, 0 as UInt32, UInt32 size * size)
-    }
+    /// Amount of memory (in bytes) in the computer.
+    memorySize: static SizeT
+    
+    /// Address used for pre-heap memory allocation.
+    placementAddress := static kernelEnd& as Pointer
 
-    set: func (index, bit: UInt) {
-        data[index] |= (1 << bit)
-    }
-
-    isSet: func (index, bit: UInt) -> Bool {
-        (data[index] & (1 << bit)) as Bool
-    }
-
-    // This is a quick way to check if all the bits in an element are set.
-    allSet: func (index: UInt) -> Bool {
-        data[index] == 0xFFFFFFFF
-    }
-
-    clear: func (index, bit: UInt) {
-        data[index] &= ~(1 << bit)
-    }
-}
-
-PMM: class {
-    FRAME_SIZE := static 4096 // 4kB
-
-    memorySize: static UInt
-    lastElement: static UInt
+    /** Bitmap frames (each frame is a 4 kB memory area). If a bit is
+        set, the corresponding frame is used. */
     bitmap: static Bitmap
 
+    /// The last-used index in the Bitmap array.
+    lastElement: static UInt
+    
     setup: static func {
         // memUpper and memLower are given in kB, but we want B
         memorySize = (multiboot memLower + multiboot memUpper) * 1024
@@ -57,7 +41,41 @@ PMM: class {
         }
 
         "Memory size: %i kB" printfln(multiboot memLower + multiboot memUpper)
-        "Bitmap size: %i B" printfln(bitmap size * 4)
+        "Bitmap size: %i B\n" printfln(bitmap size * 4)
+
+        // Parse the memory map from GRUB
+        i := multiboot mmapAddr
+
+        "Memory map:" println()
+
+        while(i < multiboot mmapAddr + multiboot mmapLength) {
+            mmapEntry := i as MMapEntry*
+
+            "0x%08x-0x%08x (%s)" printfln(
+                mmapEntry@ baseAddrLow,
+                mmapEntry@ baseAddrLow + mmapEntry@ lengthLow - 1,
+                mmapEntry@ type == 1 ? "Available" : "Reserved")
+
+            // Anything other than 1 means reserved. Mark every frame in this
+            // region as used.
+            if(mmapEntry@ type != 1) {
+                j := mmapEntry@ baseAddrLow
+                while(j < mmapEntry@ baseAddrLow + mmapEntry@ lengthLow) {
+                    allocFrame(j)
+                    j += FRAME_SIZE
+                }
+            }
+
+            i += mmapEntry@ size + mmapEntry@ size class size
+        }
+
+        '\n' print()
+    }
+
+    alloc: static func (size: SizeT) -> Pointer {
+        mem := placementAddress
+        placementAddress += size
+        return mem
     }
 
     allocFrame: static func -> UInt {
