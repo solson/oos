@@ -79,6 +79,10 @@ MM: class {
     }
 
     allocFrame: static func -> UInt {
+        // If we can't find a free frame, we will try again from the
+        // beginning if the lastElement wasn't already 0.
+        tryAgain := lastElement != 0
+        
         for(elem in lastElement..Bitmap size) {
             if(bitmap allSet(elem)) continue
 
@@ -95,23 +99,11 @@ MM: class {
         }
 
         // Maybe some frames we've already looked through have become available
-        lastElement = 0
-
-        for(elem in lastElement..Bitmap size) {
-            if(bitmap allSet(elem)) continue
-
-            for(bit in 0..32) {
-                if(bitmap isSet(elem, bit)) {
-                    // We've found ourselves a free bit, allocate and return it.
-                    bitmap set(elem, bit)
-                    lastElement = elem
-                    return elem * 32 + bit
-                }
-            }
-
-            lastElement += 1
+        if(tryAgain) {
+            lastElement = 0
+            allocFrame()
         }
-
+        
         // If still nothing was found, the entire bitmap is set, and there is
         // no free memory!
         panic("The physical memory manager did not find any free physical frames!")
