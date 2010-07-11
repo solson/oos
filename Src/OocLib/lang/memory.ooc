@@ -1,8 +1,8 @@
-import Hal/VMM
+import Hal/MM
 
 // Memory allocation functions
 gc_malloc: func (size: SizeT) -> Pointer {
-    VMM alloc(size)
+    MM alloc(size)
 }
 
 gc_malloc_atomic: func (size: SizeT) -> Pointer {
