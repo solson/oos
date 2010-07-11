@@ -22,13 +22,16 @@ env = Environment(
     LINK='ld',
     LINKFLAGS=['-melf_i386', '-nostdlib'],
     OOC=ooc,
-    OOCFLAGS=['-c', '-v', '-gcc', '-driver=sequence', '-nomain', '-gc=off', '+-m32', '+-nostdinc', '+-ffreestanding', '+-fno-stack-protector', '-IInclude', '-sourcepath=.', '-noclean'],
-    ENV = os.environ, # pass outside env to build so ooc is in PATH and OOC_DIST exists
+    OOCFLAGS=['-c', '-driver=sequence', '-nomain', '-gc=off', '+-m32',
+              '+-nostdinc', '+-ffreestanding', '+-fno-stack-protector',
+              '-IInclude', '-sourcepath=.', '-noclean', '-sdk=Src/OocLib'],
+    ENV = os.environ, # pass outside env to build so rock is in PATH and OOC_DIST exists
 )
 
 
-# set our custom ooc stdlib location
-env.Append(ENV={'OOC_SDK' : 'Src/OocLib', 'ROCK_SDK' : 'Src/OocLib'})
+# The C compiler rock should use. Defaults to clang. `scons cc=gcc` to use gcc.
+cc = ARGUMENTS.get('cc', 'clang')
+env.Append(OOCFLAGS=['-' + cc])
 
 
 # set up the ooc builder
@@ -41,6 +44,12 @@ debug = ARGUMENTS.get('debug', 1)
 if int(debug):
     env.Append(ASFLAGS=['-g'], LINKFLAGS=['-g'], OOCFLAGS=['-g'])
 
+
+# default to verbose mode. `scons verbose=0` to build more quietly
+verbose = ARGUMENTS.get('verbose', 1)
+if int(verbose):
+    env.Append(OOCFLAGS=['-v'])
+    
 
 # run the child SConscripts
 Export('env')
