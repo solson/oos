@@ -105,7 +105,7 @@ MM: class {
         Bochs debug("Memory size: %i kB" format(multiboot memLower + multiboot memUpper))
         Bochs debug("Bitmap size: %i B" format(bitmap size * 4))
 
-        usedMemory = placementAddress
+        usedMemory = placementAddress as SizeT
         
         // Parse the memory map from GRUB
         i := multiboot mmapAddr
