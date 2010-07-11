@@ -18,6 +18,7 @@ gc_calloc: func (nmemb: SizeT, size: SizeT) -> Pointer {
 }
 
 free: func (ptr: Pointer) {
+    MM free(ptr)
 }
 
 // Memory setting/copying functions

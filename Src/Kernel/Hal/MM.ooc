@@ -38,6 +38,9 @@ MM: class {
         return mem
     }
 
+    free: static func (ptr: Pointer) {
+    }
+
     allocFrame: static func -> UInt {
         // If we can't find a free frame, we will try again from the
         // beginning if the lastElement wasn't already 0.
