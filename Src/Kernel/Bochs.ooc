@@ -30,4 +30,19 @@ Bochs: class {
     print(str)
     printChar('\n')
   }
+
+  debug: static func (str: String) {
+      print("[DEBUG] ")
+      println(str)
+  }
+
+  warn: static func (str: String) {
+      print("[WARNING] ")
+      println(str)
+  }
+
+  error: static func (str: String) {
+      print("[ERROR] ")
+      println(str)
+  }
 }
