@@ -1,4 +1,4 @@
-import Kernel, Multiboot, Hal/[Hal, Display, Panic], Bochs
+import Kernel, Multiboot, Hal/[Hal, Display, Panic, MM], Bochs
 
 kmain: func (mb: MultibootInfo*, magic: UInt32) {
     multiboot = mb@
@@ -25,4 +25,8 @@ kmain: func (mb: MultibootInfo*, magic: UInt32) {
     "Kernel End:   %p" printfln(kernelEnd&)
     "Kernel Size:  %i kB" printfln((kernelEnd& as Int - kernelStart& as Int) / 1024)
     '\n' print()
+
+    "Total Memory: %6i kB" printfln(MM memorySize / 1024)
+    "Used Memory:  %6i kB" printfln(MM usedMemory / 1024)
+    "Free Memory:  %6i kB" printfln(MM getFreeMemory() / 1024)
 }

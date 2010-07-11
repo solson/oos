@@ -1,4 +1,4 @@
-import Kernel, Multiboot, Panic
+import Kernel, Multiboot, Panic, Bochs
 import structs/Bitmap
 
 MM: class {
@@ -7,9 +7,9 @@ MM: class {
 
     /// Amount of memory (in bytes) in the computer.
     memorySize: static SizeT
-    
-    /// Address used for pre-heap memory allocation.
-    placementAddress := static kernelEnd& as Pointer
+
+    /// Total amount of memory in use.
+    usedMemory: static SizeT
 
     /** Bitmap frames (each frame is a 4 kB memory area). If a bit is
         set, the corresponding frame is used. */
@@ -18,63 +18,23 @@ MM: class {
     /// The last-used index in the Bitmap array.
     lastElement: static UInt
     
-    setup: static func {
-        // memUpper and memLower are given in kB, but we want B
-        memorySize = (multiboot memLower + multiboot memUpper) * 1024
-
-        frameCount := memorySize / FRAME_SIZE
-
-        // 4 bytes equals 32 bits, use 1 bit per frame.
-        elementCount := frameCount / 32
-
-        // Add an extra element for the remainder of the frames if not aligned
-        if(frameCount % 32) {
-            elementCount += 1
+    /// Address used for pre-heap memory allocation.
+    placementAddress := static kernelEnd& as Pointer
+   
+    /// Returns the amount of free memory (in bytes).
+    getFreeMemory: static func -> SizeT {
+        if(usedMemory > memorySize) {
+            Bochs warn("For some reason, the amount of allocated memory is higher than the available memory!")
+            return 0
         }
 
-        bitmap = Bitmap new(elementCount)
-
-        // If the last element used less than 32 bits, set the other bits to
-        // make sure the allocator doesn't try to use them.
-        for(i in (frameCount % 32)..32) {
-            bitmap set(bitmap size - 1, i)
-        }
-
-        "Memory size: %i kB" printfln(multiboot memLower + multiboot memUpper)
-        "Bitmap size: %i B\n" printfln(bitmap size * 4)
-
-        // Parse the memory map from GRUB
-        i := multiboot mmapAddr
-
-        "Memory map:" println()
-
-        while(i < multiboot mmapAddr + multiboot mmapLength) {
-            mmapEntry := i as MMapEntry*
-
-            "0x%08x-0x%08x (%s)" printfln(
-                mmapEntry@ baseAddrLow,
-                mmapEntry@ baseAddrLow + mmapEntry@ lengthLow - 1,
-                mmapEntry@ type == 1 ? "Available" : "Reserved")
-
-            // Anything other than 1 means reserved. Mark every frame in this
-            // region as used.
-            if(mmapEntry@ type != 1) {
-                j := mmapEntry@ baseAddrLow
-                while(j < mmapEntry@ baseAddrLow + mmapEntry@ lengthLow) {
-                    allocFrame(j)
-                    j += FRAME_SIZE
-                }
-            }
-
-            i += mmapEntry@ size + mmapEntry@ size class size
-        }
-
-        '\n' print()
+        return memorySize - usedMemory
     }
 
     alloc: static func (size: SizeT) -> Pointer {
         mem := placementAddress
         placementAddress += size
+        usedMemory += size
         return mem
     }
 
@@ -118,5 +78,66 @@ MM: class {
     freeFrame: static func (address: UInt) {
         address /= FRAME_SIZE
         bitmap clear(address / 32, address % 32)
+    }
+
+    setup: static func {
+        // memUpper and memLower are given in kB, but we want B
+        memorySize = (multiboot memLower + multiboot memUpper) * 1024
+
+        frameCount := memorySize / FRAME_SIZE
+
+        // 4 bytes equals 32 bits, use 1 bit per frame.
+        elementCount := frameCount / 32
+
+        // Add an extra element for the remainder of the frames if not aligned
+        if(frameCount % 32) {
+            elementCount += 1
+        }
+
+        bitmap = Bitmap new(elementCount)
+
+        // If the last element used less than 32 bits, set the other bits to
+        // make sure the allocator doesn't try to use them.
+        for(i in (frameCount % 32)..32) {
+            bitmap set(bitmap size - 1, i)
+        }
+
+        Bochs debug("Memory size: %i kB" format(multiboot memLower + multiboot memUpper))
+        Bochs debug("Bitmap size: %i B" format(bitmap size * 4))
+
+        usedMemory = placementAddress
+        
+        // Parse the memory map from GRUB
+        i := multiboot mmapAddr
+
+        "Memory map:" println()
+
+        while(i < multiboot mmapAddr + multiboot mmapLength) {
+            mmapEntry := i as MMapEntry*
+
+            "0x%08x-0x%08x (%s)" printfln(
+                mmapEntry@ baseAddrLow,
+                mmapEntry@ baseAddrLow + mmapEntry@ lengthLow - 1,
+                mmapEntry@ type == 1 ? "Available" : "Reserved")
+
+            // Anything other than 1 means reserved. Mark every frame in this
+            // region as used.
+            if(mmapEntry@ type != 1) {
+                j := mmapEntry@ baseAddrLow
+                while(j < mmapEntry@ baseAddrLow + mmapEntry@ lengthLow) {
+                    allocFrame(j)
+                    
+                    // Only if it hasn't been included already.
+                    if(j >= placementAddress)
+                        usedMemory += FRAME_SIZE
+                    
+                    j += FRAME_SIZE
+                }
+            }
+
+            i += mmapEntry@ size + mmapEntry@ size class size
+        }
+
+        '\n' print()
     }
 }
