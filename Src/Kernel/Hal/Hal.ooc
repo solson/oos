@@ -1,4 +1,4 @@
-import GDT, IDT, ISR, IRQ, Interrupts, SysCall, Display, MM
+import GDT, IDT, ISR, IRQ, Interrupts, SysCall, Display, MM, Keyboard
 
 Hal: class {
     setup: static func {
@@ -11,6 +11,8 @@ Hal: class {
         ISR setup()
         IRQ setup()
         SysCall setup()
+
+        Keyboard setup()
 
         Interrupts enable()
     }
