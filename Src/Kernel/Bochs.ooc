@@ -16,19 +16,19 @@ Bochs: class {
     Ports outWord(IODEBUG_COMMAND, 0x8AE0) // drop to debugger prompt
   }
 
-  printChar: static func (chr: Char) {
+  print: static func ~char (chr: Char) {
     Ports outByte(PORT_E9, chr)
   }
 
-  print: static func (str: String) {
+  print: static func ~string (str: String) {
     for(i in 0..str length()) {
-      printChar(str[i])
+      print(str[i])
     }
   }
 
   println: static func (str: String) {
     print(str)
-    printChar('\n')
+    print('\n')
   }
 
   debug: static func (str: String) {
