@@ -72,18 +72,24 @@ IRQ: class {
     *  order to make irq0 to 15 be remapped to IDT entries 32 to
     *  47. */
     remapPIC: static func {
+        // Tell the PICs to wait for our 3 initialization bytes (we want to reinitialize).
         Ports outByte(PIC1_COMMAND, 0x11)
         Ports outByte(PIC2_COMMAND, 0x11)
-
+        
+        // Set master PIC offset to 0x20 ( = IRQ0 = 32).
         Ports outByte(PIC1_DATA, 0x20)
+        // Set slave PIC offset to 0x28 ( = IRQ8 = 40).
         Ports outByte(PIC2_DATA, 0x28)
 
+        // Set the wiring to 'attached to corresponding interrupt pin'.
         Ports outByte(PIC1_DATA, 0x04)
         Ports outByte(PIC2_DATA, 0x02)
 
+        // We want to use 8086/8088 mode (bit 0).
         Ports outByte(PIC1_DATA, 0x01)
         Ports outByte(PIC2_DATA, 0x01)
 
+        // Restore masking (if a bit is not set, the interrupts is on).
         Ports outByte(PIC1_DATA, 0x00)
         Ports outByte(PIC2_DATA, 0x00)
     }
