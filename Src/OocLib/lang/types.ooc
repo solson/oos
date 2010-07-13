@@ -289,6 +289,26 @@ LLong: cover from signed long long {
     in?: func(range: Range) -> Bool {
         return this >= range min && this < range max
     }
+
+    /// check if the specified `bit` is 1
+    bitSet?: func (bit: UInt) -> Bool {
+        (this & (1 << bit)) as Bool
+    }
+
+    /// check if the specified `bit` is 0
+    bitClear?: func (bit: UInt) -> Bool {
+        (~this & (1 << bit)) as Bool
+    }
+
+    /// set the specified `bit` to 1
+    bitSet: func (bit: UInt) -> This {
+        this | (1 << bit)
+    }
+
+    /// clear the specified `bit` to 0
+    bitClear: func (bit: UInt) -> This {
+        this & ~(1 << bit)
+    }
 }
 
 Long:  cover from signed long  extends LLong
