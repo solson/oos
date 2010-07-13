@@ -297,10 +297,6 @@ Short: cover from signed short extends LLong
 
 ULLong: cover from unsigned long long extends LLong {
     toString: func -> String { "%llu" format(this) }
-
-    in?: func(range: Range) -> Bool {
-        return this >= range min && this < range max
-    }
 }
 
 ULong:  cover from unsigned long  extends ULLong
