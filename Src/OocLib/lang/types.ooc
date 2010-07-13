@@ -199,10 +199,6 @@ Char: cover from char {
 SChar: cover from signed char extends Char
 UChar: cover from unsigned char extends Char
 
-operator as (chr: Char) -> String {
-    chr toString()
-}
-
 String: cover from Char* {
     /** Create a new string exactly *length* characters long (without the nullbyte).
         The contents of the string are undefined. */
