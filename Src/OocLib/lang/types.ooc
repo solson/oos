@@ -280,8 +280,8 @@ __int: extern(int) Void
 __uint: extern(uint32_t) Void
 
 LLong: cover from signed long long {
-    toString:    func -> String { "%lld" format(this) }
-    toHexString: func -> String { "%llx" format(this) }
+    toString:    func -> String { "%ld" format(this) }
+    toHexString: func -> String { "%lx" format(this) }
 
     isOdd:  func -> Bool { this % 2 == 1 }
     isEven: func -> Bool { this % 2 == 0 }
@@ -296,7 +296,7 @@ Int:   cover from signed int   extends LLong
 Short: cover from signed short extends LLong
 
 ULLong: cover from unsigned long long extends LLong {
-    toString: func -> String { "%llu" format(this) }
+    toString: func -> String { "%lu" format(this) }
 }
 
 ULong:  cover from unsigned long  extends ULLong
