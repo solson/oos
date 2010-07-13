@@ -78,10 +78,52 @@ Keyboard: class {
         0, /* F12 Key */
         0 /* All other keys are undefined */
     ]
+
+    ESCAPE_CODE := static const 0xE0
+
+    // true if this key is being held down
+    shift     := static false
+    alt       := static false
+    ctrl      := static false
+
+    // true if this key is enabled
+    capslock  := static false
+    numlock   := static false
+    scrolllock := static false
+
+    // true if the previous scancode was an escape code
+    escaped   := static false
+
+    flushBuffer: static func {
+        while(Ports inByte(0x64) bitSet?(0)) {
+            Ports inByte(0x60)
+        }
+    }
     
-    shiftPressed := static false
+    updateLights: static func {
+        status: UInt8 = 0
+
+        if(scrolllock)
+            status |= 1
+        if(numlock)
+            status |= 2
+        if(capslock)
+            status |= 4
+
+        // Wait for the keyboard to process our previous input if the
+        // input buffer is full.
+        while(Ports inByte(0x64) bitSet?(1)) {}
+        Ports outByte(0x60, 0xED)
+        while(Ports inByte(0x64) bitSet?(1)) {}
+        Ports outByte(0x60, status)
+    }
     
     setup: static func {
+        numlock = true
+        
+        updateLights()
+        flushBuffer()
+        
         // The keyboard interrupt handler.
         IRQ handlerInstall(1, |regs|
             scancode := Ports inByte(0x60)
@@ -90,18 +132,18 @@ Keyboard: class {
             match scancode {
                 // Shift key press
                 case 0x2A =>
-                    shiftPressed = true
+                    shift = true
                 
                 // Shift key release
                 case 0xAA =>
-                    shiftPressed = false
+                    shift = false
                 
                 // Any other scan code
                 case =>
                     if(scancode & 0x80) {
                         // Ignore the break code
                     } else {
-                        chr := (shiftPressed ? uppercase : lowercase)[scancode] as Char
+                        chr := (shift ? uppercase : lowercase)[scancode] as Char
                         Bochs debug("Char: %c" format(chr))
                         chr print()
                     }
