@@ -71,7 +71,9 @@ Array: cover from _lang_array__Array {
  * Pointer type
  */
 Void: cover from void
-Pointer: cover from void*
+Pointer: cover from void* {
+    toString: func -> String { "%p" format(this) }
+}
 
 NULL: unmangled Pointer = 0
 
