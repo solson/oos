@@ -83,15 +83,6 @@ NULL: unmangled Pointer = 0
 //__char: extern(char) Void
 __char_ary: extern(__CHAR_ARY) Void
 Char: cover from char {
-    println: func {
-        Display printChar(this)
-        Display printChar('\n')
-    }
-
-    print: func {
-        Display printChar(this)
-    }
-
     /// check for an alphanumeric character
     isAlphaNumeric: func -> Bool {
         isAlpha() || isDigit()
@@ -167,17 +158,66 @@ Char: cover from char {
         }
         return -1
     }
+
+    /// return the lowered charater
+    toLower: func -> This {
+        if(this isUpper()) {
+            return this - 'A' + 'a'
+            // or this + 32 ?
+        }
+        return this
+    }
+
+    /// return the capitalized character
+    toUpper: func -> This {
+        if(this isLower()) {
+            return this - 'a' + 'A'
+            // or this - 32 ?
+        }
+        return this
+    }
+
+    /// return a one-character string containing this character
+    toString: func -> String {
+        String new(this)
+    }
+
+    /// print this character without a following newline
+    print: func {
+        Display printChar(this)
+    }
+
+    /// print this character with a following newline
+    println: func {
+        Display printChar(this)
+        Display printChar('\n')
+    }
 }
 
+SChar: cover from signed char extends Char
 UChar: cover from unsigned char extends Char
 
+operator as (chr: Char) -> String {
+    chr toString()
+}
+
 String: cover from Char* {
+    /** Create a new string exactly *length* characters long (without the nullbyte).
+        The contents of the string are undefined. */
     new: static func~withLength (length: Int) -> This {
         result := gc_malloc(length + 1) as This
         result[length] = '\0'
         result
     }
 
+    /// Create a new string of the length 1 containing only the character *c*
+    new: static func~withChar (c: Char) -> This {
+        result := This new~withLength(1)
+        result[0] = c
+        result
+    }
+    
+    /// return the string's length, excluding the null byte.
     length: func -> SizeT {
         i := 0
         while (this@) {
