@@ -58,12 +58,34 @@ Display: cover {
         This color = (fg & 0xf) | bg << 4
     }
 
+    setColor: static func ~withFn (fg, bg: Color, fn: Func) {
+        oldFg := This fg
+        oldBg := This bg
+        setColor(fg, bg)
+        fn()
+        setColor(oldFg, oldBg)
+    }
+
     setFgColor: static func (fg: Color) {
         setColor(fg, This bg)
     }
 
+    setFgColor: static func ~withFn (fg: Color, fn: Func) {
+        oldFg := This fg
+        setFgColor(fg)
+        fn()
+        setFgColor(oldFg)
+    }
+
     setBgColor: static func (bg: Color) {
         setColor(This fg, bg)
+    }
+
+    setBgColor: static func ~withFn (bg: Color, fn: Func) {
+        oldBg := This bg
+        setBgColor(bg)
+        fn()
+        setBgColor(oldBg)
     }
 
     clearScreen: static func {
