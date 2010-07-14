@@ -1,6 +1,6 @@
 import IDT, Registers
 
-SysCall: class {
+SysCall: cover {
     // in Exceptions.asm
     isrSyscall: extern proto static func
 

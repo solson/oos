@@ -17,7 +17,7 @@
 import IDT, Ports, Registers
 
 /* `IRQ` is only used as a namespace. */
-IRQ: class {
+IRQ: cover {
     /* An array storing pointers to the interrupt handler functions. */
     irqRoutines: static Pointer[16] = [null, null, null, null, null, null,
         null, null, null, null, null, null, null, null, null, null]

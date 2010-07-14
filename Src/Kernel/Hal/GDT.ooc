@@ -19,7 +19,7 @@ GDTEntry: cover from GDTE {
     base_3: extern UInt8         // base bits 24..31
 } // __attribute__((packed))
 
-GDT: class {
+GDT: cover {
 //    gdt: static GDTEntry[3]
     gdt: static GDTEntry*
 

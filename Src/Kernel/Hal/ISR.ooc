@@ -35,7 +35,7 @@ exceptionMessages: const String[32] = [
     "31 - Intel reserved. Do not use."
 ]
 
-ISR: class {
+ISR: cover {
     // from exceptions.asm
     isr0: extern proto static func
     isr1: extern proto static func

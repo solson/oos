@@ -1,6 +1,6 @@
 import GDT, IDT, ISR, IRQ, Interrupts, SysCall, Display, MM, Keyboard
 
-Hal: class {
+Hal: cover {
     setup: static func {
         GDT setup()
         Display setup()

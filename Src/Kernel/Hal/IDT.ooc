@@ -15,7 +15,7 @@ IDTGate: cover from IDTG {
     offset_2: extern UInt16 // offset bits 16..31
 } // __attribute__((packed))
 
-IDT: class {
+IDT: cover {
     TASK   := static 0x5
     INTR16 := static 0x6
     INTR32 := static 0xe

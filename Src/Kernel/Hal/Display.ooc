@@ -28,7 +28,7 @@ Color: enum {
     white
 }
 
-Display: class {
+Display: cover {
     VIDEO_MEMORY := static 0xb8000 as UInt16*
 
     INDEX_PORT := static 0x3d4

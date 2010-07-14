@@ -1,7 +1,7 @@
 import Kernel, Multiboot, Panic, Bochs
 import structs/Bitmap
 
-MM: class {
+MM: cover {
     /// Memory region covered by one frame. (4kB)
     FRAME_SIZE := static 4096
 
