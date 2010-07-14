@@ -5,20 +5,20 @@ kmain: func (mb: MultibootInfo*, magic: UInt32) {
     Hal setup()
 
     "This kernel is written in " print()
-    Display setFgColor(Color lightGreen)
-    "ooc" print()
-    Display setFgColor(Color lightGrey)
+    Display setFgColor(Color lightGreen, ||
+        "ooc" print()
+    )
     "!\n\n" print()
 
     "Boot Loader:  " print()
-    Display setFgColor(Color lightBlue)
-    multiboot bootLoaderName as String println()
-    Display setFgColor(Color lightGrey)
-
+    Display setFgColor(Color lightBlue, ||
+        multiboot bootLoaderName as String println()
+    )
+    
     "Command Line: " print()
-    Display setFgColor(Color lightBlue)
-    multiboot cmdline as String println()
-    Display setFgColor(Color lightGrey)
+    Display setFgColor(Color lightBlue, ||
+        multiboot cmdline as String println()
+    )
     '\n' print()
 
     "Kernel Start: %p" printfln(kernelStart&)
