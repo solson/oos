@@ -1,6 +1,18 @@
 import IRQ, Ports, Bochs
 
-Keyboard: class {
+Scancode: cover {
+    ESC        := static 0x01
+    ENTER      := static 0x1c
+    LCTRL      := static 0x1d
+    LSHIFT     := static 0x2a
+    RSHIFT     := static 0x36
+    LALT       := static 0x38
+    CAPSLOCK   := static 0x3a
+    NUMLOCK    := static 0x45
+    SCROLLLOCK := static 0x46
+}
+
+Keyboard: cover {
     lowercase: static Char[128] = [
         0, 27, '1', '2', '3', '4', '5', '6', '7', '8', /* 9 */
         '9', '0', '-', '=', 0x08, /* Backspace */
@@ -129,25 +141,47 @@ Keyboard: class {
             scancode := Ports inByte(0x60)
             Bochs debug("Scancode: %i" format(scancode))
 
-            match scancode {
-                // Shift key press
-                case 0x2A =>
-                    shift = true
+            if(scancode == ESCAPE_CODE) {
+                escaped = true
+            } else if(scancode bitSet?(7)) {
+                // This scancode defines that a key was just released (key-up).
+                match(scancode bitClear(7)) {
+                    // Shift key release
+                    case Scancode LSHIFT =>
+                        shift = false
+
+                    case Scancode RSHIFT =>
+                        shift = false
+                }
+            } else {
+                match scancode {
+                    // Shift key press
+                    case Scancode LSHIFT =>
+                        shift = true
+
+                    case Scancode RSHIFT =>
+                        shift = true
+
+                    case Scancode CAPSLOCK =>
+                        capslock = !capslock
+                        This updateLights()
+
+                    case Scancode NUMLOCK =>
+                        numlock = !numlock
+                        This updateLights()
+
+                    case Scancode SCROLLLOCK =>
+                        scrolllock = !scrolllock
+                        This updateLights()
                 
-                // Shift key release
-                case 0xAA =>
-                    shift = false
-                
-                // Any other scan code
-                case =>
-                    if(scancode & 0x80) {
-                        // Ignore the break code
-                    } else {
+                    // Any other scan code
+                    case =>
                         chr := (shift ? uppercase : lowercase)[scancode] as Char
                         Bochs debug("Char: %c" format(chr))
                         chr print()
-                    }
+                }
             }
         )
     }
 }
+
