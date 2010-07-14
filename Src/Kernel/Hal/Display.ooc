@@ -37,6 +37,9 @@ Display: cover {
     CURSOR_LOW_PORT  := static 0xE
     CURSOR_HIGH_PORT := static 0xF
 
+    CONSOLE_WIDTH := static 80
+    CONSOLE_HEIGT := static 25
+
     color: static UInt8
     fg: static Color
     bg: static Color
@@ -64,9 +67,9 @@ Display: cover {
     }
 
     clearScreen: static func {
-        for (row in 0..25) {
-            for (col in 0..80) {
-                VIDEO_MEMORY[row * 80 + col] = ' ' | color << 8
+        for (row in 0..CONSOLE_HEIGT) {
+            for (col in 0..CONSOLE_WIDTH) {
+                VIDEO_MEMORY[row * CONSOLE_WIDTH + col] = ' ' | color << 8
             }
         }
         cursor_x = 0
@@ -75,7 +78,7 @@ Display: cover {
     }
 
     updateCursor: static func {
-        position := cursor_y * 80 + cursor_x
+        position := cursor_y * CONSOLE_WIDTH + cursor_x
 
         Ports outByte(INDEX_PORT, CURSOR_LOW_PORT)
         Ports outByte(DATA_PORT, position >> 8)
@@ -115,14 +118,14 @@ Display: cover {
         // in a linear chunk of memory can be represented by:
         // Index = [(y * width) + x]
         else if(chr >= ' ') {
-            i := cursor_y * 80 + cursor_x
+            i := cursor_y * CONSOLE_WIDTH + cursor_x
             VIDEO_MEMORY[i] = chr | color << 8
             cursor_x += 1
         }
 
         // If the cursor has reached the edge of the screen's width, we
         // insert a new line in there
-        if(cursor_x >= 80) {
+        if(cursor_x >= CONSOLE_WIDTH) {
             cursor_x = 0
             cursor_y += 1
         }
