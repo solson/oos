@@ -152,7 +152,26 @@ Display: cover {
             cursor_y += 1
         }
 
+        // If the cursor has gone below the bottom of the screen, we
+        // scroll the screen
+        if(cursor_y >= CONSOLE_HEIGHT) {
+            cursor_y -= 1
+            scroll()
+        }
+
         updateCursor()
+    }
+
+    scroll: static func {
+        for(row in 1..CONSOLE_HEIGHT) {
+            for(col in 0..CONSOLE_WIDTH) {
+                VIDEO_MEMORY[(row - 1) * CONSOLE_WIDTH + col] = VIDEO_MEMORY[row * CONSOLE_WIDTH + col]
+            }
+        }
+
+        for(col in 0..CONSOLE_WIDTH) {
+            VIDEO_MEMORY[(CONSOLE_HEIGHT - 1) * CONSOLE_WIDTH + col] = ' ' | color << 8
+        }
     }
 
     printString: static func (str: String) {
