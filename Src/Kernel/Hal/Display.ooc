@@ -38,7 +38,7 @@ Display: cover {
     CURSOR_HIGH_PORT := static 0xF
 
     CONSOLE_WIDTH := static 80
-    CONSOLE_HEIGT := static 25
+    CONSOLE_HEIGHT := static 25
 
     color: static UInt8
     fg: static Color
@@ -89,7 +89,7 @@ Display: cover {
     }
 
     clearScreen: static func {
-        for (row in 0..CONSOLE_HEIGT) {
+        for (row in 0..CONSOLE_HEIGHT) {
             for (col in 0..CONSOLE_WIDTH) {
                 VIDEO_MEMORY[row * CONSOLE_WIDTH + col] = ' ' | color << 8
             }
