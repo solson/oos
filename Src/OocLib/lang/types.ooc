@@ -275,7 +275,7 @@ __void: extern(void) Void
 __int: extern(int) Void
 __uint: extern(uint32_t) Void
 
-LLong: cover from signed long long {
+Long: cover from signed long {
     toString:    func -> String { "%ld" format(this) }
     toHexString: func -> String { "%lx" format(this) }
 
@@ -305,34 +305,40 @@ LLong: cover from signed long long {
     bitClear: func (bit: UInt) -> This {
         this & ~(1 << bit)
     }
+
+    /// returns `this` aligned to the next boundary of `alignment`.
+    align: func (alignment: This) -> This {
+        if(this % alignment == 0)
+            return this
+        else
+            return (this & ~(alignment - 1)) + alignment
+    }
 }
 
-Long:  cover from signed long  extends LLong
-Int:   cover from signed int   extends LLong
-Short: cover from signed short extends LLong
+Int:   cover from signed int   extends Long
+Short: cover from signed short extends Long
 
-ULLong: cover from unsigned long long extends LLong {
+ULong: cover from unsigned long extends Long {
     toString: func -> String { "%lu" format(this) }
 }
 
-ULong:  cover from unsigned long  extends ULLong
-UInt:   cover from unsigned int   extends ULLong
-UShort: cover from unsigned short extends ULLong
+UInt:   cover from unsigned int   extends ULong
+UShort: cover from unsigned short extends ULong
 
 /**
  * fixed-size integer types
  */
-Int8:  cover from int8_t  extends LLong
-Int16: cover from int16_t extends LLong
-Int32: cover from int32_t extends LLong
-Int64: cover from int64_t extends LLong
+Int8:  cover from int8_t  extends Long
+Int16: cover from int16_t extends Long
+Int32: cover from int32_t extends Long
+Int64: cover from int64_t extends Long
 
-UInt8:  cover from uint8_t  extends ULLong
-UInt16: cover from uint16_t extends ULLong
-UInt32: cover from uint32_t extends ULLong
-UInt64: cover from uint64_t extends ULLong
+UInt8:  cover from uint8_t  extends ULong
+UInt16: cover from uint16_t extends ULong
+UInt32: cover from uint32_t extends ULong
+UInt64: cover from uint64_t extends ULong
 
-SizeT: cover from size_t extends ULLong
+SizeT: cover from size_t extends ULong
 
 Bool: cover from bool {
     toString: func -> String { this ? "true" : "false" }
@@ -343,9 +349,7 @@ Bool: cover from bool {
  */
 LDouble: cover from long double {
     toString: func -> String {
-        str = gc_malloc(64) : String
-        sprintf(str, "%.2Lf", this)
-        str
+        "%.2Lf" format(this)
     }
 
     abs: func -> This {
@@ -376,7 +380,7 @@ Range: cover {
 Exception: class {
 
     origin: Class
-    msg : String
+    msg: String
 
     init: func ~originMsg (=origin, =msg) {}
     init: func ~noOrigin (=msg) {}
