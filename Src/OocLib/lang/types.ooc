@@ -279,8 +279,8 @@ LLong: cover from signed long long {
     toString:    func -> String { "%ld" format(this) }
     toHexString: func -> String { "%lx" format(this) }
 
-    isOdd:  func -> Bool { this % 2 == 1 }
-    isEven: func -> Bool { this % 2 == 0 }
+    odd?:  func -> Bool { this % 2 == 1 }
+    even?: func -> Bool { this % 2 == 0 }
 
     in?: func(range: Range) -> Bool {
         return this >= range min && this < range max
