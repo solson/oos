@@ -5,9 +5,24 @@ panic: func(fmt: String, ...) {
 
 	va_start(args, fmt)
 
-	"PANIC:" println()
+	"Panic: " print()
 	vprintf(fmt, args)
+
+    "\nStack trace:" println()
+    stackDump()
 
 	Interrupts disable()
 	System halt()
+}
+
+stackDump: extern proto func
+
+stackDumpHex: unmangled func (stack: UInt*) {
+    originalStack := stack as UInt
+    while(stack as UInt < originalStack align(0x1000)) {
+        "\t%p: %p" printfln(stack, stack@)
+        if(stack@ == 0x0)
+            break
+        stack += 1
+    }
 }

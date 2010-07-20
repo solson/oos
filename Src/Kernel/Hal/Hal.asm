@@ -51,7 +51,17 @@ disableInterrupts:
 ;;; halt: func
 global halt
 halt:
-   hlt   
+   hlt
+
+;;; stackDump: func
+extern stackDumpHex
+global stackDump
+stackDump:
+   push  ebp
+   mov   ebp, esp
+   call  stackDumpHex
+   pop   ebp
+   ret
 
    
 ;;;
