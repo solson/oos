@@ -250,7 +250,7 @@ vsnprintf: func (str: String, size: SizeT, fmt: String, ap: VaList) -> Int {
 
         /* Find the field width. */
         fieldwidth = 0
-        while(p@ as Char isDigit()) {
+        while(p@ digit?()) {
             if(fieldwidth > 0)
                 fieldwidth *= 10
             fieldwidth += (p@ - 0x30)
@@ -266,7 +266,7 @@ vsnprintf: func (str: String, size: SizeT, fmt: String, ap: VaList) -> Int {
                 precision = va_arg(ap, __int)
                 p += 1
             }
-            while(p@ as Char isDigit()) {
+            while(p@ digit?()) {
                 if (precision > 0)
                     precision *= 10
                 precision += (p@ - 0x30)
