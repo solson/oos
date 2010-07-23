@@ -55,7 +55,7 @@ IRQ: cover {
 
     /* Install a custom function to handle a certain IRQ number. */
     handlerInstall: static func (irq: Int, handler: Func (Registers*)) {
-        irqRoutines[irq] = handler
+        irqRoutines[irq] = handler as Closure thunk
     }
 
     /* Uninstall the function that handles a certain IRQ number. */
@@ -126,20 +126,21 @@ IRQ: cover {
     *  to acknowledge the interrupt at BOTH controllers, otherwise, you
     *  only send an EOI command to the first controller. If you don't send
     *  an EOI, you won't raise any more IRQs. */
-    handler: unmangled(irqHandler) static func (regs: Registers@) {
+    handler: unmangled(irqHandler) static func (regs: Registers*) {
         // This is a blank function pointer
         fn: Func (Registers*)
+        c := fn& as Closure*
 
         /* Find out if we have a custom handler to run for this
         *  IRQ, and then run it. */
-        fn = irqRoutines[regs interruptNumber - 32]
-        if(fn)
-            fn(regs&)
+        c@ thunk = irqRoutines[regs@ interruptNumber - 32]
+        if(c@ thunk != null)
+            fn(regs)
 
         /* We need to send an EOI to the interrupt controllers when we are
         *  done. Only send EOI to slave controller if it's involved (irqs 9 and
         *  up). */
-        if(regs interruptNumber > 8)
+        if(regs@ interruptNumber > 8)
             Ports outByte(PIC2_COMMAND, PIC_EOI)
         Ports outByte(PIC1_COMMAND, PIC_EOI)
   }
