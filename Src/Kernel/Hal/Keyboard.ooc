@@ -106,6 +106,10 @@ Keyboard: cover {
     // true if the previous scancode was an escape code
     escaped   := static false
 
+    // buffer to store the scancodes
+    buffer: static UInt8[]
+    bufferIndex := static 0
+
     flushBuffer: static func {
         while(Ports inByte(0x64) bitSet?(0)) {
             Ports inByte(0x60)
@@ -129,8 +133,22 @@ Keyboard: cover {
         while(Ports inByte(0x64) bitSet?(1)) {}
         Ports outByte(0x60, status)
     }
+
+    read: static func -> Char {
+        // Wait for keyboard input. The keyboard interrupt handler
+        // will increment bufferIndex.
+        while(bufferIndex == 0){}
+
+        bufferIndex -= 1
+        scancode := buffer[bufferIndex]
+
+        chr := (shift ? uppercase : lowercase)[scancode] as Char
+        Bochs debug("Char: %c" format(chr))
+        chr
+    }
     
     setup: static func {
+        buffer = UInt8[1024] new()
         numlock = true
         
         updateLights()
@@ -176,9 +194,8 @@ Keyboard: cover {
                 
                     // Any other scan code
                     case =>
-                        chr := (shift ? uppercase : lowercase)[scancode] as Char
-                        Bochs debug("Char: %c" format(chr))
-                        chr print()
+                        buffer[bufferIndex] = scancode
+                        bufferIndex += 1
                 }
             }
         )

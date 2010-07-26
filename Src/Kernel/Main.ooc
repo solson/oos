@@ -1,30 +1,18 @@
-import Kernel, Multiboot, Hal/[Hal, Display, Panic, MM], Bochs
+import Kernel, Multiboot, Hal/[Hal, Display, Panic, MM], Bochs, Console
 
 kmain: func (mb: MultibootInfo*, magic: UInt32) {
     multiboot = mb@
     Hal setup()
 
-    "This kernel is written in " print()
+    "Welcome to " print()
     Display setFgColor(Color lightGreen, ||
-        "ooc" print()
+        "oos" print()
     )
-    "!\n\n" print()
-
-    "Boot Loader:  " print()
+    " booted by " print()
     Display setFgColor(Color lightBlue, ||
-        multiboot bootLoaderName as String println()
+        multiboot bootLoaderName as String print()
     )
-    
-    "Command Line: " print()
-    Display setFgColor(Color lightBlue, ||
-        multiboot cmdline as String println()
-    )
-    '\n' print()
-
-    "Kernel Start: %p" printfln(kernelStart&)
-    "Kernel End:   %p" printfln(kernelEnd&)
-    "Kernel Size:  %i kB" printfln((kernelEnd& as Int - kernelStart& as Int) / 1024)
-    '\n' print()
+    ".\n" println()
 
     "Total Memory: %6i kB" printfln(MM memorySize / 1024)
     "Used Memory:  %6i kB" printfln(MM usedMemory / 1024)
@@ -41,8 +29,8 @@ kmain: func (mb: MultibootInfo*, magic: UInt32) {
         Display setBgColor(Color magenta, ||
             "setFgColor and setBgColor" print()
         )
-        " functions." print()
+        " functions.\n" println()
     )
 
-    while(true){}
+    Console run()
 }
