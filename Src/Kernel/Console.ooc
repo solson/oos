@@ -9,14 +9,21 @@ Console: cover {
             chr := Keyboard read()
             chr print()
             if(chr == '\n') {
+                cmd := String new(50)
                 for(i in 0..bufferIndex)
-                    buffer[i] print()
+                    cmd[i] = buffer[i]
+                cmd[bufferIndex] = '\0'
+                handleCommand(cmd)
                 bufferIndex = 0
-                "\n>> " print()
+                ">> " print()
             } else if(bufferIndex < buffer length) {
                 buffer[bufferIndex] = chr
                 bufferIndex += 1
             }
         }
+    }
+
+    handleCommand: static func (cmd: String) {
+        cmd println()
     }
 }
