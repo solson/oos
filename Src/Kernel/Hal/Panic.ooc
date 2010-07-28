@@ -8,7 +8,7 @@ panic: func(fmt: String, ...) {
 	"Panic: " print()
 	vprintf(fmt, args)
 
-    "\nStack trace:" println()
+    "\n\nStack trace:" println()
     stackDump()
 
 	Interrupts disable()
