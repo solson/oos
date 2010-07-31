@@ -1,6 +1,6 @@
 import Hal/Ports
 
-Bochs: class {
+Bochs: cover {
   // bochs uses this port to let us print to the bochs console
   PORT_E9 := static 0xE9
 
