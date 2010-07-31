@@ -2,7 +2,7 @@ import Hal/[Keyboard, Display, MM]
 
 Console: cover {
     run: static func {
-        buffer := Char[50] new()
+        buffer: Char[50]
         bufferIndex := 0
         ">> " print()
         while(true) {
@@ -21,7 +21,7 @@ Console: cover {
                     bufferIndex -= 1
                     "\b \b" print()
                 }
-            } else if(bufferIndex < buffer length) {
+            } else if(bufferIndex < 50) {
                 chr print()
                 buffer[bufferIndex] = chr
                 bufferIndex += 1

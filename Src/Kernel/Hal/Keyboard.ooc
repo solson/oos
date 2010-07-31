@@ -107,7 +107,7 @@ Keyboard: cover {
     escaped   := static false
 
     // buffer to store the scancodes
-    buffer: static UInt8[]
+    buffer: static UInt8[1024]
     bufferIndex := static 0
 
     flushBuffer: static func {
@@ -142,13 +142,13 @@ Keyboard: cover {
         bufferIndex -= 1
         scancode := buffer[bufferIndex]
 
-        chr := (shift ? uppercase : lowercase)[scancode] as Char
-        Bochs debug("Char: %c" format(chr))
-        chr
+        if((shift && !capslock) || (capslock && !shift))
+            uppercase[scancode] as Char
+        else
+            lowercase[scancode] as Char
     }
     
     setup: static func {
-        buffer = UInt8[1024] new()
         numlock = true
         
         updateLights()
