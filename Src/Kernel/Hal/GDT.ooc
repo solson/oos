@@ -20,20 +20,17 @@ GDTEntry: cover from GDTE {
 } // __attribute__((packed))
 
 GDT: cover {
-//    gdt: static GDTEntry[3]
-    gdt: static GDTEntry*
+    gdt: static GDTEntry[3]
 
     // defined in GDT.asm
     load: extern(loadGDT) proto static func (GDTDescriptor*)
 
     setup: static func {
-        gdt = gc_malloc(GDTEntry size * 3)
-
         gdtd: GDTDescriptor
         gdtd offset = gdt as UInt32
         gdtd size = GDTEntry size * 3 - 1
 
-        zeroMemory(gdt, gdtd size)
+        zeroMemory(gdt as Pointer, gdtd size)
 
         // Leave one null GDT entry at 0 because the CPU wants it
         setEntry(1, 0x00000000, 0xFFFFF, 0b00, true,  false, true, true, true)

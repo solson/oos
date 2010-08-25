@@ -47,7 +47,7 @@ Display: cover {
     cursor_y: static Int
 
     setup: static func {
-        // default to light grey on black like the BIOS
+        // Default to light grey on black like the BIOS.
         setColor(Color lightGrey, Color black)
         clearScreen()
     }
@@ -89,10 +89,8 @@ Display: cover {
     }
 
     clearScreen: static func {
-        for (row in 0..CONSOLE_HEIGHT) {
-            for (col in 0..CONSOLE_WIDTH) {
-                VIDEO_MEMORY[row * CONSOLE_WIDTH + col] = ' ' | color << 8
-            }
+        for(i in 0..(CONSOLE_HEIGHT * CONSOLE_WIDTH)) {
+            VIDEO_MEMORY[i] = ' ' | color << 8
         }
         cursor_x = 0
         cursor_y = 0
@@ -118,7 +116,7 @@ Display: cover {
         // Handles a tab by incrementing the cursor's x, but only
         // to a point that will make it divisible by 8
         else if(chr == '\t') {
-            cursor_x = (cursor_x + 8) & ~(8 - 1)
+            cursor_x = cursor_x align(8)
         }
 
         // Handles a 'Carriage Return', which simply brings the
