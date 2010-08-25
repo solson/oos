@@ -37,7 +37,7 @@ Display: cover {
     CURSOR_LOW_PORT  := static 0xE
     CURSOR_HIGH_PORT := static 0xF
 
-    CONSOLE_WIDTH := static 80
+    CONSOLE_WIDTH  := static 80
     CONSOLE_HEIGHT := static 25
 
     color: static UInt8

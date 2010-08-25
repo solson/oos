@@ -99,12 +99,12 @@ Keyboard: cover {
     ctrl      := static false
 
     // true if this key is enabled
-    capslock  := static false
-    numlock   := static false
+    capslock   := static false
+    numlock    := static false
     scrolllock := static false
 
     // true if the previous scancode was an escape code
-    escaped   := static false
+    escaped := static false
 
     // buffer to store the scancodes
     buffer: static UInt8[1024]
