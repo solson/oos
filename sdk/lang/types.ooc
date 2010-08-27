@@ -1,4 +1,4 @@
-import Hal/[Display, Panic], Printf
+import devices/Display, Panic, Printf
 
 include stdbool, stdint, c_types
 include ./array

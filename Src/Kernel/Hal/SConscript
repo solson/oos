@@ -1,9 +1,0 @@
-# vim: syntax=python
-
-Import('env')
-
-hal = env.StaticLibrary('hal', [
-  'Hal.asm'
-])
-
-Return('hal')

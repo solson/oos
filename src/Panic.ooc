@@ -1,4 +1,4 @@
-import Printf, Hal/[Interrupts, System]
+import Printf, devices/CPU
 
 panic: func(fmt: String, ...) {
 	args: VaList
@@ -11,8 +11,8 @@ panic: func(fmt: String, ...) {
     "\n\nStack trace:" println()
     stackDump()
 
-	Interrupts disable()
-	System halt()
+	CPU disableInterrupts()
+	CPU halt()
 }
 
 stackDump: extern proto func

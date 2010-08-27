@@ -1,4 +1,4 @@
-import Hal/[Keyboard, Display, MM]
+import devices/[Keyboard, Display], memory/MM
 
 Console: cover {
     run: static func {

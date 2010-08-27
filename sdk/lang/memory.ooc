@@ -1,4 +1,4 @@
-import Hal/MM
+import memory/MM
 
 // Memory allocation functions
 gc_malloc: func (size: SizeT) -> Pointer {

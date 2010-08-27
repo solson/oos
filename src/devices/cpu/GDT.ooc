@@ -2,23 +2,6 @@ include GDT
 
 // See http://wiki.osdev.org/GDT, or none of this will make any sense
 
-// These covers wouldn't have to be from C if we could do GCC's
-// __attribute__((packed)) from ooc somehow
-GDTDescriptor: cover from GDTD {
-    size: extern UInt16
-    offset: extern UInt32
-} // __attribute__((packed))
-
-GDTEntry: cover from GDTE {
-    limit_1: extern UInt16       // limit bits 0..15
-    base_1: extern UInt16        // base bits 0..15
-    base_2: extern UInt8         // base bits 16..23
-    access_byte: extern UInt8    // access: Pr, Privl (2), 1, Ex, DC, RW, Ac
-    flags__limit_2: extern UInt8 // flags: Gr, Sz, 0, 0
-                                 // limit bits 16..19
-    base_3: extern UInt8         // base bits 24..31
-} // __attribute__((packed))
-
 GDT: cover {
     gdt: static GDTEntry[3]
 
@@ -59,3 +42,20 @@ GDT: cover {
                                                      // Accessed bit (left as 0)
     }
 }
+
+// These covers wouldn't have to be from C if we could do GCC's
+// __attribute__((packed)) from ooc somehow
+GDTDescriptor: cover from GDTD {
+    size: extern UInt16
+    offset: extern UInt32
+} // __attribute__((packed))
+
+GDTEntry: cover from GDTE {
+    limit_1: extern UInt16       // limit bits 0..15
+    base_1: extern UInt16        // base bits 0..15
+    base_2: extern UInt8         // base bits 16..23
+    access_byte: extern UInt8    // access: Pr, Privl (2), 1, Ex, DC, RW, Ac
+    flags__limit_2: extern UInt8 // flags: Gr, Sz, 0, 0
+                                 // limit bits 16..19
+    base_3: extern UInt8         // base bits 24..31
+} // __attribute__((packed))

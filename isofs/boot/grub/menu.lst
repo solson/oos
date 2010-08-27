@@ -3,5 +3,5 @@ timeout 0
 color light-blue/black light-cyan/blue
 
 title oos
-kernel /System/oos.exe
+kernel /system/oos.exe
 

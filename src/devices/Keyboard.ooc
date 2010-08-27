@@ -1,4 +1,4 @@
-import IRQ, Ports, Bochs
+import devices/cpu/IRQ, devices/Ports, Bochs
 
 Scancode: cover {
     ESC        := static 0x01

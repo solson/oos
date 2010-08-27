@@ -1,4 +1,4 @@
-import Hal/Ports
+import devices/Ports
 
 Bochs: cover {
     // Bochs uses this port to let us print to the bochs console.

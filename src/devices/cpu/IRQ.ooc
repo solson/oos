@@ -14,7 +14,7 @@
 * - IDT: So we can set gates for interrupts.
 * - Ports: So we can program the PICs.
 * - Registers: A struct given to interrupt handlers. */
-import IDT, Ports, Registers
+import IDT, Registers, devices/Ports
 
 /* `IRQ` is only used as a namespace. */
 IRQ: cover {

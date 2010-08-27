@@ -24,7 +24,7 @@
  OTHER DEALINGS IN THE SOFTWARE.
 */
 
-import Hal/Display
+import devices/Display
 
 /* Text Formatting */
 TF_ALTERNATE := 1 << 0

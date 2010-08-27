@@ -21,3 +21,7 @@ rock_tmp
 # Ignore rock libcaching files
 .libs
 *.cacheinfo
+
+# Ignore the GRUB stage2
+stage2_eltorito
+

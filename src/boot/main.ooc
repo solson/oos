@@ -1,8 +1,8 @@
-import Kernel, Multiboot, Hal/[Hal, Display, Panic, MM], Bochs, Console
+import Kernel, Multiboot, devices/Display, memory/MM, Panic, Bochs, Console
 
 kmain: func (mb: MultibootInfo*, magic: UInt32) {
     multiboot = mb@
-    Hal setup()
+    Kernel setup()
 
     "Welcome to " print()
     Display setFgColor(Color lightGreen, ||
