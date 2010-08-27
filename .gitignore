@@ -4,15 +4,13 @@
 *.exe
 *.lib
 *.shlib
+*.iso
 
 #ignore editor temporary and backup files
 .*.swp
 *~
 \#*\#
 .\#*
-
-#ignore scons database file:
-.sconsign.dblite
 
 # Ignore ooc temporary directories
 ooc_tmp
