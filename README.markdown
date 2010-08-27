@@ -124,8 +124,8 @@ Thanks
 
 
 [repo]:    http://github.com/tsion/oos
-[rock]:     http://ooc-lang.org
-[rockgit]:  http://github.com/nddrylliog/ooc
+[rock]:    http://ooc-lang.org
+[rockgit]: http://github.com/nddrylliog/rock
 [irc-oos]: irc://freenode.net/##oos
 [irc-ooc]: irc://freenode.net/#ooc-lang
 [sdkmvx]:  http://github.com/martinbrandenburg
