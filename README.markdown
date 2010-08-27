@@ -12,11 +12,12 @@ oos
 Downloading and Compiling oos
 -----------------------------
 
-You will need to have installed gcc, make, nasm, genisoimage (cdrkit), and
-[ooc][ooc]. I recommend you get the very latest version of ooc from the
-[git repo][oocgit], because ooc is still in development and oos usually relies
-on some pretty recent bugfixes. If you want to run oos in an emulator,
-bochs is a good choice, and there is a makefile target for it.
+You will need to have installed gcc, make, nasm, genisoimage (cdrkit),
+and [rock][rock] (the ooc compiler). I recommend you get the very
+latest version of rock from the [git repo][rockgit], because ooc is
+still in development and oos usually relies on some pretty recent
+bugfixes. If you want to run oos in an emulator, bochs is a good
+choice, and there is a makefile target for it.
 
 After you have all that, it is as simple as:
 
