@@ -12,29 +12,30 @@ oos
 Downloading and Compiling oos
 -----------------------------
 
-You will need to have installed gcc, scons, nasm, genisoimage (cdrkit), and
+You will need to have installed gcc, make, nasm, genisoimage (cdrkit), and
 [ooc][ooc]. I recommend you get the very latest version of ooc from the
 [git repo][oocgit], because ooc is still in development and oos usually relies
-on some pretty recent bugfixes.
+on some pretty recent bugfixes. If you want to run oos in an emulator,
+bochs is a good choice, and there is a makefile target for it.
 
 After you have all that, it is as simple as:
 
     $ git clone git://github.com/tsion/oos.git
     $ cd oos
-    $ scons
+    $ make bochs
+
+You can leave off 'bochs' if you only want to build the ISO.
 
 
 Running oos
 -----------
 
-I've provided a script for running oos in the Bochs emulator.
+As seen above, I've provided a makefile target for running oos in the
+Bochs emulator. You should be able to use oos with qemu or any
+emulator of your choice by telling your emulator to boot the oos.iso
+CD image.
 
-    $ ./run.sh
-
-You should be able to use oos with qemu or any emulator of your choice
-by telling your emulator to boot the iso/shiny.iso CD image.
-
-    $ qemu -cdrom iso/oos.iso
+    $ qemu -cdrom oos.iso
 
 Running oos on real hardware is untested and not recommended (I am not
 responsible for any fires, explosions, or alien abductions that may
@@ -46,18 +47,18 @@ UPDATE: [sdkmvx][sdkmvx] has tested oos on real hardware, and it worked for him!
 Debugging oos
 -------------
 
-I have also created a script to run bochs listening for a remote gdb
-connection on port 1234. You need to compile bochs with
+I have also created a make target to run bochs listening for a remote
+gdb connection on port 1234. You need to compile bochs with
 --enable-gdb-stub to use this script!
 
-    $ ./debug.sh
+    $ make bochs-dbg
 
 When you run that, bochs will say "Waiting for gdb connection on port
 1234." You can now connect with gdb from another terminal. Use
---symbols=path/to/oos.exe so that gdb is aware of our function and
-variable names.
+--symbols=oos.exe so that gdb is aware of our function and variable
+names.
 
-    $ gdb --symbols=Src/Kernel/oos.exe
+    $ gdb --symbols=oos.exe
     GNU gdb (GDB) 7.0
     Copyright (C) 2009 Free Software Foundation, Inc.
     License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
