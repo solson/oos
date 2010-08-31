@@ -16,7 +16,7 @@ kmain: func (mb: MultibootInfo*, magic: UInt32) {
 
     "Total Memory: %6i kB" printfln(MM memorySize / 1024)
     "Used Memory:  %6i kB" printfln(MM usedMemory / 1024)
-    "Free Memory:  %6i kB" printfln(MM getFreeMemory() / 1024)
+    "Free Memory:  %6i kB" printfln(MM freeMemory / 1024)
     '\n' print()
 
     "This is " print()

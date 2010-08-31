@@ -10,6 +10,17 @@ MM: cover {
 
     /// Total amount of memory in use.
     usedMemory: static SizeT
+   
+    /// Amount of free memory (in bytes).
+    freeMemory: static SizeT {
+        get {
+            if(usedMemory > memorySize) {
+                Bochs warn("The amount of allocated memory is higher than the amount of available memory!")
+                return 0
+            }
+            memorySize - usedMemory
+        }
+    }
 
     /** Bitmap frames (each frame is a 4 kB memory area). If a bit is
         set, the corresponding frame is used. */
@@ -19,17 +30,7 @@ MM: cover {
     lastElement: static UInt
     
     /// Address used for pre-heap memory allocation.
-    placementAddress := static kernelEnd& as Pointer
-   
-    /// Returns the amount of free memory (in bytes).
-    getFreeMemory: static func -> SizeT {
-        if(usedMemory > memorySize) {
-            Bochs warn("For some reason, the amount of allocated memory is higher than the available memory!")
-            return 0
-        }
-
-        return memorySize - usedMemory
-    }
+    placementAddress := static Kernel end
 
     alloc: static func (size: SizeT) -> Pointer {
         mem := placementAddress
