@@ -30,13 +30,38 @@ MM: cover {
     lastElement: static UInt
     
     /// Address used for pre-heap memory allocation.
-    placementAddress := static Kernel end
+    placementAddress := static Kernel end as SizeT
 
-    alloc: static func (size: SizeT) -> Pointer {
-        mem := placementAddress
+    /// Address space containing shared memory between processes.
+    sharedSpace: static UInt*
+
+    alloc: static func ~defaultAlignment (size: SizeT) -> Pointer {
+        alloc(size, 1)
+    }
+
+    alloc: static func (size: SizeT, alignment: UInt16) -> Pointer {
+        mem := null
+
+        if(size == 0 || alignment == 0) {
+            Bochs warn("Someone was smart enough to specify a length or alignment of 0!")
+            return null
+        }
+
+        if(freeMemory < size) {
+            Bochs warn("Not enough memory to allocate!")
+            return null
+        }
+
+        // Placement allocation only allowed for the kernel when
+        // dynamic memory is not available yet.
+        if(alignment > 1)
+            placementAddress = placementAddress align(alignment)
+        
+        mem = placementAddress as Pointer
         placementAddress += size
         usedMemory += size
-        return mem
+        
+        mem
     }
 
     free: static func (ptr: Pointer) {
@@ -47,11 +72,12 @@ MM: cover {
         // beginning if the lastElement wasn't already 0.
         tryAgain := lastElement != 0
         
-        for(elem in lastElement..Bitmap size) {
-            if(bitmap allSet(elem)) continue
+        for(elem in lastElement..bitmap size) {
+            if(bitmap allSet?(elem))
+                continue
 
             for(bit in 0..32) {
-                if(!bitmap isSet(elem, bit)) {
+                if(bitmap clear?(elem, bit)) {
                     // We've found ourselves a free bit, allocate and return it.
                     bitmap set(elem, bit)
                     lastElement = elem
@@ -65,7 +91,7 @@ MM: cover {
         // Maybe some frames we've already looked through have become available
         if(tryAgain) {
             lastElement = 0
-            allocFrame()
+            return allocFrame()
         }
         
         // If still nothing was found, the entire bitmap is set, and there is
@@ -74,12 +100,12 @@ MM: cover {
         return 0
     }
 
-    allocFrame: static func ~address (address: UInt) {
+    allocFrame: static func ~address (address: SizeT) {
         address /= FRAME_SIZE
         bitmap set(address / 32, address % 32)
     }
 
-    freeFrame: static func (address: UInt) {
+    freeFrame: static func (address: SizeT) {
         address /= FRAME_SIZE
         bitmap clear(address / 32, address % 32)
     }
@@ -109,9 +135,55 @@ MM: cover {
         Bochs debug("Memory size: %i kB" format(multiboot memLower + multiboot memUpper))
         Bochs debug("Bitmap size: %i B" format(bitmap size * 4))
 
-        usedMemory = placementAddress as SizeT
+        // Map the shared virtual address space to itself.
+        sharedSpace = alloc(FRAME_SIZE, FRAME_SIZE)
+        memset(sharedSpace, 0 as UInt8, FRAME_SIZE)
+
+        sharedSpace[1023] = (sharedSpace as SizeT) | 4 | 2 | 1
+
+        placementAddress = placementAddress align(FRAME_SIZE)
         
-        // Parse the memory map from GRUB
+        pageTable := null as UInt*
+        physAddr := placementAddress
+
+        i := 0 as SizeT
+        while(i < placementAddress) {
+            // Need to move to the next page table?
+            if((i / FRAME_SIZE) % 1024 == 0) {
+                // Allocate a frame for this page table and map it.
+                allocFrame(physAddr)
+                sharedSpace[i / FRAME_SIZE / 1024] = physAddr | 4 | 2 | 1
+
+                pageTable = physAddr as UInt*
+                memset(pageTable, 0 as UInt8, FRAME_SIZE)
+
+                physAddr += FRAME_SIZE
+            }
+
+            // Identity map this region.
+            allocFrame(i)
+            pageTable[i / FRAME_SIZE] = i | 4 | 2 | 1
+            
+            i += FRAME_SIZE
+        }
+
+        // NOTE: All memory up until the page table containing physAddr is seen as allocated.
+        placementAddress = physAddr align(0x400000)
+        usedMemory = placementAddress
+        
+        // Parse the memory map from GRUB.
+        parseMemoryMap()
+
+        Bochs debug("Taking the plunge...")
+        // Switch and activate paging.
+        switchAddressSpace(sharedSpace)
+        Bochs debug("Swan dive!")
+
+//        activatePaging()
+//        Bochs debug("A perfect entry!")
+    }
+
+    parseMemoryMap: static func {
         i := multiboot mmapAddr
 
         "Memory map:" println()
@@ -144,4 +216,12 @@ MM: cover {
 
         '\n' print()
     }
+
+    activatePaging: static func {
+        setCR0(getCR0() bitSet(31))
+    }
+
+    switchAddressSpace: static extern proto func (addressSpace: UInt*)
+    getCR0: static extern proto func -> SizeT
+    setCR0: static extern proto func (cr0: SizeT)
 }

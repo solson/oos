@@ -11,16 +11,20 @@ Bitmap: class {
         data[index] |= (1 << bit)
     }
 
-    isSet: func (index, bit: UInt) -> Bool {
+    set?: func (index, bit: UInt) -> Bool {
         (data[index] & (1 << bit)) as Bool
     }
 
     // This is a quick way to check if all the bits in an element are set.
-    allSet: func (index: UInt) -> Bool {
+    allSet?: func (index: UInt) -> Bool {
         data[index] == 0xFFFFFFFF
     }
 
     clear: func (index, bit: UInt) {
         data[index] &= ~(1 << bit)
+    }
+
+    clear?: func (index, bit: UInt) -> Bool {
+        !(data[index] & (1 << bit))
     }
 }
