@@ -339,6 +339,7 @@ UInt32: cover from uint32_t extends ULong
 UInt64: cover from uint64_t extends ULong
 
 SizeT: cover from size_t extends ULong
+SSizeT: cover from signed int extends Long
 
 Bool: cover from bool {
     toString: func -> String { this ? "true" : "false" }

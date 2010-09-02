@@ -2,7 +2,7 @@ OOC := rock
 CC := clang
 
 CCFLAGS := +-m32 +-nostdinc +-ffreestanding +-fno-stack-protector
-OOCFLAGS := -c -v -g -sdk=sdk -sourcepath=src -gc=off -nomain -Iinclude -$(CC) $(CCFLAGS)
+OOCFLAGS := -c -v -g -sdk=sdk -sourcepath=src -gc=off -nomain -cstrings -Iinclude -$(CC) $(CCFLAGS)
 
 LDFLAGS := -melf_i386 -nostdlib -g
 ASFLAGS := -felf32 -g
