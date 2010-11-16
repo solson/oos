@@ -218,10 +218,8 @@ String: cover from Char* {
     /// return the string's length, excluding the null byte.
     length: func -> SizeT {
         i := 0
-        while (this@) {
-            this += 1
+        while (this[i])
             i += 1
-        }
         return i
     }
 

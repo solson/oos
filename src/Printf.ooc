@@ -253,7 +253,7 @@ vsnprintf: func (str: String, size: SizeT, fmt: String, ap: VaList) -> Int {
         while(p@ digit?()) {
             if(fieldwidth > 0)
                 fieldwidth *= 10
-            fieldwidth += (p@ - 0x30)
+            fieldwidth += (p@ - 0x30) as Int
             p += 1
         }
 
@@ -269,7 +269,7 @@ vsnprintf: func (str: String, size: SizeT, fmt: String, ap: VaList) -> Int {
             while(p@ digit?()) {
                 if (precision > 0)
                     precision *= 10
-                precision += (p@ - 0x30)
+                precision += (p@ - 0x30) as Int
                 p += 1
             }
         }

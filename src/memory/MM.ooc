@@ -174,10 +174,10 @@ MM: cover {
         // Parse the memory map from GRUB.
         parseMemoryMap()
 
-        Bochs debug("Taking the plunge...")
+//        Bochs debug("Taking the plunge...")
         // Switch and activate paging.
-        switchAddressSpace(sharedSpace)
-        Bochs debug("Swan dive!")
+//        switchAddressSpace(sharedSpace)
+//        Bochs debug("Swan dive!")
 
 //        activatePaging()
 //        Bochs debug("A perfect entry!")

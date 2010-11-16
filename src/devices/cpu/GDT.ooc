@@ -28,10 +28,10 @@ GDT: cover {
         gdt[n] base_3 = base >> 24 & 0xFF // base bits 24..31
 
         gdt[n] limit_1 = limit & 0xFFFF // limit bits 0..15
-        gdt[n] flags__limit_2 = ((gr & 1) << 7)     | // granularity bit
+        gdt[n] flags__limit_2 = (((gr & 1) << 7)     | // granularity bit
                                 ((sz & 1) << 6)     | // size bit
                                                       // ends with two dummy bits (00)
-                                (limit >> 16 & 0xF) // limit bits 16..19
+                                (limit >> 16 & 0xF)) as UInt8 // limit bits 16..19
 
         gdt[n] access_byte = (1 << 7)              | // first bit must be set for all valid GDT selectors
                              ((privl & 0b11) << 5) | // two bits for the ring level

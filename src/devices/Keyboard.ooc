@@ -13,7 +13,7 @@ Scancode: cover {
 }
 
 Keyboard: cover {
-    lowercase: static Char[128] = [
+    lowercase: static SSizeT[128] = [
         0, 27, '1', '2', '3', '4', '5', '6', '7', '8', /* 9 */
         '9', '0', '-', '=', 0x08, /* Backspace */
         '\t', /* Tab */
@@ -52,7 +52,7 @@ Keyboard: cover {
         0 /* All other keys are undefined */
     ]
     
-    uppercase: static Char[128] = [
+    uppercase: static SSizeT[128] = [
         0, 27, '!', '@', '#', '$', '%', '^', '&', '*', /* 9 */
         '(', ')', '_', '+', 0x08, /* Backspace */
         '\t', /* Tab */
@@ -140,20 +140,22 @@ Keyboard: cover {
         while(bufferIndex == 0){}
 
         bufferIndex -= 1
-        scancode := buffer[bufferIndex]
+        scancode: UInt8 = buffer[bufferIndex]
 
-        if((shift && !capslock) || (capslock && !shift))
+        Bochs debug("Reading... CAPS:%i, SHIFT:%i" format(capslock, shift))
+
+        Bochs debug("uppercase:%p lowercase:%p scancode:%i" format(uppercase, lowercase, scancode))
+
+        Bochs debug("%s" format((uppercase[scancode] == lowercase[scancode]) toString()))
+        
+        if((shift && !capslock) || (capslock && !shift)) {
             uppercase[scancode] as Char
-        else
+        } else {
             lowercase[scancode] as Char
+        }
     }
     
     setup: static func {
-        numlock = true
-        
-        updateLights()
-        flushBuffer()
-        
         // The keyboard interrupt handler.
         IRQ handlerInstall(1, |regs|
             scancode := Ports inByte(0x60)
@@ -199,6 +201,10 @@ Keyboard: cover {
                 }
             }
         )
+        numlock = true
+        
+        updateLights()
+        flushBuffer()
     }
 }
 

@@ -55,7 +55,7 @@ Display: cover {
     setColor: static func (fg, bg: Color) {
         This fg = fg
         This bg = bg
-        This color = (fg & 0xf) | bg << 4
+        This color = ((fg & 0xf) | bg << 4) as UInt8
     }
 
     setColor: static func ~withFn (fg, bg: Color, fn: Func) {
@@ -90,7 +90,7 @@ Display: cover {
 
     clearScreen: static func {
         for(i in 0..(CONSOLE_HEIGHT * CONSOLE_WIDTH)) {
-            VIDEO_MEMORY[i] = ' ' | color << 8
+            VIDEO_MEMORY[i] = (' ' | color << 8) as UInt16
         }
         cursor_x = 0
         cursor_y = 0
@@ -139,7 +139,7 @@ Display: cover {
         // Index = [(y * width) + x]
         else if(chr >= ' ') {
             i := cursor_y * CONSOLE_WIDTH + cursor_x
-            VIDEO_MEMORY[i] = chr | color << 8
+            VIDEO_MEMORY[i] = (chr | color << 8) as UInt16
             cursor_x += 1
         }
 
@@ -168,7 +168,7 @@ Display: cover {
         }
 
         for(col in 0..CONSOLE_WIDTH) {
-            VIDEO_MEMORY[(CONSOLE_HEIGHT - 1) * CONSOLE_WIDTH + col] = ' ' | color << 8
+            VIDEO_MEMORY[(CONSOLE_HEIGHT - 1) * CONSOLE_WIDTH + col] = (' ' | color << 8) as UInt16
         }
     }
 
