@@ -19,8 +19,7 @@ import IDT, Registers, devices/Ports
 /* `IRQ` is only used as a namespace. */
 IRQ: cover {
     /* An array storing pointers to the interrupt handler functions. */
-    irqRoutines: static Pointer[16] = [null, null, null, null, null, null,
-        null, null, null, null, null, null, null, null, null, null]
+    irqRoutines: static Pointer* // [16]
 
     /* All of these `irq` functions are defined in Hal.asm. The `proto` keyword
     *  is used because there is no C header that declares these functions. */
@@ -98,7 +97,11 @@ IRQ: cover {
     *  the appropriate ISRs to the correct entries in the IDT. This
     *  is just like installing the exception handlers. */
     setup: static func {
-        remapPIC()
+	    irqRoutines = gc_malloc(Pointer size * 16)
+	    for(i in 0..16)
+		    irqRoutines[i] = null
+	    
+		remapPIC()
 
         IDT setGate(32, irq0, 0x8, 0, 0, IDT INTR32)
         IDT setGate(33, irq1, 0x8, 0, 0, IDT INTR32)

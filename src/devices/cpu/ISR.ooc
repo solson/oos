@@ -1,39 +1,6 @@
 import IDT, SysCall, Registers, Panic
 
-exceptionMessages: const String[32] = [
-    "0 #DE Divide Error",
-    "1 #DB RESERVED",
-    "2 - NMI Interrupt",
-    "3 #BP Breakpoint",
-    "4 #OF Overflow",
-    "5 #BR BOUND Range Exceeded",
-    "6 #UD Invalid Opcode (Undefined Opcode)",
-    "7 #NM Device Not Available (No Math Coprocessor)",
-    "8 #DF Double Fault",
-    "9   Coprocessor Segment Overrun (reserved)",
-    "10 #TS Invalid TSS",
-    "11 #NP Segment Not Present",
-    "12 #SS Stack-Segment Fault",
-    "13 #GP General Protection",
-    "14 #PF Page Fault",
-    "15 - (Intel reserved. Do not use.)",
-    "16 #MF x87 FPU Floating-Point Error (Math Fault)",
-    "17 #AC Alignment Check",
-    "18 #MC Machine Check",
-    "19 #XM SIMD Floating-Point Exception",
-    "20 - Intel reserved. Do not use.",
-    "21 - Intel reserved. Do not use.",
-    "22 - Intel reserved. Do not use.",
-    "23 - Intel reserved. Do not use.",
-    "24 - Intel reserved. Do not use.",
-    "25 - Intel reserved. Do not use.",
-    "26 - Intel reserved. Do not use.",
-    "27 - Intel reserved. Do not use.",
-    "28 - Intel reserved. Do not use.",
-    "29 - Intel reserved. Do not use.",
-    "30 - Intel reserved. Do not use.",
-    "31 - Intel reserved. Do not use."
-]
+exceptionMessages: const String* // [32]
 
 ISR: cover {
     // from exceptions.asm
@@ -83,6 +50,40 @@ ISR: cover {
     }
 
     setup: static func {
+	    exceptionMessages = gc_malloc(String size * 32)
+	    exceptionMessages[0] = "0 #DE Divide Error"
+	    exceptionMessages[1] = "1 #DB RESERVED"
+	    exceptionMessages[2] = "2 - NMI Interrupt"
+	    exceptionMessages[3] = "3 #BP Breakpoint"
+	    exceptionMessages[4] = "4 #OF Overflow"
+	    exceptionMessages[5] = "5 #BR BOUND Range Exceeded"
+	    exceptionMessages[6] = "6 #UD Invalid Opcode (Undefined Opcode)"
+	    exceptionMessages[7] = "7 #NM Device Not Available (No Math Coprocessor)"
+	    exceptionMessages[8] = "8 #DF Double Fault"
+	    exceptionMessages[9] = "9   Coprocessor Segment Overrun (reserved)"
+	    exceptionMessages[10] = "10 #TS Invalid TSS"
+	    exceptionMessages[11] = "11 #NP Segment Not Present"
+	    exceptionMessages[12] = "12 #SS Stack-Segment Fault"
+	    exceptionMessages[13] = "13 #GP General Protection"
+	    exceptionMessages[14] = "14 #PF Page Fault"
+	    exceptionMessages[15] = "15 - (Intel reserved. Do not use.)"
+	    exceptionMessages[16] = "16 #MF x87 FPU Floating-Point Error (Math Fault)"
+	    exceptionMessages[17] = "17 #AC Alignment Check"
+	    exceptionMessages[18] = "18 #MC Machine Check"
+	    exceptionMessages[19] = "19 #XM SIMD Floating-Point Exception"
+	    exceptionMessages[20] = "20 - Intel reserved. Do not use."
+	    exceptionMessages[21] = "21 - Intel reserved. Do not use."
+	    exceptionMessages[22] = "22 - Intel reserved. Do not use."
+	    exceptionMessages[23] = "23 - Intel reserved. Do not use."
+	    exceptionMessages[24] = "24 - Intel reserved. Do not use."
+	    exceptionMessages[25] = "25 - Intel reserved. Do not use."
+	    exceptionMessages[26] = "26 - Intel reserved. Do not use."
+	    exceptionMessages[27] = "27 - Intel reserved. Do not use."
+	    exceptionMessages[28] = "28 - Intel reserved. Do not use."
+	    exceptionMessages[29] = "29 - Intel reserved. Do not use."
+	    exceptionMessages[30] = "30 - Intel reserved. Do not use."
+	    exceptionMessages[31] = "31 - Intel reserved. Do not use."
+	    
         IDT setGate(0, isr0, 0x8, 0, 0, IDT INTR32)
         IDT setGate(1, isr1, 0x8, 0, 0, IDT INTR32)
         IDT setGate(2, isr2, 0x8, 0, 0, IDT INTR32)
