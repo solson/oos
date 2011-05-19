@@ -12,9 +12,8 @@
 \#*\#
 .\#*
 
-# Ignore ooc temporary directories
-ooc_tmp
-rock_tmp
+# Ignore build directory
+build
 
 # Ignore rock libcaching files
 .libs

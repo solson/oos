@@ -42,4 +42,4 @@ isofs/boot/grub/stage2_eltorito:
 	cp ${STAGE2} $@
 
 clean:
-	 $(RM) -r $(wildcard $(ASMOBJFILES) src/oos.lib oos.exe oos.iso rock_tmp ooc_tmp .libs)
+	 $(RM) -r $(wildcard $(ASMOBJFILES) src/oos.lib oos.exe oos.iso rock_tmp ooc_tmp build .libs)
