@@ -12,8 +12,8 @@ Downloading and Compiling oos
 -----------------------------
 
 You will need to have installed gcc, make, nasm, genisoimage (cdrkit),
-and [rock][rock] (the ooc compiler). I recommend you get the very
-latest version of rock from the [git repo][rock], because ooc is
+and rock (the ooc compiler). I recommend you get the very
+latest version of rock from the [git repo][rockgit], because ooc is
 still in development and oos usually relies on some pretty recent
 bugfixes. If you want to run oos in an emulator, bochs is a good
 choice, and there is a makefile target for it.
@@ -117,13 +117,14 @@ Todo
 Thanks
 ------
 
-* [nddrylliog][ndd] and everyone else involved in creating [the ooc language][rock]!
+* [nddrylliog][ndd] and everyone else involved in creating [the ooc language][ooc]!
 * [OSDev][osdev], for all the great tutorials and informative articles
 * The creators of [dux OS][dux]. I read and stole a lot of code from them. :)
 
 
 [repo]:    http://github.com/tsion/oos
-[rock]: http://github.com/nddrylliog/rock
+[ooc]:    http://ooc-lang.org
+[rockgit]: http://github.com/nddrylliog/rock
 [irc-oos]: irc://freenode.net/##oos
 [irc-ooc]: irc://freenode.net/#ooc-lang
 [sdkmvx]:  http://github.com/martinbrandenburg
