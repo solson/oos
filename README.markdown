@@ -19,6 +19,13 @@ still in development and oos usually relies on some pretty recent
 bugfixes. If you want to run oos in an emulator, bochs is a good
 choice, and there is a makefile target for it.
 
+Also, if you don't have `/boot/grub/stage2_eltorito`, you should `wget
+http://osdev.googlecode.com/svn-history/r12/trunk/geekos/build/x86/boot/stage2_eltorito`
+and move it to `isofs/boot/grub/stage2_eltorito`.
+
+If you have `stage2_eltorito`, but it's just in a different location,
+run `make STAGE2=/path/to/stage2_eltorito`.
+
 After you have all that, it is as simple as:
 
     $ git clone git://github.com/tsion/oos.git
