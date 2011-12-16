@@ -1,8 +1,8 @@
 OOC := rock
-CC := clang
+CC := gcc
 
 CCFLAGS := +-m32 +-nostdinc +-ffreestanding +-fno-stack-protector
-OOCFLAGS := -c -v -g -sdk=sdk -sourcepath=src -gc=off -nomain -cstrings -Iinclude -$(CC) $(CCFLAGS)
+OOCFLAGS := -c -v -g --sdk=sdk --sourcepath=src --gc=off --nomain --cstrings -Iinclude --$(CC) $(CCFLAGS)
 
 LDFLAGS := -melf_i386 -nostdlib -g
 ASFLAGS := -felf32 -g
@@ -17,11 +17,14 @@ ASMOBJFILES := $(patsubst %.asm,%.o,$(ASMFILES))
 
 all: oos.iso
 
-bochs: all
-	bochs -qf .bochsrc
+bochs: oos.iso
+	@bochs -qf .bochsrc
 
-bochs-dbg: all
-	bochs -qf .bochsrc-dbg
+bochs-dbg: oos.iso
+	@bochs -qf .bochsrc-dbg
+
+qemu: oos.iso
+	@qemu -cdrom $< -net none
 
 oos.iso: oos.exe isofs/boot/grub/stage2_eltorito isofs/boot/grub/menu.lst
 	@mkdir -p isofs/system
@@ -32,7 +35,7 @@ oos.exe: ${ASMOBJFILES} src/oos.lib
 	${LD} ${LDFLAGS} -T src/linker.ld -o $@ ${ASMOBJFILES} src/oos.lib
 
 src/oos.lib: ${OOCFILES}
-	${OOC} ${OOCFLAGS} -entrypoint=kmain -staticlib=$@ boot/main.ooc
+	${OOC} ${OOCFLAGS} --entrypoint=kmain --staticlib=$@ boot/main.ooc
 
 %.o: %.asm
 	nasm ${ASFLAGS} -o $@ $<
