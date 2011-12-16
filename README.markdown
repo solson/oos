@@ -1,4 +1,3 @@
-
 oos
 ===
 
@@ -13,7 +12,7 @@ Downloading and Compiling oos
 -----------------------------
 
 You will need to have installed gcc, make, nasm, genisoimage (cdrkit),
-and [rock][rock] (the ooc compiler). I recommend you get the very
+and rock (the ooc compiler). I recommend you get the very
 latest version of rock from the [git repo][rockgit], because ooc is
 still in development and oos usually relies on some pretty recent
 bugfixes. If you want to run oos in an emulator, bochs is a good
@@ -98,7 +97,7 @@ consult its documentation on how to do a remote gdb connection. And by
 the way, since I compile with ooc -g, gdb can walk through ooc code
 line by line, and display the ooc source of the line it's on. Hooray!
 
-Note: gdb can do a *lot*, check out `help` (duh).
+Note: gdb can do a *lot*, check out `help`.
 
 Note again: [nemiver][nemiver] is a decent GTK+ GUI front-end for gdb. Or
 if you like to like to live on the 'K' side of life, there is [kdbg][kdbg].
@@ -131,7 +130,7 @@ Thanks
 
 
 [repo]:    http://github.com/tsion/oos
-[rock]:    http://ooc-lang.org
+[ooc]:    http://ooc-lang.org
 [rockgit]: http://github.com/nddrylliog/rock
 [irc-oos]: irc://freenode.net/##oos
 [irc-ooc]: irc://freenode.net/#ooc-lang
