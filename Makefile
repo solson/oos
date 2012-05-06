@@ -1,5 +1,6 @@
 OOC := rock
 CC := gcc
+QEMU := qemu-system-i386
 
 CCFLAGS := +-m32 +-nostdinc +-ffreestanding +-fno-stack-protector
 OOCFLAGS := -c -v -g --sdk=sdk --sourcepath=src --gc=off --nomain --cstrings -Iinclude --$(CC) $(CCFLAGS)
@@ -13,7 +14,7 @@ OOCFILES := $(shell find "src" -name "*.ooc")
 ASMFILES := $(shell find "src" -name "*.asm")
 ASMOBJFILES := $(patsubst %.asm,%.o,$(ASMFILES))
 
-.PHONY: all clean bochs bochs-dbg
+.PHONY: all clean bochs bochs-dbg qemu
 
 all: oos.iso
 
@@ -24,7 +25,7 @@ bochs-dbg: oos.iso
 	@bochs -qf .bochsrc-dbg
 
 qemu: oos.iso
-	@qemu -cdrom $< -net none
+	@$(QEMU) -cdrom $< -net none
 
 oos.iso: oos.exe isofs/boot/grub/stage2_eltorito isofs/boot/grub/menu.lst
 	@mkdir -p isofs/system
