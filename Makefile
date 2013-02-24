@@ -1,9 +1,10 @@
+export OOC_LIBS = .
 OOC := rock
 CC := gcc
 QEMU := qemu-system-i386
 
 CCFLAGS := +-m32 +-nostdinc +-ffreestanding +-fno-stack-protector
-OOCFLAGS := -c -v -g --sdk=sdk --sourcepath=src --gc=off --nomain --cstrings -Iinclude --$(CC) $(CCFLAGS)
+OOCFLAGS := -c -v -g --gc=off --nomain -Iinclude $(CCFLAGS)
 
 LDFLAGS := -melf_i386 -nostdlib -g
 ASFLAGS := -felf32 -g
@@ -36,7 +37,7 @@ oos.exe: ${ASMOBJFILES} src/oos.lib
 	${LD} ${LDFLAGS} -T src/linker.ld -o $@ ${ASMOBJFILES} src/oos.lib
 
 src/oos.lib: ${OOCFILES}
-	${OOC} ${OOCFLAGS} --entrypoint=kmain --staticlib=$@ boot/main.ooc
+	${OOC} ${OOCFLAGS} --entrypoint=kmain oos.use
 
 %.o: %.asm
 	nasm ${ASFLAGS} -o $@ $<

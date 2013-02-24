@@ -1,0 +1,4 @@
+Name: oos
+Description: ooc operating system
+SourcePath: src
+Main: boot/main.ooc

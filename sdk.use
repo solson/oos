@@ -1,0 +1,4 @@
+Name: sdk
+Description: The custom ooc sdk for oos
+SourcePath: sdk
+Imports: lang/ooclib, lang/types, lang/memory
