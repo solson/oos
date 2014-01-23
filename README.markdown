@@ -103,24 +103,6 @@ Note again: [nemiver][nemiver] is a decent GTK+ GUI front-end for gdb. Or
 if you like to like to live on the 'K' side of life, there is [kdbg][kdbg].
 
 
-Features
---------
-
-* el zilcho
-* Can I call printing colour text a feature? =)
-
-
-Todo
-----
-
-* interrupts/exceptions - Done!
-* syscalls - almost done
-* memory management
-* drivers for keyboard, display (text display driver mostly done), serial, filesystems, floppy, etc
-* modules / elf32 loading
-* ooc stdlib (all things like strlen, strcmp, etc, will be in pure ooc)
-
-
 Thanks
 ------
 
