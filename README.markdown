@@ -5,7 +5,6 @@ oos
   as much of the code as possible
 * oos stands for ooc operating system
 * Repository: [http://github.com/tsion/oos][repo]
-* IRC: [##oos][irc-oos] or [#ooc-lang][irc-ooc] on freenode
 
 
 Downloading and Compiling oos
@@ -114,8 +113,6 @@ Thanks
 [repo]:    http://github.com/tsion/oos
 [ooc]:    http://ooc-lang.org
 [rockgit]: http://github.com/nddrylliog/rock
-[irc-oos]: irc://freenode.net/##oos
-[irc-ooc]: irc://freenode.net/#ooc-lang
 [sdkmvx]:  http://github.com/martinbrandenburg
 [nemiver]: http://projects.gnome.org/nemiver/
 [kdbg]:    http://www.kdbg.org/
